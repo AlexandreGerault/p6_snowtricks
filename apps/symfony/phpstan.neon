@@ -1,0 +1,6 @@
+parameters:
+    paths:
+        - domain
+        - src
+        - tests
+    level: 9
