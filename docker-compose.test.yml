@@ -1,0 +1,26 @@
+version:  '3.8'
+
+services:
+  php_test:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - './apps/symfony/:/usr/src/app'
+    restart: on-failure
+    env_file:
+      - .env.test
+    user: ${LOCAL_USER}
+    depends_on:
+      - mailer_test
+
+  mailer_test:
+    image: mailhog/mailhog:latest
+    container_name: mailhog_test
+    restart: on-failure
+    ports:
+      - "1026:1025"
+      - "8026:8025"
+
+volumes:
+  database-volume-test:
