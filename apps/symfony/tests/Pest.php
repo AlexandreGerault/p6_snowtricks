@@ -13,7 +13,7 @@
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-uses(WebTestCase::class)->in('Web');
+// uses(WebTestCase::class)->in('Web');
 
 /*
 |--------------------------------------------------------------------------
