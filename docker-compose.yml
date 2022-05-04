@@ -37,7 +37,7 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_CONTAINER}:3306/${MYSQL_DATABASE}?serverVersion=8.0.24'
+      DATABASE_URL: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}?serverVersion=8.0.24'
     user: ${LOCAL_USER}
     depends_on:
       - mailer

@@ -1,6 +1,21 @@
 version:  '3.8'
 
 services:
+  mysql_test:
+    image: mysql:8.0
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+    ports:
+      - '${MYSQL_PORT_TEST}:3306'
+    expose:
+      - '3306'
+    volumes:
+      - database-volume-test:/var/lib/mysql
+
   php_test:
     build:
       context: .
@@ -8,8 +23,6 @@ services:
     volumes:
       - './apps/symfony/:/usr/src/app'
     restart: on-failure
-    env_file:
-      - .env.test
     user: ${LOCAL_USER}
     depends_on:
       - mailer_test
@@ -19,8 +32,9 @@ services:
     container_name: mailhog_test
     restart: on-failure
     ports:
-      - "1026:1025"
-      - "8026:8025"
+      - "1027:1025"
+      - "8027:8025"
 
 volumes:
   database-volume-test:
+    driver: local
