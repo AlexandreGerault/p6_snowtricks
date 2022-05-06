@@ -52,7 +52,6 @@ class RegisterController extends AbstractController
      */
     private function sendConfirmationLink(string $to): void
     {
-        dump("blop");
         $mail = new RegisterConfirmationLinkMail("hlhl", $to);
         $this->mailer->send($mail);
     }
