@@ -27,10 +27,10 @@ class User
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $email;
 
-    #[ORM\Column(type: Types::STRING, unique: true)]
+    #[ORM\Column(type: Types::STRING)]
     private string $password;
 
-    #[ORM\Column(Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
     public function username(): string
