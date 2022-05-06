@@ -11,7 +11,7 @@ prepare-install:
 
 .PHONY: migrate
 migrate:
-	docker compose run php bin/console doctrine:migrations:migrate --no-interaction
+	docker compose run php bin/console d:s:u --force
 
 .PHONY: build-front
 build-front:
