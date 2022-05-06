@@ -34,10 +34,9 @@ services:
     volumes:
       - './apps/symfony/:/usr/src/app'
     restart: on-failure
-    env_file:
-      - .env
     environment:
       DATABASE_URL: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}?serverVersion=8.0.24'
+      MAILER_DSN: 'smtp://:@mailer:1025'
     user: ${LOCAL_USER}
     depends_on:
       - mailer
