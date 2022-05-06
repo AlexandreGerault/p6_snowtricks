@@ -26,7 +26,7 @@ class RegisterController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    #[Route(path: '/inscription')]
+    #[Route(path: '/inscription', name: 'app_register')]
     public function __invoke(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         $form = $this->createForm(RegisterType::class, new RegisterFormModel());
