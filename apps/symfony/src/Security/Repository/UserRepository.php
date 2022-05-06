@@ -26,13 +26,11 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findByActivationToken(string $token): ?User
     {
-        $result = $this->createQueryBuilder('u')
+        return $this->createQueryBuilder('u')
             ->innerJoin('u.activationToken', 'a')
             ->where('a.token = :token')
             ->setParameter('token', $token)
             ->getQuery()
             ->getOneOrNullResult();
-
-        return $result;
     }
 }
