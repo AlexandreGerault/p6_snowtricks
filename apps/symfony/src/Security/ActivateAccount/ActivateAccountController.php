@@ -17,6 +17,13 @@ class ActivateAccountController extends AbstractController
     public function __invoke(Request $request, UserRepository $userRepository, EntityManagerInterface $em): RedirectResponse
     {
         $user = $userRepository->findByActivationToken($request->get('token'));
+
+        if (!$user) {
+            $this->addFlash("error", "Aucun compte ne correspond à ce jeton d'activation !");
+
+            return $this->redirect('/');
+        }
+
         $user->activate();
 
         $em->persist($user);

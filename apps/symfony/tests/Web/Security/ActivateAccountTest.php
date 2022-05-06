@@ -28,4 +28,16 @@ class ActivateAccountTest extends WebTestCase
 
         $this->assertTrue($inactiveUser->isActive());
     }
+
+    public function test_it_cannot_find_account_for_given_token(): void
+    {
+        $client = static::createClient();
+
+        $client->request(Request::METHOD_GET, '/confirmer?token=invalid');
+
+        $this->assertResponseRedirects();
+        $crawler = $client->followRedirect();
+
+        $this->assertStringContainsString("Aucun compte ne correspond à ce jeton d'activation !", $crawler->html());
+    }
 }
