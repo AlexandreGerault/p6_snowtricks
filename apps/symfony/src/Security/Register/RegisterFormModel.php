@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RegisterFormModel
 {
     #[Assert\NotBlank]
+    #[UniqueField(options: ['table' => 'users', 'field' => 'username', 'fieldName' => "nom d'utilisateur"])]
     public string $username;
 
     #[Assert\NotBlank]
