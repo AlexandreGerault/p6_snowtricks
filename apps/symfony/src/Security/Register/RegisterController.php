@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
@@ -26,7 +27,7 @@ class RegisterController extends AbstractController
      * @throws TransportExceptionInterface
      */
     #[Route(path: '/inscription')]
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         $form = $this->createForm(RegisterType::class, new RegisterFormModel());
         $form->handleRequest($request);
@@ -36,6 +37,7 @@ class RegisterController extends AbstractController
             $data = $form->getData();
 
             $user = $this->factory->create($data->username, $data->email, $data->password);
+            $user->setPassword($hasher->hashPassword($user, $data->password));
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 

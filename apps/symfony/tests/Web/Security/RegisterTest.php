@@ -33,6 +33,7 @@ class RegisterTest extends WebTestCase
         $this->assertInstanceOf(User::class, $createdUser);
         $this->assertEquals('Alexandre Gérault', $createdUser->username());
         $this->assertFalse($createdUser->isActive());
+        $this->assertNotEquals("password", $createdUser->getPassword()); // check password has been hashed
 
         $this->assertEmailCount(1);
     }

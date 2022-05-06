@@ -8,12 +8,13 @@ use App\Security\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`users`')]
 #[UniqueEntity('email')]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: "uuid", unique: true)]
@@ -62,6 +63,11 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function isActive(): bool
