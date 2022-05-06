@@ -24,6 +24,9 @@ services:
       - './apps/symfony/:/usr/src/app'
     restart: on-failure
     user: ${LOCAL_USER}
+    environment:
+      DATABASE_URL: 'mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql_test:3306/${MYSQL_DATABASE}?serverVersion=8.0.24'
+      MAILER_DSN: 'null://null'
     depends_on:
       - mailer_test
 

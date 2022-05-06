@@ -16,7 +16,7 @@ activate Domain
 alt User already exist
     Domain -> Infrastructure: Verify user does not exist
     activate Infrastructure
-    Infrastructure -> Domain: Tell user does not already exit
+    Infrastructure -> Domain: Tell user already exits
     deactivate Infrastructure
     UserInterface -> Domain: Presents error
     UserInterface -> Visitor: Render form page with errors

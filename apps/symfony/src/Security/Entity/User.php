@@ -30,6 +30,9 @@ class User
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $password;
 
+    #[ORM\Column(Types::BOOLEAN)]
+    private bool $active = false;
+
     public function username(): string
     {
         return $this->username;
@@ -59,5 +62,10 @@ class User
         $this->password = $password;
 
         return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
     }
 }
