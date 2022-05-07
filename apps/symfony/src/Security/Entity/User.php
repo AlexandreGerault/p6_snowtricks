@@ -34,8 +34,13 @@ class User implements PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: ActivationToken::class)]
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: ActivationToken::class, cascade: ['remove'])]
     private ActivationToken $activationToken;
+
+    public function id(): Uuid
+    {
+        return $this->uuid;
+    }
 
     public function username(): string
     {
@@ -78,9 +83,21 @@ class User implements PasswordAuthenticatedUserInterface
         return $this->active;
     }
 
-    public function activate()
+    public function activate(): static
     {
         $this->active = true;
+
+        return $this;
+    }
+
+    public function activationToken(): ActivationToken
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(ActivationToken $activationToken): static
+    {
+        $this->activationToken = $activationToken;
 
         return $this;
     }
