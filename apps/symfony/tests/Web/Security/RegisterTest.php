@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\DataFixtures\UserFixture;
+use App\Security\Entity\ActivationToken;
 use App\Security\Entity\User;
 use App\Security\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegisterTest extends WebTestCase
 {
-    public function test_it_can_register_a_user_and_send_a_confirmation_email(): void
+    public function test_it_can_register_a_user_and_send_a_confirmation_email_with_activation_token(): void
     {
         $client = static::createClient();
 
@@ -35,7 +38,21 @@ class RegisterTest extends WebTestCase
         $this->assertFalse($createdUser->isActive());
         $this->assertNotEquals("password", $createdUser->getPassword()); // check password has been hashed
 
+        /** @var EntityManagerInterface $em */
+        $em = $this->getContainer()->get(EntityManagerInterface::class);
+        $token = $em->createQueryBuilder()
+            ->select('a')
+            ->from(ActivationToken::class, 'a')
+            ->innerJoin('a.user', 'u')
+            ->where('u.uuid = :id')
+            ->setParameter('id', $createdUser->id()->toBinary())
+            ->getQuery()
+            ->getOneOrNullResult();
+        $this->assertInstanceOf(ActivationToken::class, $token);
+
+        $message = $this->getMailerMessage();
         $this->assertEmailCount(1);
+        $this->assertEmailHtmlBodyContains($message, "/confirmer?token={$token->getToken()}");
     }
 
     public function test_it_cannot_register_a_user_with_an_email_already_in_use(): void
@@ -53,6 +70,9 @@ class RegisterTest extends WebTestCase
         ]);
         $this->assertResponseIsSuccessful();
 
-        $this->assertStringContainsString(UserFixture::ADMIN_MAIL . " est déjà utilisé comme adresse mail.", $crawler->html());
+        $this->assertStringContainsString(
+            UserFixture::ADMIN_MAIL . " est déjà utilisé comme adresse mail.",
+            $crawler->html()
+        );
     }
 }
