@@ -4,11 +4,10 @@
 actor Visitor
 
 Visitor -> UserInterface: Activation link
-UserInterface -> UserInterface: Read user's identifier (email) from Token
-UserInterface -> Domain: Execute use case with user's ID (email)
+UserInterface -> Domain: Execute use case with token
 activate Domain
     alt User is found
-        Domain -> Infrastructure: Ask member from email
+        Domain -> Infrastructure: Ask member from token
         activate Infrastructure
         Infrastructure -> Domain: Returns member
         deactivate Infrastructure
@@ -19,7 +18,7 @@ activate Domain
         UserInterface -> Domain: Presents response
         UserInterface -> Visitor: Redirect to homepage with success flash message
     else User is not found
-        Domain -> Infrastructure: Ask member from email
+        Domain -> Infrastructure: Ask member from token
         activate Infrastructure
         Infrastructure -> Domain: No member found
         deactivate Infrastructure
