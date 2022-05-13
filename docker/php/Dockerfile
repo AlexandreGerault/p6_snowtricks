@@ -9,11 +9,9 @@ RUN apt-get update && \
 apt-get install -y \
 libzip-dev
 
-RUN pecl install apcu
+RUN pecl install apcu xdebug
 
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install zip
-RUN docker-php-ext-enable apcu
+RUN docker-php-ext-install pdo_mysql mysqli zip
+RUN docker-php-ext-enable apcu xdebug
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
