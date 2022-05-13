@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Register;
+namespace App\Security\UseCases\Register;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
