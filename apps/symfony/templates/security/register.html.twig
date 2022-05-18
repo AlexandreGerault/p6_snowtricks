@@ -1,11 +1,19 @@
-{{ form_start(form) }}
+{% extends 'base.html.twig' %}
 
-<div class="my-custom-class-for-errors">
-    {{ form_errors(form) }}
-</div>
+{% block title %}
+    Inscription
+{% endblock %}
 
-{{ form_rest(form) }}
+{% block body %}
+    {{ form_start(form) }}
 
-<button type="submit">S'inscrire</button>
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
 
-{{ form_end(form) }}
+    {{ form_rest(form) }}
+
+    <button type="submit">S'inscrire</button>
+
+    {{ form_end(form) }}
+{% endblock %}
