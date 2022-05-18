@@ -1,5 +1,9 @@
-{% for message in app.flashes('error') %}
-    <div>
-        {{ message }}
-    </div>
-{% endfor %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.flashes('error') %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}
