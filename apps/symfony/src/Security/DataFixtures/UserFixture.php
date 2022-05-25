@@ -22,7 +22,7 @@ class UserFixture extends Fixture
     {
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $admin = $this->userFactory->create(self::ADMIN_NAME, self::ADMIN_MAIL, self::PASSWORD)->activate();
         $inactive = $this->userFactory->create(self::INACTIVE_NAME, self::INACTIVE_MAIL, self::PASSWORD);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\DataFixtures\UserFixture;
+use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -14,6 +15,7 @@ class ResetPasswordTest extends WebTestCase
 {
     use MailerAssertionsTrait;
 
+    /** @throws Exception */
     public function test_it_sends_a_reset_request_when_email_exists(): void
     {
         $client = static::createClient();
@@ -26,9 +28,13 @@ class ResetPasswordTest extends WebTestCase
         $client->submitForm('Envoyer', [
             'reset_password_request_form[email]' => UserFixture::ADMIN_MAIL,
         ]);
+
         /** @var TemplatedEmail $email */
         $email = $this->getMailerMessage();
-        $link = $this->extractLinkFromEmail($email->getHtmlBody());
+        if (!is_string($htmlBody = $email->getHtmlBody())) {
+            throw new Exception('Email body is not a string');
+        }
+        $link = $this->extractLinkFromEmail($htmlBody);
 
         $this->assertEmailCount(1);
         $this->assertResponseRedirects();
@@ -57,7 +63,7 @@ class ResetPasswordTest extends WebTestCase
             '_password' => 'new_password',
         ]);
         $security = static::getContainer()->get(AuthorizationCheckerInterface::class);
-        $this->assertTrue($security->isGranted('IS_AUTHENTICATED_FULLY'));
+        $this->assertTrue($security?->isGranted('IS_AUTHENTICATED_FULLY'));
     }
 
     public function test_it_does_not_send_the_mail_when_email_does_not_exist(): void

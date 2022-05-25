@@ -64,14 +64,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "Domain\\": "domain/src"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/",
-            "Domain\\Tests\\": "domain/tests"
+            "App\\Tests\\": "tests/"
         }
     },
     "replace": {

@@ -18,6 +18,11 @@ class ActivateAccountController extends AbstractController
     public function __invoke(Request $request, UserRepository $userRepository, EntityManagerInterface $em): RedirectResponse
     {
         $token = $request->get('token');
+
+        if (!is_string($token)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $user = $userRepository->findByActivationToken($token);
 
         if (!$user) {
@@ -28,7 +33,10 @@ class ActivateAccountController extends AbstractController
 
         $user->activate();
 
-        $em->remove($em->getRepository(ActivationToken::class)->findOneBy(compact('token')));
+        $activationToken = $em->getRepository(ActivationToken::class)->findOneBy(compact('token'));
+        if ($activationToken) {
+            $em->remove($activationToken);
+        }
         $em->persist($user);
         $em->flush();
 

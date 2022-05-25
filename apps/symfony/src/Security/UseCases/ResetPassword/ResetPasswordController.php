@@ -43,9 +43,15 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!is_string($email = $form->get('email')->getData())) {
+                $this->addFlash('error', 'Veuillez entrer une adresse email valide.');
+                return $this->redirectToRoute('app_forgot_password_request');
+            }
+
             return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
+                $email,
                 $mailer,
                 $translator
             );
@@ -94,6 +100,9 @@ class ResetPasswordController extends AbstractController
 
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
+            if (!$user instanceof User) {
+                throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            }
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('error', sprintf(
                 '%s - %s',
@@ -108,14 +117,20 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid() && $user instanceof PasswordAuthenticatedUserInterface) {
+            if (!is_string($plainPassword = $form->get('plainPassword')->getData())) {
+                $this->addFlash('error', 'Veuillez entrer un mot de passe valide.');
+                return $this->redirectToRoute('app_reset_password');
+            }
+
             // A password reset token should be used only once, remove it.
             $this->resetPasswordHelper->removeResetRequest($token);
 
             // Encode(hash) the plain password, and set it.
             $encodedPassword = $userPasswordHasher->hashPassword(
                 $user,
-                $form->get('plainPassword')->getData()
+                $plainPassword
             );
 
             $user->setPassword($encodedPassword);
