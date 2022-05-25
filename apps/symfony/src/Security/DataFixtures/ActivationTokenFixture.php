@@ -18,7 +18,7 @@ class ActivationTokenFixture extends Fixture implements DependentFixtureInterfac
     {
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var User $inactiveUser */
         $inactiveUser = $this->getReference(UserFixture::INACTIVE_NAME);

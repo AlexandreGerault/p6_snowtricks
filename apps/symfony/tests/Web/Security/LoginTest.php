@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class LoginTest extends WebTestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function test_it_can_authenticate(): void
     {
         $client = static::createClient();
@@ -23,8 +26,9 @@ class LoginTest extends WebTestCase
             '_password' => UserFixture::PASSWORD,
         ]);
 
+        /** @var AuthorizationCheckerInterface $authorizationChecker */
         $security = static::getContainer()->get(AuthorizationCheckerInterface::class);
-        $this->assertTrue($security->isGranted('IS_AUTHENTICATED_FULLY'));
+        $this->assertTrue($security?->isGranted('IS_AUTHENTICATED_FULLY'));
     }
 
     public function test_it_shows_error_when_user_provides_wrong_credentials(): void

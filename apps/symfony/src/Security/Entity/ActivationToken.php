@@ -20,7 +20,7 @@ class ActivationToken
 
     #[ORM\OneToOne(inversedBy: 'activationToken', targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'uuid')]
-    private User $user;
+    private ?User $user;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $token;
