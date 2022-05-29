@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\DataFixtures\UserFixture;
-use App\Test\Web\WebTestCase;
+use App\Tests\Web\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\DataFixtures\UserFixture;
-use App\Test\Web\WebTestCase;
+use App\Tests\Web\WebTestCase;
 use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;

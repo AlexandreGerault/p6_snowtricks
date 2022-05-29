@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Test\Web;
+namespace App\Tests\Web;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as TestCase;
 use Symfony\Component\Filesystem\Filesystem;
