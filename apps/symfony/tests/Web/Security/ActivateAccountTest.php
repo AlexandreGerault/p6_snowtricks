@@ -8,7 +8,7 @@ use App\Security\DataFixtures\ActivationTokenFixture;
 use App\Security\DataFixtures\UserFixture;
 use App\Security\Entity\User;
 use App\Security\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Test\Web\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class ActivateAccountTest extends WebTestCase
