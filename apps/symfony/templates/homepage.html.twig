@@ -6,4 +6,11 @@
             {{ message }}
         </div>
     {% endfor %}
+
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 {% endblock %}
