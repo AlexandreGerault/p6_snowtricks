@@ -6,15 +6,47 @@ namespace App\Trick\Infrastructure;
 
 use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
+use App\Trick\Infrastructure\Entity\Category;
+use App\Trick\Infrastructure\Entity\Trick as Entity;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\UuidV6;
 
-class TrickRepository implements TrickGateway
+/**
+ * @extends  ServiceEntityRepository<Trick>
+ */
+class TrickRepository extends ServiceEntityRepository implements TrickGateway
 {
+    public function __construct(ManagerRegistry $registry, private CategoryRepository $categoryRepository)
+    {
+        parent::__construct($registry, Entity::class);
+    }
+
     public function save(Trick $trick): void
     {
+        $snapshot = $trick->snapshot();
+
+        $entity = new Entity;
+        $entity->setUuid(UuidV6::fromString($snapshot->uuid));
+        $entity->setName($snapshot->name);
+        $entity->setDescription($snapshot->description);
+        $entity->setCategory($this->categoryRepository->findOneBy(['uuid' => $snapshot->categoryId]));
+        $entity->setSlug($snapshot->slug);
+
+        foreach ($snapshot->images as $image) {
+            $entity->addImage($image);
+        }
+
+        foreach ($snapshot->videos as $video) {
+            $entity->addVideo($video);
+        }
+
+        $this->_em->persist($entity);
+        $this->_em->flush();
     }
 
     public function findAll(): array
     {
-        return [];
+        return parent::findAll();
     }
 }

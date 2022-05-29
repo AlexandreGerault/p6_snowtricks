@@ -29,6 +29,7 @@ class RegisterTrick
             }, $request->videos);
 
             $trick = Trick::create(
+                UuidV6::generate(),
                 $request->name,
                 $request->description,
                 UuidV6::fromString($request->categoryId),

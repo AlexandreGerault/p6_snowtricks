@@ -13,6 +13,7 @@ class Trick
      * @param array<Video> $videos
      */
     public function __construct(
+        private readonly string $uuid,
         private readonly string $name,
         private readonly string $description,
         private readonly AbstractUid $category,
@@ -30,18 +31,20 @@ class Trick
     }
 
     public static function create(
+        string $uuid,
         string $name,
         string $description,
         AbstractUid $category,
         array $images,
         array $videos
     ): Trick {
-        return new self($name, $description, $category, Slugger::slugify($name), $images, $videos);
+        return new self($uuid, $name, $description, $category, Slugger::slugify($name), $images, $videos);
     }
 
     public function snapshot(): TrickSnapshot
     {
         return new TrickSnapshot(
+            $this->uuid,
             $this->name,
             $this->description,
             $this->category,

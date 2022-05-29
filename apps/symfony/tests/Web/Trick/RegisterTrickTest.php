@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\Web\Trick\RegisterTrick;
 
 use App\Security\DataFixtures\UserFixture;
-use App\Test\Web\WebTestCase;
+use App\Tests\Web\WebTestCase;
 use App\Tests\Helpers\File\File;
 use App\Tests\Helpers\Security\FetchUser;
 use App\Trick\Core\ImageStorage;
 use App\Trick\Infrastructure\Entity\Category;
+use App\Trick\Infrastructure\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Psr\Container\ContainerExceptionInterface;
@@ -99,5 +100,6 @@ class RegisterTrickTest extends WebTestCase
         });
 
         $this->assertCount(1, $client->getContainer()->get(ImageStorage::class)->findAll());
+        $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findAll());
     }
 }
