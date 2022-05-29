@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\UseCases\Register;
 
 use App\Security\Entity\ActivationToken;
-use App\Security\Entity\UserFactory;
+use App\Security\DataFixtures\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

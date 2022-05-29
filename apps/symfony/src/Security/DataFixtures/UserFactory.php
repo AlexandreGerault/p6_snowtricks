@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Entity;
+namespace App\Security\DataFixtures;
 
+use App\Security\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory
