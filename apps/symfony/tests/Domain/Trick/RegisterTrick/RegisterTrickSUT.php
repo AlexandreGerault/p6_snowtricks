@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Trick\RegisterTrick;
 
+use App\Tests\Domain\Trick\Adapters\InMemoryImageStorage;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
+use App\Trick\Core\ImageStorage;
 use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
 use App\Trick\Core\UseCases\RegisterTrick\RegisterTrick;
@@ -22,10 +24,10 @@ class RegisterTrickSUT
     private array $images = [];
     private array $videos = [];
 
-    private RegisterTrickInputData $request;
     private RegisterTrickTestOutputPort $outputPort;
 
     private TrickGateway $gateway;
+    private ImageStorage $imageStorage;
 
     public function __construct()
     {
@@ -38,8 +40,9 @@ class RegisterTrickSUT
 
     public function run(): static
     {
+        $this->imageStorage = new InMemoryImageStorage();
         $this->gateway = new InMemoryTrickGateway();
-        $this->request = new RegisterTrickInputData(
+        $request = new RegisterTrickInputData(
             $this->name,
             $this->description,
             $this->categoryId,
@@ -48,8 +51,8 @@ class RegisterTrickSUT
         );
         $this->outputPort = new RegisterTrickTestOutputPort();
 
-        $registerTrick = new RegisterTrick($this->gateway);
-        $registerTrick->executes($this->request, $this->outputPort);
+        $registerTrick = new RegisterTrick($this->gateway, $this->imageStorage);
+        $registerTrick->executes($request, $this->outputPort);
 
         return $this;
     }
@@ -66,7 +69,7 @@ class RegisterTrickSUT
     public function withImages(int $int): static
     {
         for ($i = 0; $i < $int; $i++) {
-            $this->images[] = ['path' => "public/storage/img/figure_{$i}.png", 'description' => "test"];
+            $this->images[] = ['path' => "public/storage/img/figure_{$i}.png", 'alt' => "test"];
         }
 
         return $this;
@@ -75,7 +78,7 @@ class RegisterTrickSUT
     public function withVideos(int $int): static
     {
         for ($i = 0; $i < $int; $i++) {
-            $this->videos[] = ['url' => "https://www.youtube.com/watch?v=lCQigQcTMJ{$i}"];
+            $this->videos[] = "https://www.youtube.com/watch?v=lCQigQcTMJ{$i}";
         }
 
         return $this;
@@ -102,5 +105,10 @@ class RegisterTrickSUT
         $this->videos = [];
 
         return $this;
+    }
+
+    public function imageStorage(): ImageStorage
+    {
+        return $this->imageStorage;
     }
 }

@@ -7,6 +7,7 @@ namespace App\Tests\Domain\Trick\RegisterTrick;
 use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickResponse;
 use Generator;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\UuidV6;
 
 class RegisterTrickTest extends TestCase
 {
@@ -24,6 +25,7 @@ class RegisterTrickTest extends TestCase
             ->run();
 
         $this->assertCount(1, $sut->gateway()->findAll());
+        $this->assertCount(2, $sut->imageStorage()->findAll());
         $this->assertEquals($name, $sut->output()->snapshot->name);
         $this->assertEquals($description, $sut->output()->snapshot->description);
         $this->assertEquals($category, $sut->output()->snapshot->categoryId);
@@ -35,7 +37,7 @@ class RegisterTrickTest extends TestCase
             ->with([
                 'name' => "Trick without image",
                 'description' => "Trick without image",
-                'category' => "a0424572-1efe-4826-a5ac-bbda03a023f2",
+                'category' => UuidV6::generate(),
             ])
             ->withoutImages()
             ->withVideos(2)
@@ -50,7 +52,7 @@ class RegisterTrickTest extends TestCase
             ->with([
                 'name' => "Trick without video",
                 'description' => "Trick without video",
-                'category' => "a0424572-1efe-4826-a5ac-bbda03a023f2",
+                'category' => UuidV6::generate(),
             ])
             ->withImages(2)
             ->withoutVideos()
@@ -61,7 +63,7 @@ class RegisterTrickTest extends TestCase
 
     public function provideValidInputs(): Generator
     {
-        yield ['name' => 'test', 'description' => 'test', 'category' => 'a0424572-1efe-4826-a5ac-bbda03a023f2'];
-        yield ['name' => 'test2', 'description' => 'test2', 'category' => '585b23c8-e434-46ff-9462-08a9b900b436'];
+        yield ['name' => 'test', 'description' => 'test', 'category' => UuidV6::generate()];
+        yield ['name' => 'test2', 'description' => 'test2', 'category' => UuidV6::generate()];
     }
 }
