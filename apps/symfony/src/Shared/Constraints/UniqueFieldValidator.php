@@ -22,10 +22,6 @@ class UniqueFieldValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueField::class);
         }
 
-        if ('' === $value || !is_string($value)) {
-            return;
-        }
-
         if ($this->alreadyExists($value, $constraint->field, $constraint->table)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter("{{ value }}", $value)

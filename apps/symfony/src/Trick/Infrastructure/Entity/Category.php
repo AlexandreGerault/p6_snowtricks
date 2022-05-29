@@ -32,12 +32,14 @@ class Category
         return $this->uuid;
     }
 
+    /** @codeCoverageIgnore  */
     public function setUuid(Uuid $uuid): Category
     {
         $this->uuid = $uuid;
         return $this;
     }
 
+    /** @codeCoverageIgnore  */
     public function setName(string $name): Category
     {
         $this->name = $name;
