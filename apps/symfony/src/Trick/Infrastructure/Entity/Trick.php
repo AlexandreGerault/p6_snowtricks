@@ -69,23 +69,6 @@ class Trick
         $this->category = $category;
     }
 
-    /** @param Collection<int, Image> $images */
-    public function setImages(Collection $images): static
-    {
-        $this->images = $images;
-    }
-
-    /**
-     * @param Collection<int, Video> $videos
-     * @return Trick
-     */
-    public function setVideos(Collection $videos): Trick
-    {
-        $this->videos = $videos;
-
-        return $this;
-    }
-
     public function addImage(\App\Trick\Core\Image $image): void
     {
         $new = new Image();
