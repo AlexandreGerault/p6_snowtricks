@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Web\Trick\RegisterTrick;
 
 use App\Security\DataFixtures\UserFixture;
+use App\Test\Web\WebTestCase;
 use App\Tests\Helpers\File\File;
 use App\Tests\Helpers\Security\FetchUser;
 use App\Trick\Core\ImageStorage;
@@ -14,7 +15,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
