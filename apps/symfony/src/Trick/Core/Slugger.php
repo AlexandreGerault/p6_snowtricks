@@ -8,6 +8,11 @@ class Slugger
 {
     public static function slugify(string $name): string
     {
-        return \strtolower(\preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
+        $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
+
+        /** @var string $name */
+        $name = preg_replace('/[^a-zA-Z0-9]/', '-', $name);
+
+        return \strtolower($name);
     }
 }
