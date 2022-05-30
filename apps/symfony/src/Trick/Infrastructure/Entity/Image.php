@@ -24,6 +24,9 @@ class Image
     #[ORM\Column(type: Types::STRING)]
     private string $alt;
 
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "images")]
+    private Trick $trick;
+
     public function setPath(string $path): void
     {
         $this->path = $path;

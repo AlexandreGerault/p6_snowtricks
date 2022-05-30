@@ -20,6 +20,9 @@ class Video
     #[ORM\Column(type: Types::STRING)]
     private string $url;
 
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "videos")]
+    private Trick $trick;
+
     public function setUrl(string $url): void
     {
         $this->url = $url;

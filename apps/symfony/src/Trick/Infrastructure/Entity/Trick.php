@@ -22,14 +22,14 @@ class Trick
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $name;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, unique: true)]
     private string $slug;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
     #[ORM\JoinColumn(name: "category_uuid", referencedColumnName: "uuid")]
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "tricks")]
+    #[ORM\ManyToOne(targetEntity: Category::class)]
     private Category $category;
 
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: Image::class, cascade: ["persist", "remove"])]
