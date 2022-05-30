@@ -41,6 +41,7 @@ services:
 
   node:
     image: node:latest
+    working_dir: /usr/src/app
     volumes:
       - './apps/symfony/:/usr/src/app'
 
