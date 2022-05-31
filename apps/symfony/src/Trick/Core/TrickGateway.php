@@ -8,5 +8,6 @@ interface TrickGateway
 {
     public function save(Trick $trick): void;
 
+    /** @return array<Trick> */
     public function findAll(): array;
 }
