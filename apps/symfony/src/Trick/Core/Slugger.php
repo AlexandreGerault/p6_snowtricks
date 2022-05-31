@@ -10,6 +10,10 @@ class Slugger
     {
         $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
 
+        if (!$name) {
+            throw new \RuntimeException("Unable to normalize accentuated characters");
+        }
+
         /** @var string $name */
         $name = preg_replace('/[^a-zA-Z0-9]/', '-', $name);
 
