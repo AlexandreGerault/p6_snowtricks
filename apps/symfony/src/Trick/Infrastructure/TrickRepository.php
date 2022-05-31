@@ -25,12 +25,17 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
     public function save(Trick $trick): void
     {
         $snapshot = $trick->snapshot();
+        $category = $this->categoryRepository->findOneBy(['uuid' => $snapshot->categoryId]);
+
+        if (!$category) {
+            throw new \Exception('Category not found');
+        }
 
         $entity = new Entity;
         $entity->setUuid(UuidV6::fromString($snapshot->uuid));
         $entity->setName($snapshot->name);
         $entity->setDescription($snapshot->description);
-        $entity->setCategory($this->categoryRepository->findOneBy(['uuid' => $snapshot->categoryId]));
+        $entity->setCategory($category);
         $entity->setSlug($snapshot->slug);
 
         foreach ($snapshot->images as $image) {
