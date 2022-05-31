@@ -8,10 +8,9 @@ use App\Security\DataFixtures\UserFixture;
 use App\Security\Entity\ActivationToken;
 use App\Security\Entity\User;
 use App\Security\Repository\UserRepository;
+use App\Tests\Web\WebTestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegisterTest extends WebTestCase
 {

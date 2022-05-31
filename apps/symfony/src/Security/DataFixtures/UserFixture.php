@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Security\DataFixtures;
 
-use App\Security\Entity\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

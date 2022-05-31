@@ -17,6 +17,10 @@ class ActivateAccountController extends AbstractController
     #[Route(path: "/confirmer", name: 'app_activate_account')]
     public function __invoke(Request $request, UserRepository $userRepository, EntityManagerInterface $em): RedirectResponse
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $token = $request->get('token');
 
         if (!is_string($token)) {

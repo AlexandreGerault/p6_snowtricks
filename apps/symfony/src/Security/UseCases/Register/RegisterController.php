@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\UseCases\Register;
 
 use App\Security\Entity\ActivationToken;
-use App\Security\Entity\UserFactory;
+use App\Security\DataFixtures\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +31,10 @@ class RegisterController extends AbstractController
     #[Route(path: '/inscription', name: 'app_register')]
     public function __invoke(Request $request, UserPasswordHasherInterface $hasher): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(RegisterType::class, new RegisterFormModel());
         $form->handleRequest($request);
 

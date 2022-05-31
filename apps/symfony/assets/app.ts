@@ -7,6 +7,7 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import {CollectionInputCustomElement} from "./components/CollectionInputCustomElement";
+import './collection'
 
-// start the Stimulus application
-import './bootstrap';
+customElements.define('collection-input', CollectionInputCustomElement);

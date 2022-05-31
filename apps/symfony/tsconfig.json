@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "strict": true,
+    "baseUrl": "assets",
+    "paths": {
+      "@/components/*": [
+        "assets/components/*"
+      ],
+      "@/react/*": [
+        "assets/react/*"
+      ]
+    },
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["assets"]
+}

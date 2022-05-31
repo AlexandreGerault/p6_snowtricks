@@ -29,6 +29,7 @@
         </include>
         <exclude>
             <directory>src/Security/DataFixtures</directory>
+            <directory>src/Trick/Infrastructure/DataFixtures</directory>
         </exclude>
     </coverage>
 
