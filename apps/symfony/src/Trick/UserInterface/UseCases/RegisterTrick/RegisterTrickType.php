@@ -4,40 +4,40 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 
-use App\Trick\Infrastructure\Entity\Category;
-use App\Trick\UserInterface\Type\ImageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use App\Trick\UserInterface\Type\TrickType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegisterTrickType extends AbstractType
+class RegisterTrickType extends TrickType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        parent::buildForm($builder, $options);
+
         $builder
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
+            ->add('add_image', ButtonType::class, [
+                'label' => 'Ajouter une image',
+                'attr' => [
+                    'class' => 'add-button',
+                    'data-collection' => $builder->get('images')->getAttribute('id'),
+                ],
             ])
-            ->add('images', CollectionType::class, [
-                'entry_type' => ImageType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
+            ->add('add_video', ButtonType::class, [
+                'label' => 'Ajouter une vidéo',
+                'attr' => [
+                    'class' => 'add-button',
+                    'data-collection' => $builder->get('videos')->getAttribute('id'),
+                ],
             ])
-            ->add('videos', CollectionType::class, [
-                'entry_type' => UrlType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-            ])
-        ;
+            ->add('Ajouter', SubmitType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => RegisterTrickDTO::class,
+        ]);
     }
 }

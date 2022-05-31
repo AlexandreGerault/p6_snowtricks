@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 
+use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
+use App\Trick\UserInterface\Type\ImageDTO;
+use App\Trick\UserInterface\Type\VideoDTO;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterTrickDTO
 {
     #[Assert\NotBlank]
+    #[UniqueField(options: ['table' => 'tricks', 'field' => 'name', 'fieldName' => "nom de figure"])]
     public string $name;
 
     #[Assert\NotBlank]
@@ -23,12 +27,13 @@ class RegisterTrickDTO
     #[Assert\Type(type: "array")]
     #[Assert\All(constraints: [new Assert\Type(type: ImageDTO::class)])]
     #[Assert\Count(min: 1)]
-    /** @var array<ImageDTO> */
     public array $images;
 
-    #[Assert\All(constraints: [new Assert\Url()])]
+
+    #[Assert\Valid]
+    #[Assert\Type(type: "array")]
+    #[Assert\All(constraints: [new Assert\Type(type: VideoDTO::class)])]
     #[Assert\Count(min: 1)]
-    /** @var array<string> */
     public array $videos;
 
     public function toDomainRequest(): RegisterTrickInputData

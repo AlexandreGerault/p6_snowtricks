@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\RegisterTrick;
+namespace App\Trick\UserInterface\Type;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
