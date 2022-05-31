@@ -8,7 +8,9 @@ use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\UserInterface\Type\ImageDTO;
+use App\Trick\UserInterface\Type\ImageType;
 use App\Trick\UserInterface\Type\VideoDTO;
+use App\Trick\UserInterface\Type\VideoType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterTrickDTO
@@ -43,7 +45,7 @@ class RegisterTrickDTO
             $this->description,
             $this->category->uuid()->toRfc4122(),
             array_map(fn(ImageDTO $image) => $image->toDomain(), $this->images),
-            $this->videos
+            array_map(fn(VideoDTO $video) => $video->toDomain(), $this->videos)
         );
     }
 }

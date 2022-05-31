@@ -14,10 +14,9 @@ class VideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('url', UrlType::class, [
-                'label' => 'URL',
-            ]);
+        $builder->add('url', UrlType::class, [
+            'label' => 'URL',
+        ]);
 
         if ($options['can_delete'] ?? false) {
             $builder->add('delete', ButtonType::class, [

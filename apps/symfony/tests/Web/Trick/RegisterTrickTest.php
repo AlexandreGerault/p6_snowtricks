@@ -81,7 +81,7 @@ class RegisterTrickTest extends WebTestCase
                 'category' => $this->getCategoryUuid($client->getContainer()),
                 'images' => [['alt' => 'Figure de snow']],
                 'videos' => [
-                    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
                 ],
             ]
         ];

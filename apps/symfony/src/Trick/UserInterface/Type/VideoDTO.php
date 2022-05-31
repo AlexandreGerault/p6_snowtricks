@@ -11,4 +11,9 @@ class VideoDTO
     #[Assert\NotBlank]
     #[Assert\Url]
     public string $url;
+
+    public function toDomain(): string
+    {
+        return $this->url;
+    }
 }
