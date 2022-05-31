@@ -6,6 +6,10 @@ namespace App\Trick\Core\UseCases\RegisterTrick;
 
 class RegisterTrickInputData
 {
+    /**
+     * @param array<array{path: string, alt: string}> $images
+     * @param array<string> $videos
+     */
     public function __construct(
         public string $name,
         public string $description,

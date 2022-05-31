@@ -14,6 +14,10 @@ class LoginController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 

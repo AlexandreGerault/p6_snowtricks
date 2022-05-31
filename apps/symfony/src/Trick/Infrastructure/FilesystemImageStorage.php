@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure;
 
+use App\Trick\Core\Image;
 use App\Trick\Core\ImageStorage;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -26,7 +27,11 @@ class FilesystemImageStorage implements ImageStorage
         $finder = $finder->in($this->uploadDir)->files();
         $iterator = $finder->getIterator();
 
-        return iterator_to_array($iterator);
+        $files = iterator_to_array($iterator);
+
+        return array_map(function (SplFileInfo $file) {
+            return $file->getPathname();
+        }, $files);
     }
 
     public function save(string $path): string
@@ -43,15 +48,23 @@ class FilesystemImageStorage implements ImageStorage
         return $output;
     }
 
-    private function findFile(string $path, string $filename): bool|SplFileInfo
+    private function findFile(string $path, string $filename): SplFileInfo
     {
         $finder = new Finder();
         $finder = $finder->in($path)->name($filename)->files();
 
         $iterator = $finder->getIterator();
-        /** @var array<string, SplFileInfo> $result */
-        $result = iterator_to_array($iterator);
-        return reset($result);
+
+        /** @var array<string, SplFileInfo> $files */
+        $files = iterator_to_array($iterator);
+
+        $result = reset($files);
+
+        if (!$result) {
+            throw new \RuntimeException('File not found');
+        }
+
+        return $result;
     }
 
     /** @return array{string, string} */
@@ -64,7 +77,7 @@ class FilesystemImageStorage implements ImageStorage
         return [$path, $filename];
     }
 
-    private function generateFilename(mixed $file): string
+    private function generateFilename(SplFileInfo $file): string
     {
         $mime = $this->mimeType->guessMimeType($file->getRealPath());
 

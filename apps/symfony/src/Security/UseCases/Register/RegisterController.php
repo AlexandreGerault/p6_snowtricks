@@ -31,6 +31,10 @@ class RegisterController extends AbstractController
     #[Route(path: '/inscription', name: 'app_register')]
     public function __invoke(Request $request, UserPasswordHasherInterface $hasher): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(RegisterType::class, new RegisterFormModel());
         $form->handleRequest($request);
 

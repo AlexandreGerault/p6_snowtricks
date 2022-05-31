@@ -25,6 +25,7 @@ class RegisterTrickDTO
     #[Assert\NotBlank]
     public Category $category;
 
+    /** @var ImageDTO[] */
     #[Assert\Valid]
     #[Assert\Type(type: "array")]
     #[Assert\All(constraints: [new Assert\Type(type: ImageDTO::class)])]
@@ -32,6 +33,7 @@ class RegisterTrickDTO
     public array $images;
 
 
+    /** @var VideoDTO[] */
     #[Assert\Valid]
     #[Assert\Type(type: "array")]
     #[Assert\All(constraints: [new Assert\Type(type: VideoDTO::class)])]

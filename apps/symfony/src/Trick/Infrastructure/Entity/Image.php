@@ -24,7 +24,7 @@ class Image
     #[ORM\Column(type: Types::STRING)]
     private string $alt;
 
-    #[ORM\JoinColumn(name: "trick_uuid", referencedColumnName: "uuid")]
+    #[ORM\JoinColumn(name: "trick_uuid", referencedColumnName: "uuid", nullable: false)]
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "images")]
     private Trick $trick;
 

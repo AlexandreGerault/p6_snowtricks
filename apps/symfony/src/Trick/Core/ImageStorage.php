@@ -6,7 +6,7 @@ namespace App\Trick\Core;
 
 interface ImageStorage
 {
-    /** @return array<Image> */
+    /** @return array<string> */
     public function findAll(): array;
 
     /** Save an image from a given path and return the generated image path */

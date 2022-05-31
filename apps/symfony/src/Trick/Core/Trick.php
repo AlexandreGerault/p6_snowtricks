@@ -9,8 +9,8 @@ use Symfony\Component\Uid\AbstractUid;
 class Trick
 {
     /**
-     * @param array<Image> $images
-     * @param array<Video> $videos
+     * @param Image[] $images
+     * @param Video[] $videos
      */
     public function __construct(
         private readonly string $uuid,
@@ -30,6 +30,10 @@ class Trick
         }
     }
 
+    /**
+     * @param Image[] $images
+     * @param Video[] $videos
+     */
     public static function create(
         string $uuid,
         string $name,

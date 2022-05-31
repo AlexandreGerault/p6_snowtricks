@@ -28,13 +28,15 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
-    #[ORM\JoinColumn(name: "category_uuid", referencedColumnName: "uuid")]
+    #[ORM\JoinColumn(name: "category_uuid", referencedColumnName: "uuid", nullable: false)]
     #[ORM\ManyToOne(targetEntity: Category::class)]
     private Category $category;
 
+    /** @var Collection<int, Image> */
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: Image::class, cascade: ["persist", "remove"])]
     private Collection $images;
 
+    /** @var Collection<int, Video> */
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: Video::class, cascade: ["persist", "remove"])]
     private Collection $videos;
 
