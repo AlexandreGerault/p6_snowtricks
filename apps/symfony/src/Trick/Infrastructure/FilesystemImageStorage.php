@@ -54,6 +54,7 @@ class FilesystemImageStorage implements ImageStorage
         return reset($result);
     }
 
+    /** @return array{string, string} */
     private function parsePath(string $path): array
     {
         $path = explode('/', $path);
@@ -65,7 +66,13 @@ class FilesystemImageStorage implements ImageStorage
 
     private function generateFilename(mixed $file): string
     {
-        $extension = $this->mimeType->getExtensions($this->mimeType->guessMimeType($file->getRealPath()))[0];
+        $mime = $this->mimeType->guessMimeType($file->getRealPath());
+
+        if (is_null($mime)) {
+            throw new \RuntimeException("Could not guess mime type");
+        }
+
+        $extension = $this->mimeType->getExtensions($mime)[0];
         $uniqueName = UuidV6::generate();
 
         return "{$uniqueName}.{$extension}";
