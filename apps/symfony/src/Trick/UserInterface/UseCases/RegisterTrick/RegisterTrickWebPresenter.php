@@ -31,7 +31,6 @@ class RegisterTrickWebPresenter implements RegisterTrickOutputPort
         $this->response = new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 
-    /** @codeCoverageIgnore  */
     public function cannotCreateTrick(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
