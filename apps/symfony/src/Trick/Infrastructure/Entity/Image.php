@@ -24,8 +24,14 @@ class Image
     #[ORM\Column(type: Types::STRING)]
     private string $alt;
 
+    #[ORM\JoinColumn(name: "trick_uuid", referencedColumnName: "uuid")]
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "images")]
     private Trick $trick;
+
+    public function setTrick(Trick $trick): void
+    {
+        $this->trick = $trick;
+    }
 
     public function setPath(string $path): void
     {

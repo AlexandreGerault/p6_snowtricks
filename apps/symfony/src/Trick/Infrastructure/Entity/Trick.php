@@ -72,6 +72,7 @@ class Trick
     public function addImage(\App\Trick\Core\Image $image): void
     {
         $new = new Image();
+        $new->setTrick($this);
         $new->setPath($image->path);
         $new->setAlt($image->description);
         $this->images->add($new);
@@ -80,6 +81,7 @@ class Trick
     public function addVideo(\App\Trick\Core\Video $video): void
     {
         $new = new Video();
+        $new->setTrick($this);
         $new->setUrl($video->url);
         $this->videos->add($new);
     }
