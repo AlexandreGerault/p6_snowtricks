@@ -54,5 +54,7 @@ class CategoryFixture extends Fixture
         $manager->persist($slide);
 
         $manager->flush();
+
+        $this->addReference(self::CATEGORY_NAME_RIDER, $rider);
     }
 }
