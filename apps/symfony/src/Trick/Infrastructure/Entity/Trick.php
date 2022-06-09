@@ -88,4 +88,36 @@ class Trick
         $new->setUrl($video->url);
         $this->videos->add($new);
     }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function description(): string
+    {
+        return $this->description;
+    }
+
+    public function category(): Category
+    {
+        return $this->category;
+    }
+
+    /** @return Collection<int, Image> */
+    public function images(): Collection
+    {
+        return $this->images;
+    }
+
+    /** @return Collection<int, Video> */
+    public function videos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function uuid(): AbstractUid
+    {
+        return $this->uuid;
+    }
 }
