@@ -11,15 +11,16 @@ class Trick
     /**
      * @param Image[] $images
      * @param Video[] $videos
+     * :thumb
      */
     public function __construct(
-        private readonly string $uuid,
-        private readonly string $name,
-        private readonly string $description,
-        private readonly AbstractUid $category,
+        private readonly AbstractUid $uuid,
+        private string $name,
+        private string $description,
+        private AbstractUid $category,
         private readonly string $slug,
-        private readonly array $images,
-        private readonly array $videos,
+        private array $images,
+        private array $videos,
     ) {
         if (count($images) === 0) {
             throw new \InvalidArgumentException('Trick must have at least one image');
@@ -35,7 +36,7 @@ class Trick
      * @param Video[] $videos
      */
     public static function create(
-        string $uuid,
+        AbstractUid $uuid,
         string $name,
         string $description,
         AbstractUid $category,
@@ -56,5 +57,40 @@ class Trick
             $this->images,
             $this->videos
         );
+    }
+
+    public function rename(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function changeDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function changeCategory(AbstractUid $id): void
+    {
+        $this->category = $id;
+    }
+
+    /** @param Image[] $images */
+    public function updateImages(array $images): void
+    {
+        if (count($images) === 0) {
+            throw new \InvalidArgumentException('Trick must have at least one image');
+        }
+
+        $this->images = $images;
+    }
+
+    /** @param Video[] $videos */
+    public function updateVideos(array $videos): void
+    {
+        if (count($videos) === 0) {
+            throw new \InvalidArgumentException('Trick must have at least one image');
+        }
+
+        $this->videos = $videos;
     }
 }
