@@ -38,6 +38,7 @@ class TrickType extends AbstractType
                     'class' => 'form-container',
                 ],
                 'by_reference' => false,
+                'required' => false,
             ])
             ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,

@@ -42,4 +42,24 @@ class Image
     {
         $this->alt = $alt;
     }
+
+    public function alt(): string
+    {
+        return $this->alt;
+    }
+
+    public function path(): string
+    {
+        return $this->path;
+    }
+
+    public function getFilePath(): string
+    {
+        return dirname($this->path);
+    }
+
+    public function getFileName(): string
+    {
+        return basename($this->path());
+    }
 }

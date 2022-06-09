@@ -33,4 +33,9 @@ class Video
     {
         $this->url = $url;
     }
+
+    public function url(): string
+    {
+        return $this->url;
+    }
 }

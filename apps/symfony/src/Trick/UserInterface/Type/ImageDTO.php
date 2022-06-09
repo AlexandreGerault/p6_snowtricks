@@ -4,23 +4,34 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\Type;
 
+use App\Trick\Infrastructure\Entity\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ImageDTO
 {
     #[Assert\Image]
-    public UploadedFile $image;
+    public ?UploadedFile $image;
 
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
     public string $alt;
 
+    public string $path;
+
+    public function __construct(?Image $image = null)
+    {
+        if ($image) {
+            $this->path = $image->path();
+            $this->alt = $image->alt();
+        }
+    }
+
     /** @return array{alt: string, path: string} */
     public function toDomain(): array
     {
         return [
-            'path' => $this->image->getRealPath(),
+            'path' => is_null($this->image) ? $this->path : $this->image->getRealPath(),
             'alt' => $this->alt,
         ];
     }
