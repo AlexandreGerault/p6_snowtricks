@@ -55,4 +55,10 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
     {
         return parent::findAll();
     }
+
+    /** @throws \Exception */
+    public function get(AbstractUid $trickId): Trick
+    {
+        throw new \Exception('Not implemented yet');
+    }
 }
