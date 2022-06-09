@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Web\Trick\RegisterTrick;
+namespace App\Tests\Web\Trick;
 
 use App\Security\DataFixtures\UserFixture;
 use App\Tests\Web\WebTestCase;
@@ -100,6 +100,6 @@ class RegisterTrickTest extends WebTestCase
         });
 
         $this->assertCount(1, $client->getContainer()->get(ImageStorage::class)->findAll());
-        $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findAll());
+        $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findBy(['name' => 'Figure']));
     }
 }
