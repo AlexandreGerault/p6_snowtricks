@@ -13,7 +13,7 @@ class TrickSnapshot
      * @param array<Video> $videos
      */
     public function __construct(
-        public readonly string $uuid,
+        public readonly AbstractUid $uuid,
         public readonly string $name,
         public readonly string $description,
         public readonly AbstractUid $categoryId,

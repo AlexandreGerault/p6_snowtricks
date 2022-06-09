@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -17,7 +18,7 @@ class Trick
 {
     #[ORM\Id]
     #[ORM\Column(type: "uuid", unique: true)]
-    private Uuid $uuid;
+    private AbstractUid $uuid;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $name;
@@ -46,7 +47,7 @@ class Trick
         $this->videos = new ArrayCollection();
     }
 
-    public function setUuid(Uuid $uuid): void
+    public function setUuid(AbstractUid $uuid): void
     {
         $this->uuid = $uuid;
     }

@@ -10,6 +10,7 @@ use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\Infrastructure\Entity\Trick as Entity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\UuidV6;
 
 /**
@@ -32,7 +33,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         }
 
         $entity = new Entity;
-        $entity->setUuid(UuidV6::fromString($snapshot->uuid));
+        $entity->setUuid($snapshot->uuid);
         $entity->setName($snapshot->name);
         $entity->setDescription($snapshot->description);
         $entity->setCategory($category);
