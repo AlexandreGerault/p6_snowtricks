@@ -1,5 +1,5 @@
 .PHONY: install
-install: prepare-install migrate build-front
+install: prepare-install build-test migrate build-front
 
 .PHONY: prepare-install
 prepare-install:
@@ -7,6 +7,7 @@ prepare-install:
 	docker compose build
 	docker compose up -d
 	cp apps/symfony/.env.example apps/symfony/.env
+	cp apps/symfony/.env.test.example apps/symfony/.env.test
 	docker compose exec php composer install
 
 .PHONY: migrate
