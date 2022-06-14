@@ -4,6 +4,7 @@ install: prepare-install build-test migrate build-front
 .PHONY: prepare-install
 prepare-install:
 	cp .env.example .env
+	cp .env.test.example .env.test
 	docker compose build
 	docker compose up -d
 	cp apps/symfony/.env.example apps/symfony/.env
