@@ -16,6 +16,7 @@ class UniqueFieldValidator extends ConstraintValidator
     {
     }
 
+    /** @throws Exception */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueField) {
@@ -34,9 +35,7 @@ class UniqueFieldValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     private function alreadyExists(string $value, string $field, string $table): bool
     {
         $connection = $this->entityManager->getConnection();
