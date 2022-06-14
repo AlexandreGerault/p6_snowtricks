@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit;
 
-use App\Shared\Constraints\UniqueField;
 use App\Shared\Constraints\UniqueFieldValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
