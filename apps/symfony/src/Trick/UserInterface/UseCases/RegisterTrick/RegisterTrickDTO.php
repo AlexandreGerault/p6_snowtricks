@@ -7,10 +7,8 @@ namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
-use App\Trick\UserInterface\Type\ImageDTO;
-use App\Trick\UserInterface\Type\ImageType;
-use App\Trick\UserInterface\Type\VideoDTO;
-use App\Trick\UserInterface\Type\VideoType;
+use App\Trick\UserInterface\Form\Type\ImageDTO;
+use App\Trick\UserInterface\Form\Type\VideoDTO;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterTrickDTO

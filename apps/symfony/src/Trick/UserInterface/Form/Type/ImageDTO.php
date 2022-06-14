@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\Type;
+namespace App\Trick\UserInterface\Form\Type;
 
 use App\Trick\Infrastructure\Entity\Image;
+use App\Trick\UserInterface\Form\Constraints\NullableImageWithDefaultPath;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[NullableImageWithDefaultPath]
 class ImageDTO
 {
     #[Assert\Image]
@@ -17,7 +19,7 @@ class ImageDTO
     #[Assert\Length(max: 255)]
     public string $alt;
 
-    public string $path;
+    public ?string $path;
 
     public function __construct(?Image $image = null)
     {

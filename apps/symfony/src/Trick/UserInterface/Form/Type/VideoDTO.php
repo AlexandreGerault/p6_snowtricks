@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\Type;
+namespace App\Trick\UserInterface\Form\Type;
 
 use App\Trick\Infrastructure\Entity\Video;
 use Symfony\Component\Validator\Constraints as Assert;
