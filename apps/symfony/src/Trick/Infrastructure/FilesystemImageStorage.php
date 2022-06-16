@@ -90,4 +90,9 @@ class FilesystemImageStorage implements ImageStorage
 
         return "{$uniqueName}.{$extension}";
     }
+
+    public function delete($path): void
+    {
+        $this->filesystem->remove($path);
+    }
 }
