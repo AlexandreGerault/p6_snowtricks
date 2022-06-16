@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure;
 
+use App\Trick\Core\Image;
 use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
-use App\Trick\Infrastructure\Entity\Category;
+use App\Trick\Core\Video;
+use App\Trick\Infrastructure\Entity\Image as ImageEntity;
 use App\Trick\Infrastructure\Entity\Trick as Entity;
+use App\Trick\Infrastructure\Entity\Video as VideoEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\UuidV6;
 
 /**
  * @extends  ServiceEntityRepository<Trick>
@@ -32,7 +34,26 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             throw new \Exception('Category not found');
         }
 
-        $entity = new Entity;
+        /** @var ?Entity $entity */
+        $entity = $this->findOneBy(['uuid' => $snapshot->uuid]);
+
+        $isNew = false;
+
+        if ($entity === null) {
+            $entity = new Entity();
+            $isNew = true;
+        } else {
+            foreach ($entity->images() as $image) {
+                $this->_em->remove($image);
+            }
+
+            foreach ($entity->videos() as $video) {
+                $this->_em->remove($video);
+            }
+
+            $this->_em->flush();
+        }
+
         $entity->setUuid($snapshot->uuid);
         $entity->setName($snapshot->name);
         $entity->setDescription($snapshot->description);
@@ -47,7 +68,10 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             $entity->addVideo($video);
         }
 
-        $this->_em->persist($entity);
+        if ($isNew) {
+            $this->_em->persist($entity);
+        }
+
         $this->_em->flush();
     }
 
@@ -59,6 +83,21 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
     /** @throws \Exception */
     public function get(AbstractUid $trickId): Trick
     {
-        throw new \Exception('Not implemented yet');
+        /** @var ?Entity $entity */
+        $entity = $this->findOneBy(['uuid' => $trickId->toRfc4122()]);
+
+        if (!$entity) {
+            throw new \Exception('Trick not found');
+        }
+
+        return new Trick(
+            $entity->uuid(),
+            $entity->name(),
+            $entity->description(),
+            $entity->category()->uuid(),
+            $entity->slug(),
+            array_map(fn(ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
+            array_map(fn(VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
+        );
     }
 }
