@@ -120,4 +120,9 @@ class Trick
     {
         return $this->uuid;
     }
+
+    public function slug(): string
+    {
+        return $this->slug;
+    }
 }
