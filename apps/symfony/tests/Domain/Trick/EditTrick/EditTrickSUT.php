@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Trick\EditTrick;
 
+use App\Tests\Domain\Trick\Adapters\InMemoryImageStorage;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
 use App\Trick\Core\Image;
 use App\Trick\Core\Trick;
@@ -17,16 +18,21 @@ class EditTrickSUT
     private Trick $trickToEdit;
     private EditTrickTestOutputPort $testOutputPort;
     private InMemoryTrickGateway $inMemoryTrickGateway;
+    private InMemoryImageStorage $imageStorage;
 
     /** @var array<array{path:string, alt:string}> */
     public array $images = [
         [
-            "path" => "1ece6a39-2b53-68ca-a3a3-3dd8fe5ea620.jpg",
+            "path" => "97d9d9ec-db95-45e2-b501-67159e7825c0.jpg",
             "alt" => "New image",
         ],
         [
-            "path" => "1ece5bf3-81aa-63a6-a118-fbv3diffs124.jpg",
-            "alt" => "New image",
+            "path" => "539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg",
+            "alt" => "New image 2",
+        ],
+        [
+            "path" => "fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg",
+            "alt" => "Same image",
         ]
     ];
 
@@ -44,13 +50,19 @@ class EditTrickSUT
             new UuidV6('1ece5bf4-83aa-6ca6-ac18-fb03dfecd997'),
             'old-name',
             [
-                new Image('1ece5bf4-83aa-6ca6-ac18-fb03dfecd997.jpg', 'Old image'),
-                new Image('1ece5bf3-81aa-63a6-a118-fbv3diffs124.jpg', 'Old image 2'),
+                new Image('37b48eb3-3ed0-4019-a45f-88b90bc571a2.jpg', 'Old image'),
+                new Image('df419614-60ac-44fb-8311-3925a399776e.jpg', 'Old image 2'),
+                new Image('fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg', 'Same image'),
             ],
             [
-                new Video('1ece5bf4-83aa-6ca6-ac18-fb03dfecd997.mp4'),
+                new Video('1e37acb3-bc71-4d87-aa93-631e6ecd97a3.mp4'),
             ]
         );
+        $this->imageStorage = new InMemoryImageStorage([
+            '37b48eb3-3ed0-4019-a45f-88b90bc571a2.jpg',
+            'df419614-60ac-44fb-8311-3925a399776e.jpg',
+            'fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg',
+        ]);
 
         $this->testOutputPort = new EditTrickTestOutputPort();
 
@@ -72,7 +84,7 @@ class EditTrickSUT
             $this->images,
             $this->videos,
         );
-        $editTrick = new EditTrick($this->inMemoryTrickGateway);
+        $editTrick = new EditTrick($this->inMemoryTrickGateway, $this->imageStorage);
         $editTrick->executes($request, $this->testOutputPort);
 
         return $this;
@@ -95,5 +107,15 @@ class EditTrickSUT
         $this->videos = [];
 
         return $this;
+    }
+
+    public function imageStorage(): InMemoryImageStorage
+    {
+        return $this->imageStorage;
+    }
+
+    public function repository(): InMemoryTrickGateway
+    {
+        return $this->inMemoryTrickGateway;
     }
 }

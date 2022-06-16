@@ -11,4 +11,7 @@ interface ImageStorage
 
     /** Save an image from a given path and return the generated image path */
     public function save(string $path): string;
+
+    /** Assert that an image exists */
+    public function delete($path): void;
 }
