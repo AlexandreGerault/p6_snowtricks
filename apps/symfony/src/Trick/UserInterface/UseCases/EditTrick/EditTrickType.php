@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\EditTrick;
 
-use App\Trick\UserInterface\Type\TrickType;
+use App\Trick\UserInterface\Form\Type\TrickType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;

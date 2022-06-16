@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\EditTrick;
 
-use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\EditTrick\EditTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\Infrastructure\Entity\Image;
 use App\Trick\Infrastructure\Entity\Trick;
 use App\Trick\Infrastructure\Entity\Video;
-use App\Trick\UserInterface\Type\ImageDTO;
-use App\Trick\UserInterface\Type\VideoDTO;
+use App\Trick\UserInterface\Form\Type\ImageDTO;
+use App\Trick\UserInterface\Form\Type\VideoDTO;
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Validator\Constraints as Assert;
 

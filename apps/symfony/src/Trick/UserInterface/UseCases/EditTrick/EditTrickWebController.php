@@ -31,8 +31,6 @@ class EditTrickWebController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
-
             $presenter = new EditTrickWebPresenter(
                 $this->generator,
                 $requestStack->getSession()->getBag('flashes')
