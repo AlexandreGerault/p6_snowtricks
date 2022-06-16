@@ -5,44 +5,20 @@ declare(strict_types=1);
 namespace App\Tests\Web\Trick;
 
 use App\Security\DataFixtures\UserFixture;
-use App\Tests\Web\WebTestCase;
 use App\Tests\Helpers\File\File;
 use App\Tests\Helpers\Security\FetchUser;
+use App\Tests\Helpers\Trick\FindCategory;
+use App\Tests\Web\WebTestCase;
 use App\Trick\Core\ImageStorage;
-use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\Infrastructure\TrickRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegisterTrickTest extends WebTestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function getCategoryUuid(ContainerInterface $container): string
-    {
-        $em = $container->get(EntityManagerInterface::class);
-
-        try {
-            /** @var Category $category */
-            $category = $em->createQueryBuilder()->select("category")
-                ->from(Category::class, "category")
-                ->where("category.name = :name")
-                ->setParameter("name", "Rider")
-                ->getQuery()
-                ->getOneOrNullResult();
-
-            return $category->uuid()->toRfc4122();
-        } catch (NonUniqueResultException $e) {
-            $this->fail("Category not found");
-        }
-    }
+    use FindCategory;
 
     public function testGuestCannotRegisterTrick(): void
     {
