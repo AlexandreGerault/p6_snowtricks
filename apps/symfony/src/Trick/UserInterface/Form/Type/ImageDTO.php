@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ImageDTO
 {
     #[Assert\Image]
-    public ?UploadedFile $image;
+    public ?UploadedFile $image = null;
 
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
