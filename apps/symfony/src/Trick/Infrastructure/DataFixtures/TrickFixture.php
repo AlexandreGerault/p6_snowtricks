@@ -19,7 +19,7 @@ class TrickFixture extends Fixture
     {
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var Category $category */
         $category = $this->getReference(CategoryFixture::CATEGORY_NAME_RIDER);

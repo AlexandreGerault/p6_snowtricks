@@ -13,5 +13,5 @@ interface ImageStorage
     public function save(string $path): string;
 
     /** Assert that an image exists */
-    public function delete($path): void;
+    public function delete(string $path): void;
 }

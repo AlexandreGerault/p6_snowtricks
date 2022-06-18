@@ -32,8 +32,14 @@ class ImageDTO
     /** @return array{alt: string, path: string} */
     public function toDomain(): array
     {
+        $path = $this->path ?? $this->image?->getPathname();
+
+        if ($path === null) {
+            throw new \InvalidArgumentException('Image path is required: ' . $path);
+        }
+
         return [
-            'path' => is_null($this->image) ? $this->path : $this->image->getRealPath(),
+            'path' => $path,
             'alt' => $this->alt,
         ];
     }
