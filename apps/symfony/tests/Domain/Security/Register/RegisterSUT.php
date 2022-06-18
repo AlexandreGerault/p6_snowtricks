@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Security\Register;
 
 use App\Security\Core\UseCases\Register;
+use App\Security\Core\UseCases\RegisterInputData;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
 
 class RegisterSUT
@@ -30,7 +31,10 @@ class RegisterSUT
         $this->repository = new InMemoryUserRepository();
 
         $register = new Register($this->repository);
-        $register->executes($this->presenter);
+        $register->executes(
+            new RegisterInputData($this->username, $this->email, $this->password),
+            $this->presenter
+        );
 
         return $this;
     }
