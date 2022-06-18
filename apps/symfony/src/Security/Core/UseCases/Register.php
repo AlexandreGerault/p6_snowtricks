@@ -14,9 +14,12 @@ class Register
     {
     }
 
-    public function executes(RegisterPresenter $presenter): void
+    public function executes(RegisterInputData $input, RegisterPresenter $presenter): void
     {
-        $this->repository->save(new User(Uuid::v4(), 'username', 'user@email.fr', 'password'));
+        $user = new User(Uuid::v4(), $input->username, $input->email, $input->password);
+
+        $this->repository->save($user);
+
         $presenter->userCreated();
     }
 }
