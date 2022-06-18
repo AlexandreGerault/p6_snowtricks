@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Security\Adapters;
 
+use App\Security\Core\PlainPassword;
 use App\Security\Core\User;
 use App\Security\Core\UserRepository;
 use PHPUnit\Framework\Assert;
@@ -37,5 +38,14 @@ class InMemoryUserRepository implements UserRepository
     public function save(User $user): void
     {
         $this->users[] = $user;
+    }
+
+    public function assertPasswordIsHashedForEmail(string $email, PlainPassword $password): void
+    {
+        foreach ($this->users as $user) {
+            if ($user->snapshot()->email() === $email) {
+                Assert::assertTrue($user->snapshot()->password()->value !== $password->value);
+            }
+        }
     }
 }

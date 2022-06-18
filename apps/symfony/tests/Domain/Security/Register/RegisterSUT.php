@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Security\Register;
 
 use App\Security\Core\UseCases\Register;
 use App\Security\Core\UseCases\RegisterInputData;
+use App\Tests\Domain\Security\Adapters\FakePasswordHasher;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
 
 class RegisterSUT
@@ -30,7 +31,7 @@ class RegisterSUT
         $this->presenter = new RegisterTestOutputPort();
         $this->repository = new InMemoryUserRepository();
 
-        $register = new Register($this->repository);
+        $register = new Register($this->repository, new FakePasswordHasher());
         $register->executes(
             new RegisterInputData($this->username, $this->email, $this->password),
             $this->presenter

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Security\Register;
 
+use App\Security\Core\PlainPassword;
 use PHPUnit\Framework\TestCase;
 
 class RegisterTest extends TestCase
@@ -19,5 +20,6 @@ class RegisterTest extends TestCase
         $sut->presenter->assertUserWasCreated();
         $sut->repository->assertCount(1);
         $sut->repository->assertUserWasCreated("user@email.fr");
+        $sut->repository->assertPasswordIsHashedForEmail("user@email.fr", new PlainPassword("password"));
     }
 }
