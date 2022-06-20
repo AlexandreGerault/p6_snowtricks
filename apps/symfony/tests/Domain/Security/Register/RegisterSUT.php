@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Security\Register;
 
 use App\Security\Core\UseCases\Register;
 use App\Security\Core\UseCases\RegisterInputData;
+use App\Security\Core\User;
 use App\Tests\Domain\Security\Adapters\FakePasswordHasher;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
 
@@ -16,6 +17,9 @@ class RegisterSUT
     private string $username;
     public InMemoryUserRepository $repository;
     public RegisterTestOutputPort $presenter;
+
+    /** @var User[] */
+    private array $users;
 
     public function __construct()
     {
@@ -29,7 +33,7 @@ class RegisterSUT
     public function run(): static
     {
         $this->presenter = new RegisterTestOutputPort();
-        $this->repository = new InMemoryUserRepository();
+        $this->repository = new InMemoryUserRepository($this->users);
 
         $register = new Register($this->repository, new FakePasswordHasher());
         $register->executes(
@@ -40,7 +44,7 @@ class RegisterSUT
         return $this;
     }
 
-    public function withEmail(string $email)
+    public function withEmail(string $email): static
     {
         $this->email = $email;
 
@@ -57,6 +61,14 @@ class RegisterSUT
     public function withUsername(string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /** @param  User[]  $users */
+    public function whenHavingUsers(array $users): static
+    {
+        $this->users = $users;
 
         return $this;
     }
