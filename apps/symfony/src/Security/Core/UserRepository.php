@@ -7,4 +7,6 @@ namespace App\Security\Core;
 interface UserRepository
 {
     public function save(User $user): void;
+
+    public function exists(string $email): bool;
 }

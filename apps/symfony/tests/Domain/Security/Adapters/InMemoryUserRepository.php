@@ -48,4 +48,9 @@ class InMemoryUserRepository implements UserRepository
             }
         }
     }
+
+    public function exists(string $email): bool
+    {
+        return $this->hasUser($email);
+    }
 }
