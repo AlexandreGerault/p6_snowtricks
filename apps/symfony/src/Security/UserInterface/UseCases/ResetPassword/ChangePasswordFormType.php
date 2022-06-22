@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\UseCases\ResetPassword;
+namespace App\Security\UserInterface\UseCases\ResetPassword;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

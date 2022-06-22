@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCases\Register;
+namespace App\Security\UserInterface\UseCases\Register;
 
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Header\Headers;

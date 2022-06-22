@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCases\ActivateAccount;
+namespace App\Security\UserInterface\UseCases\ActivateAccount;
 
 use App\Security\Entity\ActivationToken;
 use App\Security\Repository\UserRepository;
