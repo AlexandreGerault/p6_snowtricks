@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCases\Register;
+namespace App\Security\UserInterface\UseCases\Register;
 
 use App\Shared\Constraints\UniqueField;
 use Symfony\Component\Validator\Constraints as Assert;

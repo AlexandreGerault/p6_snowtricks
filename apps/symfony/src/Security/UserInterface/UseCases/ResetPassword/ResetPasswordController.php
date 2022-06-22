@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\UseCases\ResetPassword;
+namespace App\Security\UserInterface\UseCases\ResetPassword;
 
 use App\Security\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;

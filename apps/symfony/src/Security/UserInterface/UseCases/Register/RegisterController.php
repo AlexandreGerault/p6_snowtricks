@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCases\Register;
+namespace App\Security\UserInterface\UseCases\Register;
 
-use App\Security\Entity\ActivationToken;
 use App\Security\DataFixtures\UserFactory;
+use App\Security\Entity\ActivationToken;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
