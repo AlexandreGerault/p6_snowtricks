@@ -10,14 +10,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[ORM\Table(name: '`tricks`')]
 class Trick
 {
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\Column(type: 'uuid', unique: true)]
     private AbstractUid $uuid;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
@@ -29,16 +28,16 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
-    #[ORM\JoinColumn(name: "category_uuid", referencedColumnName: "uuid", nullable: false)]
+    #[ORM\JoinColumn(name: 'category_uuid', referencedColumnName: 'uuid', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Category::class)]
     private Category $category;
 
     /** @var Collection<int, Image> */
-    #[ORM\OneToMany(mappedBy: "trick", targetEntity: Image::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
     /** @var Collection<int, Video> */
-    #[ORM\OneToMany(mappedBy: "trick", targetEntity: Video::class, cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist', 'remove'])]
     private Collection $videos;
 
     public function __construct()

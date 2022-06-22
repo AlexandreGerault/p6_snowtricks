@@ -13,12 +13,12 @@ trait FindTrick
         /** @var Connection $connection */
         $connection = $this->getContainer()->get(EntityManagerInterface::class)->getConnection();
 
-        $sql = "SELECT * FROM tricks";
+        $sql = 'SELECT * FROM tricks';
 
         try {
             $statement = $connection->prepare($sql);
         } catch (Exception $e) {
-            $this->fail("Trick not found");
+            $this->fail('Trick not found');
         }
 
         return $statement->executeQuery()->fetchAllAssociative()[0]['slug'];

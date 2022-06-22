@@ -37,7 +37,7 @@ class EditTrick
         }
 
         $unchangedImages = array_intersect($requestImages, $snapshot->images);
-        
+
         $trick->rename($request->name);
         $trick->changeDescription($request->description);
         $trick->changeCategory(UuidV6::fromString($request->categoryId));

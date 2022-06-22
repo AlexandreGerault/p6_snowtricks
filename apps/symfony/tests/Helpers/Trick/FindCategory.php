@@ -21,16 +21,16 @@ trait FindCategory
 
         try {
             /** @var Category $category */
-            $category = $em->createQueryBuilder()->select("category")
-                ->from(Category::class, "category")
-                ->where("category.name = :name")
-                ->setParameter("name", "Rider")
+            $category = $em->createQueryBuilder()->select('category')
+                ->from(Category::class, 'category')
+                ->where('category.name = :name')
+                ->setParameter('name', 'Rider')
                 ->getQuery()
                 ->getOneOrNullResult();
 
             return $category->uuid()->toRfc4122();
         } catch (NonUniqueResultException $e) {
-            $this->fail("Category not found");
+            $this->fail('Category not found');
         }
     }
 }

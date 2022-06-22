@@ -39,7 +39,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
 
         $isNew = false;
 
-        if ($entity === null) {
+        if (null === $entity) {
             $entity = new Entity();
             $isNew = true;
         } else {
@@ -96,8 +96,8 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             $entity->description(),
             $entity->category()->uuid(),
             $entity->slug(),
-            array_map(fn(ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
-            array_map(fn(VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
+            array_map(fn (ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
+            array_map(fn (VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
         );
     }
 }

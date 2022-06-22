@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Security\Adapters;
 
-use App\Security\Core\ActivationAccountToken;
 use App\Security\Core\NotificationGateway;
 use App\Security\Core\UserSnapshot;
 use PHPUnit\Framework\Assert;

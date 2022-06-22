@@ -12,6 +12,6 @@ class FakePasswordHasher implements PasswordHasher
 {
     public function hash(PlainPassword $password): HashedPassword
     {
-        return new HashedPassword($password->value . "_hashed");
+        return new HashedPassword($password->value.'_hashed');
     }
 }

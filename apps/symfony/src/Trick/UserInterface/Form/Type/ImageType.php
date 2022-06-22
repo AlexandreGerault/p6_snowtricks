@@ -24,7 +24,7 @@ class ImageType extends AbstractType
                     'readonly' => true,
                     'hidden' => true,
                 ],
-                'label' => false
+                'label' => false,
             ])
             ->add('alt', TextType::class, [
                 'label' => 'Description',

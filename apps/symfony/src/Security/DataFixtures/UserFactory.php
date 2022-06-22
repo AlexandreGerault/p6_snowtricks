@@ -11,7 +11,6 @@ class UserFactory
 {
     public function __construct(private UserPasswordHasherInterface $hasher)
     {
-
     }
 
     public function create(string $username, string $email, string $password): User
@@ -20,6 +19,7 @@ class UserFactory
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($this->hasher->hashPassword($user, $password));
+
         return $user;
     }
 }

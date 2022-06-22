@@ -31,7 +31,7 @@ stop:
 
 .PHONY: format
 format:
-	docker compose exec php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	docker compose exec php vendor/bin/php-cs-fixer fix
 
 .PHONY: analyse
 analyse:

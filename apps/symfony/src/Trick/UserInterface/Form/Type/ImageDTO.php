@@ -34,8 +34,8 @@ class ImageDTO
     {
         $path = $this->path ?? $this->image?->getPathname();
 
-        if ($path === null) {
-            throw new \InvalidArgumentException('Image path is required: ' . $path);
+        if (null === $path) {
+            throw new \InvalidArgumentException('Image path is required: '.$path);
         }
 
         return [

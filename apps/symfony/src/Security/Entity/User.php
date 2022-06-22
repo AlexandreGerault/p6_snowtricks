@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Entity;
 
-use App\Security\Repository\UserRepository;
+use App\Security\Infrastructure\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -18,8 +18,8 @@ use Symfony\Component\Uid\Uuid;
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
-    #[ORM\GeneratedValue(strategy: "CUSTOM")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private Uuid $uuid;
 

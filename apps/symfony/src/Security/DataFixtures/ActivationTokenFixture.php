@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ActivationTokenFixture extends Fixture implements DependentFixtureInterface
 {
-    public const ACTIVATION_TOKEN = "12345";
+    public const ACTIVATION_TOKEN = '12345';
 
     public function __construct()
     {
@@ -34,7 +34,7 @@ class ActivationTokenFixture extends Fixture implements DependentFixtureInterfac
     public function getDependencies(): array
     {
         return [
-            UserFixture::class
+            UserFixture::class,
         ];
     }
 }

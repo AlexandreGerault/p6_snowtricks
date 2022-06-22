@@ -25,6 +25,7 @@ class InMemoryTrickGateway implements TrickGateway
             if ($iterationTrick->snapshot()->uuid->equals($trick->snapshot()->uuid)) {
                 $this->edited = true;
                 $this->tricks[$key] = $trick;
+
                 return;
             }
         }

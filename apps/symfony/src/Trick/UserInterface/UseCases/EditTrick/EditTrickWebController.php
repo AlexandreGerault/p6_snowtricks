@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-
 class EditTrickWebController extends AbstractController
 {
     public function __construct(private readonly UrlGeneratorInterface $generator, private readonly EditTrick $editTrick)
@@ -41,7 +40,7 @@ class EditTrickWebController extends AbstractController
         }
 
         return $this->renderForm('trick/edit.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 }
