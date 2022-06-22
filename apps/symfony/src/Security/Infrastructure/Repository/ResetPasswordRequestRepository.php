@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Repository;
+namespace App\Security\Infrastructure\Repository;
 
 use App\Security\Entity\ResetPasswordRequest;
 use App\Security\Entity\User;
@@ -56,7 +56,7 @@ class ResetPasswordRequestRepository extends ServiceEntityRepository implements 
         string $hashedToken
     ): ResetPasswordRequestInterface {
         if (!$user instanceof User) {
-            throw new Exception("User must be an instance of App\\Security\\Entity\\User.");
+            throw new Exception('User must be an instance of App\\Security\\Entity\\User.');
         }
 
         return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);

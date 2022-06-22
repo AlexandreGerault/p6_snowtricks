@@ -16,7 +16,7 @@ class ResetPasswordTest extends WebTestCase
     use MailerAssertionsTrait;
 
     /** @throws Exception */
-    public function test_it_sends_a_reset_request_when_email_exists(): void
+    public function testItSendsAResetRequestWhenEmailExists(): void
     {
         $client = static::createClient();
 
@@ -54,7 +54,7 @@ class ResetPasswordTest extends WebTestCase
             'change_password_form[plainPassword][first]' => 'new_password',
             'change_password_form[plainPassword][second]' => 'new_password',
         ]);
-        $this->assertResponseRedirects("/");
+        $this->assertResponseRedirects('/');
         $client->followRedirect();
 
         $client->request('GET', '/connexion');
@@ -66,7 +66,7 @@ class ResetPasswordTest extends WebTestCase
         $this->assertTrue($security?->isGranted('IS_AUTHENTICATED_FULLY'));
     }
 
-    public function test_it_does_not_send_the_mail_when_email_does_not_exist(): void
+    public function testItDoesNotSendTheMailWhenEmailDoesNotExist(): void
     {
         $client = static::createClient();
 
@@ -76,13 +76,13 @@ class ResetPasswordTest extends WebTestCase
         $this->assertStringContainsString('Demande de réinitialisation de votre mot de passe', $crawler->html());
 
         $client->submitForm('Envoyer', [
-            'reset_password_request_form[email]' => "wrong@email.fr",
+            'reset_password_request_form[email]' => 'wrong@email.fr',
         ]);
         $this->assertEmailCount(0);
         $this->assertResponseRedirects();
     }
 
-    public function test_it_displays_an_error_if_the_reset_token_is_invalid(): void
+    public function testItDisplaysAnErrorIfTheResetTokenIsInvalid(): void
     {
         $client = static::createClient();
         $client->request('GET', '/nouveau-mot-de-passe/reinitialisation/0utVQfNb7ZEGtWrOeNJIXbBjvjg8JpIb6R7Vo666');
@@ -91,7 +91,7 @@ class ResetPasswordTest extends WebTestCase
         $this->assertResponseRedirects('/nouveau-mot-de-passe');
         $crawler = $client->followRedirect();
         $this->assertStringContainsString(
-            "Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe",
+            'Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe',
             $crawler->html()
         );
     }
@@ -100,6 +100,7 @@ class ResetPasswordTest extends WebTestCase
     {
         $matches = [];
         preg_match('/href="(.*)"/', $email, $matches);
+
         return $matches[1];
     }
 }
