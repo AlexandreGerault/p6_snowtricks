@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\DataFixtures;
+namespace App\Security\Infrastructure\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Entity;
+namespace App\Security\Infrastructure\Entity;
 
 use App\Security\Infrastructure\Repository\ResetPasswordRequestRepository;
 use Doctrine\ORM\Mapping as ORM;

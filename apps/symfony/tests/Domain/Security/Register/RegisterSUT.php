@@ -21,11 +21,10 @@ class RegisterSUT
     public InMemoryNotifications $notification;
 
     /** @var User[] */
-    private array $users= [];
+    private array $users = [];
 
     public function __construct()
     {
-
     }
 
     public static function new(): RegisterSUT

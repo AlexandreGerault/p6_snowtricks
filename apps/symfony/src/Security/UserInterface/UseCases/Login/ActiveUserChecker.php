@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\UserInterface\UseCases\Login;
 
-use App\Security\Entity\User;
+use App\Security\Infrastructure\Entity\User;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Web\Trick;
 
-use App\Security\DataFixtures\UserFixture;
+use App\Security\Infrastructure\DataFixtures\UserFixture;
 use App\Tests\Helpers\File\File;
 use App\Tests\Helpers\Security\FetchUser;
 use App\Tests\Helpers\Trick\FindCategory;
@@ -27,9 +27,9 @@ class RegisterTrickTest extends WebTestCase
         $loginUrl = $client
             ->getContainer()
             ->get(UrlGeneratorInterface::class)
-            ->generate("app_login", referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
+            ->generate('app_login', referenceType: UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $client->request(Request::METHOD_POST, "/figure/ajouter");
+        $client->request(Request::METHOD_POST, '/figure/ajouter');
         $this->assertResponseRedirects($loginUrl);
     }
 
@@ -47,7 +47,7 @@ class RegisterTrickTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->filter('form[name="register_trick"]')->form();
-        $csrfTokenField = $form->get("register_trick[_token]");
+        $csrfTokenField = $form->get('register_trick[_token]');
 
         $params = [
             'register_trick' => [
@@ -59,11 +59,11 @@ class RegisterTrickTest extends WebTestCase
                 'videos' => [
                     ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
                 ],
-            ]
+            ],
         ];
         $files = [
             'register_trick' => [
-                'images' => [['image' => File::image("figure.jpg")]]
+                'images' => [['image' => File::image('figure.jpg')]],
             ],
         ];
 

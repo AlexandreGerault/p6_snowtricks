@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Trick\RegisterTrick;
 
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickResponse;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\UuidV6;
@@ -12,7 +11,7 @@ use Symfony\Component\Uid\UuidV6;
 class RegisterTrickTest extends TestCase
 {
     /** @dataProvider provideValidInputs */
-    public function test_it_can_register_a_trick(string $name, string $description, string $category): void
+    public function testItCanRegisterATrick(string $name, string $description, string $category): void
     {
         $sut = RegisterTrickSUT::new()
             ->with([
@@ -31,12 +30,12 @@ class RegisterTrickTest extends TestCase
         $this->assertEquals($category, $sut->output()->snapshot->categoryId);
     }
 
-    public function test_it_cannot_register_a_trick_without_images(): void
+    public function testItCannotRegisterATrickWithoutImages(): void
     {
         $sut = RegisterTrickSUT::new()
             ->with([
-                'name' => "Trick without image",
-                'description' => "Trick without image",
+                'name' => 'Trick without image',
+                'description' => 'Trick without image',
                 'category' => UuidV6::generate(),
             ])
             ->withoutImages()
@@ -46,12 +45,12 @@ class RegisterTrickTest extends TestCase
         $this->assertCount(0, $sut->gateway()->findAll());
     }
 
-    public function test_it_cannot_register_a_trick_without_a_video(): void
+    public function testItCannotRegisterATrickWithoutAVideo(): void
     {
         $sut = RegisterTrickSUT::new()
             ->with([
-                'name' => "Trick without video",
-                'description' => "Trick without video",
+                'name' => 'Trick without video',
+                'description' => 'Trick without video',
                 'category' => UuidV6::generate(),
             ])
             ->withImages(2)

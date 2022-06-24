@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Entity;
+namespace App\Security\Infrastructure\Entity;
 
 use App\Security\Infrastructure\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;

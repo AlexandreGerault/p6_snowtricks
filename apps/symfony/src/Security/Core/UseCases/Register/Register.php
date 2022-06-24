@@ -17,8 +17,7 @@ class Register
         private readonly UserRepository $repository,
         private readonly PasswordHasher $hasher,
         private readonly NotificationGateway $notificationGateway
-    )
-    {
+    ) {
     }
 
     public function executes(RegisterInputData $input, RegisterPresenter $presenter): void
@@ -27,6 +26,7 @@ class Register
 
         if ($isEmailAlreadyInUse) {
             $presenter->emailAlreadyInUse();
+
             return;
         }
 

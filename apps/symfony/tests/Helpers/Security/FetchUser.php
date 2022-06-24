@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Helpers\Security;
 
-use App\Security\Entity\User;
+use App\Security\Infrastructure\Entity\User;
 use App\Security\Infrastructure\Repository\UserRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

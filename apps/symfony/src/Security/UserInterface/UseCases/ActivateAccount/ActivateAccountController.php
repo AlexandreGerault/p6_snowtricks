@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\UserInterface\UseCases\ActivateAccount;
 
-use App\Security\Entity\ActivationToken;
+use App\Security\Infrastructure\Entity\ActivationToken;
 use App\Security\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

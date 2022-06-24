@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Web\Security;
 
-use App\Security\DataFixtures\ActivationTokenFixture;
-use App\Security\DataFixtures\UserFixture;
-use App\Security\Entity\User;
+use App\Security\Infrastructure\DataFixtures\ActivationTokenFixture;
+use App\Security\Infrastructure\DataFixtures\UserFixture;
+use App\Security\Infrastructure\Entity\User;
 use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,8 +2,8 @@
 
 namespace App\Security\Infrastructure\Repository;
 
-use App\Security\Entity\ResetPasswordRequest;
-use App\Security\Entity\User;
+use App\Security\Infrastructure\Entity\ResetPasswordRequest;
+use App\Security\Infrastructure\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;

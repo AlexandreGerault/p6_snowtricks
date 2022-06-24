@@ -15,7 +15,7 @@ class RegisterConfirmationLinkMail extends Email
         parent::__construct($headers, $body);
         $this
             ->subject("Confirmation de l'inscription sur Snowtricks")
-            ->from("no-replay@snowtricks")
+            ->from('no-replay@snowtricks')
             ->to($receiver)
             ->text(<<<TXT
 Félicitation pour votre inscription sur Snowtricks ! Veuillez confirmer votre inscription en cliquant sur le lien {$confirmLink}

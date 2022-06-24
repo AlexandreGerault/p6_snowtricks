@@ -41,7 +41,7 @@ class RegisterTrickWebController extends AbstractController
         }
 
         return $this->renderForm('trick/create.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 }

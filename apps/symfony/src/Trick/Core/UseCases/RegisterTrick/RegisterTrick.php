@@ -41,6 +41,7 @@ class RegisterTrick
             $this->gateway->save($trick);
         } catch (\Exception) {
             $outputPort->cannotCreateTrick();
+
             return;
         }
 
