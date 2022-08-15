@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RegisterTrickDTO
 {
     #[Assert\NotBlank]
-    #[UniqueField(options: ['table' => 'tricks', 'field' => 'name', 'fieldName' => "nom de figure"])]
+    #[UniqueField(options: ['table' => 'tricks', 'field' => 'name', 'fieldName' => 'nom de figure'])]
     public string $name;
 
     #[Assert\NotBlank]
@@ -25,15 +25,14 @@ class RegisterTrickDTO
 
     /** @var ImageDTO[] */
     #[Assert\Valid]
-    #[Assert\Type(type: "array")]
+    #[Assert\Type(type: 'array')]
     #[Assert\All(constraints: [new Assert\Type(type: ImageDTO::class)])]
     #[Assert\Count(min: 1)]
     public array $images;
 
-
     /** @var VideoDTO[] */
     #[Assert\Valid]
-    #[Assert\Type(type: "array")]
+    #[Assert\Type(type: 'array')]
     #[Assert\All(constraints: [new Assert\Type(type: VideoDTO::class)])]
     #[Assert\Count(min: 1)]
     public array $videos;
@@ -44,8 +43,8 @@ class RegisterTrickDTO
             $this->name,
             $this->description,
             $this->category->uuid()->toRfc4122(),
-            array_map(fn(ImageDTO $image) => $image->toDomain(), $this->images),
-            array_map(fn(VideoDTO $video) => $video->toDomain(), $this->videos)
+            array_map(fn (ImageDTO $image) => $image->toDomain(), $this->images),
+            array_map(fn (VideoDTO $video) => $video->toDomain(), $this->videos)
         );
     }
 }

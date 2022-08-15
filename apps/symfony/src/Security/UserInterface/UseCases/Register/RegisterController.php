@@ -4,61 +4,37 @@ declare(strict_types=1);
 
 namespace App\Security\UserInterface\UseCases\Register;
 
-use App\Security\DataFixtures\UserFactory;
-use App\Security\Entity\ActivationToken;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Security\Core\UseCases\Register\Register;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegisterController extends AbstractController
 {
-    public function __construct(
-        private readonly UserFactory $factory,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly MailerInterface $mailer
-    ) {
+    public function __construct(private Register $register) {
     }
 
     /**
      * @throws TransportExceptionInterface
      */
     #[Route(path: '/inscription', name: 'app_register')]
-    public function __invoke(Request $request, UserPasswordHasherInterface $hasher): Response
+    public function __invoke(Request $request, UserPasswordHasherInterface $hasher, RegisterWebPresenter $presenter): Response
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('homepage');
         }
 
-        $form = $this->createForm(RegisterType::class, new RegisterFormModel());
+        $dto = new RegisterDTO();
+        $form = $this->createForm(RegisterType::class, $dto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var RegisterFormModel $data */
-            $data = $form->getData();
+            $this->register->executes($dto->toDomainRequest(), $presenter);
 
-            $user = $this->factory->create($data->username, $data->email, $data->password);
-            $user->setPassword($hasher->hashPassword($user, $data->password));
-
-            $activationToken = new ActivationToken();
-            $activationToken->setToken("token");
-            $activationToken->setUser($user);
-
-            $this->entityManager->persist($user);
-            $this->entityManager->persist($activationToken);
-            $this->entityManager->flush();
-
-            $this->sendConfirmationLink(
-                $user->email(),
-                $this->generateUrl('app_activate_account', ['token' => $activationToken->getToken()], UrlGeneratorInterface::ABSOLUTE_URL)
-            );
-
-            return $this->redirect('/inscription');
+            return $presenter->response();
         }
 
         return $this->render('security/register.html.twig', ['form' => $form->createView()]);

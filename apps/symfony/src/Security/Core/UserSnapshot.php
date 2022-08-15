@@ -19,4 +19,9 @@ class UserSnapshot
     {
         return $this->password;
     }
+
+    public function username(): string
+    {
+        return $this->username;
+    }
 }

@@ -19,7 +19,7 @@ class RegisterSUT
     public RegisterTestOutputPort $presenter;
 
     /** @var User[] */
-    private array $users;
+    private array $users = [];
 
     public function __construct()
     {

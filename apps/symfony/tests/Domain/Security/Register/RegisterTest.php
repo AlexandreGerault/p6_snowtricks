@@ -12,7 +12,7 @@ use Symfony\Component\Uid\Uuid;
 
 class RegisterTest extends TestCase
 {
-    public function test_a_user_can_register(): void
+    public function testAUserCanRegister(): void
     {
         $sut = RegisterSUT::new()
             ->withEmail('user@email.fr')
@@ -22,11 +22,12 @@ class RegisterTest extends TestCase
 
         $sut->presenter->assertUserWasCreated();
         $sut->repository->assertCount(1);
-        $sut->repository->assertUserWasCreated("user@email.fr");
-        $sut->repository->assertPasswordIsHashedForEmail("user@email.fr", new PlainPassword("password"));
+        $sut->repository->assertUserWasCreated('user@email.fr');
+        $sut->repository->assertPasswordIsHashedForEmail('user@email.fr', new PlainPassword('password'));
+        $sut->notification->assertSent();
     }
 
-    public function test_a_user_cannot_register_when_the_email_is_already_in_use(): void
+    public function testAUserCannotRegisterWhenTheEmailIsAlreadyInUse(): void
     {
         $sut = RegisterSUT::new()
             ->whenHavingUsers([
@@ -39,7 +40,7 @@ class RegisterTest extends TestCase
 
         $sut->presenter->assertUserWasNotCreated();
         $sut->repository->assertCount(1);
-        $sut->repository->assertUserWasCreated("user@email.fr");
-        $sut->repository->assertPasswordIsHashedForEmail("user@email.fr", new PlainPassword("password"));
+        $sut->repository->assertUserWasCreated('user@email.fr');
+        $sut->repository->assertPasswordIsHashedForEmail('user@email.fr', new PlainPassword('password'));
     }
 }
