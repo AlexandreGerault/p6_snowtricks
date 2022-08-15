@@ -39,13 +39,4 @@ class RegisterController extends AbstractController
 
         return $this->render('security/register.html.twig', ['form' => $form->createView()]);
     }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    private function sendConfirmationLink(string $to, string $confirmLink): void
-    {
-        $mail = new RegisterConfirmationLinkMail($confirmLink, $to);
-        $this->mailer->send($mail);
-    }
 }
