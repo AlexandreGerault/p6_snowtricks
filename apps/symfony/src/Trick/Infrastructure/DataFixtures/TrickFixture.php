@@ -43,7 +43,7 @@ class TrickFixture extends Fixture
 
     private function copyAssetImageForTrick(Trick $trick, string $imageName): Image
     {
-        $path = $this->imageStorage->save(__DIR__ . '/../../../../assets/fixtures/tricks/' . $imageName);
+        $path = $this->imageStorage->save(__DIR__.'/../../../../assets/fixtures/tricks/'.$imageName);
 
         return new Image($path, $imageName);
     }

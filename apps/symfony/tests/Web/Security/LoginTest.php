@@ -14,14 +14,14 @@ class LoginTest extends WebTestCase
     /**
      * @throws \Exception
      */
-    public function test_it_can_authenticate(): void
+    public function testItCanAuthenticate(): void
     {
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/connexion');
         $this->assertResponseIsSuccessful();
 
-        $client->submitForm("Se connecter", [
+        $client->submitForm('Se connecter', [
             '_username' => UserFixture::ADMIN_NAME,
             '_password' => UserFixture::PASSWORD,
         ]);
@@ -31,16 +31,16 @@ class LoginTest extends WebTestCase
         $this->assertTrue($security?->isGranted('IS_AUTHENTICATED_FULLY'));
     }
 
-    public function test_it_shows_error_when_user_provides_wrong_credentials(): void
+    public function testItShowsErrorWhenUserProvidesWrongCredentials(): void
     {
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/connexion');
         $this->assertResponseIsSuccessful();
 
-        $client->submitForm("Se connecter", [
-            '_username' => "Wrong user",
-            '_password' => "Wrong password",
+        $client->submitForm('Se connecter', [
+            '_username' => 'Wrong user',
+            '_password' => 'Wrong password',
         ]);
         $this->assertResponseRedirects();
         $crawler = $client->followRedirect();
@@ -48,14 +48,14 @@ class LoginTest extends WebTestCase
         $this->assertStringContainsString('Identifiants invalides.', $crawler->html());
     }
 
-    public function test_it_shows_error_when_user_is_not_activated(): void
+    public function testItShowsErrorWhenUserIsNotActivated(): void
     {
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/connexion');
         $this->assertResponseIsSuccessful();
 
-        $client->submitForm("Se connecter", [
+        $client->submitForm('Se connecter', [
             '_username' => UserFixture::INACTIVE_NAME,
             '_password' => UserFixture::PASSWORD,
         ]);

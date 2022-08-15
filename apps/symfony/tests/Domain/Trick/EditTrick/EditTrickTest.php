@@ -6,7 +6,6 @@ namespace App\Tests\Domain\Trick\EditTrick;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Uid\UuidV6;
 
 class EditTrickTest extends TestCase
 {
@@ -16,11 +15,11 @@ class EditTrickTest extends TestCase
 
         $this->assertEquals('New name', $sut->output()->snapshot->name);
         $this->assertEquals('New description', $sut->output()->snapshot->description);
-        $this->assertEquals("1ece6881-b8c6-6d6a-aa71-a9e76a603a2f", $sut->output()->snapshot->categoryId->toRfc4122());
+        $this->assertEquals('1ece6881-b8c6-6d6a-aa71-a9e76a603a2f', $sut->output()->snapshot->categoryId->toRfc4122());
 
         $this->assertCount(3, $sut->output()->snapshot->images);
-        $this->assertEquals("97d9d9ec-db95-45e2-b501-67159e7825c0.jpg", $sut->output()->snapshot->images[1]->path);
-        $this->assertEquals("539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg", $sut->output()->snapshot->images[2]->path);
+        $this->assertEquals('97d9d9ec-db95-45e2-b501-67159e7825c0.jpg', $sut->output()->snapshot->images[1]->path);
+        $this->assertEquals('539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg', $sut->output()->snapshot->images[2]->path);
 
         $this->assertCount(1, $sut->output()->snapshot->videos);
 

@@ -27,15 +27,14 @@ class EditTrickDTO
 
     /** @var ImageDTO[] */
     #[Assert\Valid]
-    #[Assert\Type(type: "array")]
+    #[Assert\Type(type: 'array')]
     #[Assert\All(constraints: [new Assert\Type(type: ImageDTO::class)])]
     #[Assert\Count(min: 1)]
     public array $images;
 
-
     /** @var VideoDTO[] */
     #[Assert\Valid]
-    #[Assert\Type(type: "array")]
+    #[Assert\Type(type: 'array')]
     #[Assert\All(constraints: [new Assert\Type(type: VideoDTO::class)])]
     #[Assert\Count(min: 1)]
     public array $videos;
@@ -48,8 +47,8 @@ class EditTrickDTO
         $this->name = $trick->name();
         $this->description = $trick->description();
         $this->category = $trick->category();
-        $this->images = array_map(fn(Image $image) => new ImageDTO($image), $trick->images()->toArray());
-        $this->videos = array_map(fn(Video $video) => new VideoDTO($video), $trick->videos()->toArray());
+        $this->images = array_map(fn (Image $image) => new ImageDTO($image), $trick->images()->toArray());
+        $this->videos = array_map(fn (Video $video) => new VideoDTO($video), $trick->videos()->toArray());
     }
 
     public function toDomainRequest(): EditTrickInputData
@@ -59,8 +58,8 @@ class EditTrickDTO
             $this->name,
             $this->description,
             $this->category->uuid()->toRfc4122(),
-            array_map(fn(ImageDTO $image) => $image->toDomain(), $this->images),
-            array_map(fn(VideoDTO $video) => $video->toDomain(), $this->videos)
+            array_map(fn (ImageDTO $image) => $image->toDomain(), $this->images),
+            array_map(fn (VideoDTO $video) => $video->toDomain(), $this->videos)
         );
     }
 }

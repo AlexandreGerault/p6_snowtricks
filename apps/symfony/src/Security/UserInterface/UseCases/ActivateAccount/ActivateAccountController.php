@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\UserInterface\UseCases\ActivateAccount;
 
 use App\Security\Entity\ActivationToken;
-use App\Security\Repository\UserRepository;
+use App\Security\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ActivateAccountController extends AbstractController
 {
-    #[Route(path: "/confirmer", name: 'app_activate_account')]
+    #[Route(path: '/confirmer', name: 'app_activate_account')]
     public function __invoke(Request $request, UserRepository $userRepository, EntityManagerInterface $em): RedirectResponse
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -30,7 +30,7 @@ class ActivateAccountController extends AbstractController
         $user = $userRepository->findByActivationToken($token);
 
         if (!$user) {
-            $this->addFlash("error", "Aucun compte ne correspond à ce jeton d'activation !");
+            $this->addFlash('error', "Aucun compte ne correspond à ce jeton d'activation !");
 
             return $this->redirect('/');
         }

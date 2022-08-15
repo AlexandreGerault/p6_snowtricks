@@ -29,8 +29,8 @@ class UniqueFieldValidator extends ConstraintValidator
 
         if ($this->alreadyExists($value, $constraint->field, $constraint->table)) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter("{{ value }}", $value)
-                ->setParameter("{{ field }}", $constraint->fieldName)
+                ->setParameter('{{ value }}', $value)
+                ->setParameter('{{ field }}', $constraint->fieldName)
                 ->addViolation();
         }
     }

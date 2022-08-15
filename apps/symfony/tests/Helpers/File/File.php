@@ -18,14 +18,14 @@ class File extends UploadedFile
     public ?string $mimeTypeToReport = null;
 
     /**
-     * @param string $name
      * @param resource $tempFile
      */
-    public function __construct(string $name, $tempFile) {
+    public function __construct(string $name, $tempFile)
+    {
         $this->name = $name;
         $this->tempFile = $tempFile;
 
-        parent::__construct($this->tempFilePath(), $name, $this->getMimeType(),null, true);
+        parent::__construct($this->tempFilePath(), $name, $this->getMimeType(), null, true);
     }
 
     public static function create(string $name, string|int $kilobytes = 0): static

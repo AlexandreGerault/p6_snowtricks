@@ -19,22 +19,22 @@ class NullableWithFallbackFieldValidatorTest extends ConstraintValidatorTestCase
         return new NullableImageWithDefaultPathValidator();
     }
 
-    public function test_it_can_have_a_value_to_the_nullable_field_and_null_to_the_fallback(): void
+    public function testItCanHaveAValueToTheNullableFieldAndNullToTheFallback(): void
     {
         $constraint = new NullableImageWithDefaultPath();
 
         $imageDTO = new ImageDTO();
 
-        $imageDTO->image = File::image("fake.jpg");
+        $imageDTO->image = File::image('fake.jpg');
         $imageDTO->path = null;
-        $imageDTO->alt = "fake";
+        $imageDTO->alt = 'fake';
 
         $this->validator->validate($imageDTO, $constraint);
 
         $this->assertNoViolation();
     }
 
-    public function test_it_raises_a_violation_when_the_image_is_null_and_the_fallback_is_also_null(): void
+    public function testItRaisesAViolationWhenTheImageIsNullAndTheFallbackIsAlsoNull(): void
     {
         $constraint = new NullableImageWithDefaultPath();
 
@@ -42,22 +42,22 @@ class NullableWithFallbackFieldValidatorTest extends ConstraintValidatorTestCase
 
         $imageDTO->image = null;
         $imageDTO->path = null;
-        $imageDTO->alt = "fake";
+        $imageDTO->alt = 'fake';
 
         $this->validator->validate($imageDTO, $constraint);
 
         $this->buildViolation($constraint->message)->assertRaised();
     }
 
-    public function test_it_can_have_a_null_image_when_having_a_path(): void
+    public function testItCanHaveANullImageWhenHavingAPath(): void
     {
         $constraint = new NullableImageWithDefaultPath();
 
         $imageDTO = new ImageDTO();
 
         $imageDTO->image = null;
-        $imageDTO->path = File::image("fake.jpg");
-        $imageDTO->alt = "fake";
+        $imageDTO->path = File::image('fake.jpg');
+        $imageDTO->alt = 'fake';
 
         $this->validator->validate($imageDTO, $constraint);
 
