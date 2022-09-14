@@ -36,7 +36,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private bool $active = false;
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: ActivationToken::class, cascade: ['remove'])]
-    private ?ActivationToken $activationToken; // @phpstan-ignore-line
+    private ?ActivationToken $activationToken;
 
     public function id(): Uuid
     {
@@ -84,16 +84,14 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this->active;
     }
 
-    public function activate(): static
-    {
-        $this->active = true;
-
-        return $this;
-    }
-
     public function getRoles(): array
     {
         return [];
+    }
+
+    public function activationToken(): ?ActivationToken
+    {
+        return $this->activationToken;
     }
 
     public function eraseCredentials(): void
@@ -104,5 +102,10 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function getUserIdentifier(): string
     {
         return $this->username;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
     }
 }

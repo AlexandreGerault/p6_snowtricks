@@ -6,5 +6,7 @@ namespace App\Security\Core\UseCases\ActivateAccount;
 
 interface ActivateAccountPresenter
 {
+    public function userHasBeenActivated(): void;
 
+    public function userNotFound(): void;
 }

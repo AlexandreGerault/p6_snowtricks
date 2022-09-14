@@ -27,6 +27,9 @@ class ActivateAccountTest extends WebTestCase
         $inactiveUser = $userRepository->findOneBy(['username' => UserFixture::INACTIVE_NAME]);
 
         $this->assertTrue($inactiveUser->isActive());
+
+        $crawler = $client->followRedirect();
+        $this->assertStringContainsString("Votre compte a bien été activé !", $crawler->html());
     }
 
     public function testItCannotFindAccountForGivenToken(): void
