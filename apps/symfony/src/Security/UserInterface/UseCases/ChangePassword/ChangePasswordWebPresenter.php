@@ -17,7 +17,7 @@ class ChangePasswordWebPresenter implements ChangePasswordPresenter
 
     public function userNotFound(): void
     {
-        dump('User not found');
+        $this->response = new Response(null, Response::HTTP_NOT_FOUND);
     }
 
     public function passwordChanged(): void
