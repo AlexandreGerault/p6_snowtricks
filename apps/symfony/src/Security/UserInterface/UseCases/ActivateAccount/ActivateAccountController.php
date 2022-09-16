@@ -6,8 +6,6 @@ namespace App\Security\UserInterface\UseCases\ActivateAccount;
 
 use App\Security\Core\UseCases\ActivateAccount\ActivateAccount;
 use App\Security\Core\UseCases\ActivateAccount\ActivateAccountInputData;
-use App\Security\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -17,7 +17,7 @@ class ChangePasswordWebPresenter implements ChangePasswordPresenter
 
     public function userNotFound(): void
     {
-        dump("User not found");
+        dump('User not found');
     }
 
     public function passwordChanged(): void

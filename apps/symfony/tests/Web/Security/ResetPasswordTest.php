@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\Infrastructure\DataFixtures\UserFixture;
-use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;

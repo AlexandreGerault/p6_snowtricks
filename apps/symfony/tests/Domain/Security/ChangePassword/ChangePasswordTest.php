@@ -11,7 +11,7 @@ use Symfony\Component\Uid\Uuid;
 
 class ChangePasswordTest extends TestCase
 {
-    public function test_a_user_can_change_its_password_when_it_provides_the_correct_token(): void
+    public function testAUserCanChangeItsPasswordWhenItProvidesTheCorrectToken(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),
@@ -37,7 +37,7 @@ class ChangePasswordTest extends TestCase
         );
     }
 
-    public function test_it_does_not_found_the_user_when_the_token_is_incorrect(): void
+    public function testItDoesNotFoundTheUserWhenTheTokenIsIncorrect(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),

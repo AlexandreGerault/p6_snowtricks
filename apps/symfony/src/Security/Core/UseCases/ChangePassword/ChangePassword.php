@@ -21,6 +21,7 @@ class ChangePassword
 
         if (is_null($user)) {
             $presenter->userNotFound();
+
             return;
         }
 
