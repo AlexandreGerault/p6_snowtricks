@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Security\Infrastructure\Repository;
 
 use App\Security\Core\HashedPassword;
-use App\Security\Core\ActivationToken;
+use App\Security\Core\ActivationToken as CoreActivationToken;
 use App\Security\Core\User as CoreUser;
+use App\Security\Infrastructure\Entity\ActivationToken;
+use App\Security\Infrastructure\Entity\PasswordResetToken;
 use App\Security\Infrastructure\Entity\User;
-use App\Trick\Infrastructure\Entity\Trick as Entity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -32,10 +33,27 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
         /** @var User $entity */
         $entity = $this->findOneBy(['uuid' => $snapshot->id]) ?? new User();
 
+
         $entity->setEmail($snapshot->email);
         $entity->setUsername($snapshot->username);
         $entity->setPassword($snapshot->password->value);
         $entity->setActive($snapshot->activated);
+
+        if (!is_null($snapshot->activationToken)) {
+            $activationToken = $entity->activationToken() ?? new ActivationToken();
+            $activationToken->setToken($snapshot->activationToken->token);
+            $this->_em->persist($activationToken);
+
+            $entity->setActivationToken($activationToken);
+        }
+
+        if (!is_null($snapshot->passwordResetToken)) {
+            $passwordResetToken = $entity->passwordResetToken() ?? new PasswordResetToken();
+            $passwordResetToken->setToken($snapshot->passwordResetToken->token);
+            $this->_em->persist($passwordResetToken);
+
+            $entity->setPasswordResetToken($passwordResetToken);
+        }
 
         $this->_em->persist($entity);
         $this->_em->flush();
@@ -60,7 +78,7 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
         // TODO: Implement get() method.
     }
 
-    public function getFromActivationToken(ActivationToken $token): ?CoreUser
+    public function getFromActivationToken(CoreActivationToken $token): ?CoreUser
     {
         $user = $this->createQueryBuilder('u')
             ->innerJoin('u.activationToken', 'a')
@@ -81,13 +99,29 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
             return throw new \Exception('The user activation token is null');
         }
 
+        return $this->coreUser($user);
+    }
+
+    public function findByEmail(string $email): ?CoreUser
+    {
+        $entity = $this->findOneBy(['email' => $email]);
+
+        if (is_null($entity)) {
+            return null;
+        }
+
+        return $this->coreUser($entity);
+    }
+
+    private function coreUser(User $entity): CoreUser
+    {
         return new CoreUser(
-            id: $user->id(),
-            username: $user->username(),
-            email: $user->email(),
-            password: new HashedPassword($user->getPassword()),
-            activated: $user->isActive(),
-            activationToken: new ActivationToken($user->activationToken()->getToken())
+            id: $entity->id(),
+            username: $entity->username(),
+            email: $entity->email(),
+            password: new HashedPassword($entity->getPassword()),
+            activated: $entity->isActive(),
+            activationToken: $entity->activationToken() ? new CoreActivationToken($entity->activationToken()->getToken()) : null
         );
     }
 }

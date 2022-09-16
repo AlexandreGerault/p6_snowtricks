@@ -15,16 +15,30 @@ class User
         private HashedPassword   $password,
         private bool             $activated = false,
         private ?ActivationToken $activationToken = null,
+        private ?ResetPasswordToken $resetPasswordToken = null,
     ) {
     }
 
     public function snapshot(): UserSnapshot
     {
-        return new UserSnapshot($this->id, $this->username, $this->email, $this->password, $this->activated, $this->activationToken);
+        return new UserSnapshot(
+            id: $this->id,
+            username: $this->username,
+            email: $this->email,
+            password: $this->password,
+            activated: $this->activated,
+            activationToken: $this->activationToken,
+            passwordResetToken: $this->resetPasswordToken
+        );
     }
 
     public function activate(): void
     {
         $this->activated = true;
+    }
+
+    public function changePasswordResetToken(ResetPasswordToken $resetPasswordToken): void
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
     }
 }

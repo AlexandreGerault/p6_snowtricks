@@ -38,6 +38,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: ActivationToken::class, cascade: ['remove'])]
     private ?ActivationToken $activationToken;
 
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: PasswordResetToken::class, cascade: ['remove'])]
+    private ?PasswordResetToken $passwordResetToken;
+
     public function id(): Uuid
     {
         return $this->uuid;
@@ -107,5 +110,24 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function setActive(bool $active): void
     {
         $this->active = $active;
+    }
+
+    public function setActivationToken(?ActivationToken $activationToken): User
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function setPasswordResetToken(PasswordResetToken $passwordResetToken): User
+    {
+        $this->passwordResetToken = $passwordResetToken;
+
+        return $this;
+    }
+
+    public function passwordResetToken(): ?PasswordResetToken
+    {
+        return $this->passwordResetToken;
     }
 }

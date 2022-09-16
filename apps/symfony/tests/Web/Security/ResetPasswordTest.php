@@ -7,6 +7,7 @@ namespace App\Tests\Web\Security;
 use App\Security\Infrastructure\DataFixtures\UserFixture;
 use App\Tests\Web\WebTestCase;
 use Exception;
+use PHPUnit\Framework\Assert;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -26,21 +27,27 @@ class ResetPasswordTest extends WebTestCase
         $this->assertStringContainsString('Demande de réinitialisation de votre mot de passe', $crawler->html());
 
         $client->submitForm('Envoyer', [
-            'reset_password_request_form[email]' => UserFixture::ADMIN_MAIL,
+            'ask_password_reset[email]' => UserFixture::ADMIN_MAIL,
         ]);
 
-        /** @var TemplatedEmail $email */
+        /** @var ?TemplatedEmail $email */
         $email = $this->getMailerMessage();
-        if (!is_string($htmlBody = $email->getHtmlBody())) {
-            throw new Exception('Email body is not a string');
+
+        if (is_null($email)) {
+            Assert::fail("No email was sent");
         }
+
+        if (!is_string($htmlBody = $email->getHtmlBody())) {
+            Assert::fail("Email body is not a string");
+        }
+
         $link = $this->extractLinkFromEmail($htmlBody);
 
         $this->assertEmailCount(1);
         $this->assertResponseRedirects();
         $crawler = $client->followRedirect();
 
-        $this->assertStringContainsString('Mail de réinitialisation de mot passe envoyé', $crawler->html());
+        $this->assertStringContainsString('Un email de réinitialisation de mot de passe vous a été envoyé !', $crawler->html());
         $this->assertEmailTextBodyContains($email, $link);
         $this->assertEmailHtmlBodyContains($email, $link);
 
@@ -76,7 +83,7 @@ class ResetPasswordTest extends WebTestCase
         $this->assertStringContainsString('Demande de réinitialisation de votre mot de passe', $crawler->html());
 
         $client->submitForm('Envoyer', [
-            'reset_password_request_form[email]' => 'wrong@email.fr',
+            'ask_password_reset[email]' => 'wrong@email.fr',
         ]);
         $this->assertEmailCount(0);
         $this->assertResponseRedirects();

@@ -4,10 +4,12 @@ namespace App\Tests\Domain\Security\Adapters;
 
 use App\Security\Core\PlainPassword;
 use App\Security\Core\ActivationToken;
+use App\Security\Core\ResetPasswordToken;
 use App\Security\Core\User;
 use App\Security\Core\UserRepository;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Uid\AbstractUid;
+use Symfony\Component\Uid\Uuid;
 
 class InMemoryUserRepository implements UserRepository
 {
@@ -75,10 +77,36 @@ class InMemoryUserRepository implements UserRepository
         Assert::assertTrue($this->hasSaved);
     }
 
+    public function assertHasNotSaved(): void
+    {
+        Assert::assertFalse($this->hasSaved);
+    }
+
     public function getFromActivationToken(ActivationToken $token): ?User
     {
         foreach ($this->users as $user) {
             if ($user->snapshot()->activationToken->equals($token)) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
+    public function assertUserHasResetPasswordToken(Uuid $fromString, ResetPasswordToken $resetPasswordToken)
+    {
+        foreach ($this->users as $user) {
+            if ($user->snapshot()->id->equals($fromString)) {
+                Assert::assertNotNull($user->snapshot()->passwordResetToken);
+                Assert::assertTrue($user->snapshot()->passwordResetToken->equals($resetPasswordToken));
+            }
+        }
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        foreach ($this->users as $user) {
+            if ($user->snapshot()->email === $email) {
                 return $user;
             }
         }

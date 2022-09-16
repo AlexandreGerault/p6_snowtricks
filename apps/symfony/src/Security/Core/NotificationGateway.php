@@ -7,4 +7,6 @@ namespace App\Security\Core;
 interface NotificationGateway
 {
     public function notifyAccountCreated(UserSnapshot $user): void;
+
+    public function notifyPasswordResetTokenCreated(User $user): void;
 }

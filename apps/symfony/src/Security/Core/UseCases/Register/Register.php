@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Core\UseCases\Register;
 
+use App\Security\Core\NotificationGateway;
 use App\Security\Core\PasswordHasher;
 use App\Security\Core\PlainPassword;
 use App\Security\Core\User;
@@ -34,6 +35,8 @@ class Register
         $user = new User(Uuid::v4(), $input->username, $input->email, $hashedPassword);
 
         $this->repository->save($user);
+
+        $this->notificationGateway->notifyAccountCreated($user->snapshot());
 
         $presenter->userCreated();
     }

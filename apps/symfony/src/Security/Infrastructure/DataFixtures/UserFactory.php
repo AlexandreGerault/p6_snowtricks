@@ -30,6 +30,7 @@ class UserFactory
     public function create(string $username, string $email, string $password): User
     {
         $user = new User();
+
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($this->hasher->hashPassword($user, $password));

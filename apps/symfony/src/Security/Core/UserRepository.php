@@ -13,4 +13,6 @@ interface UserRepository
     public function getFromActivationToken(ActivationToken $token): ?User;
 
     public function save(User $user): void;
+
+    public function findByEmail(string $email): ?User;
 }

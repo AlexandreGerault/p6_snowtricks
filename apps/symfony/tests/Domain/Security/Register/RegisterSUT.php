@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Security\Register;
 
-use App\Security\Core\UseCases\Register;
-use App\Security\Core\UseCases\RegisterInputData;
+use App\Security\Core\UseCases\Register\Register;
+use App\Security\Core\UseCases\Register\RegisterInputData;
 use App\Security\Core\User;
 use App\Tests\Domain\Security\Adapters\FakePasswordHasher;
+use App\Tests\Domain\Security\Adapters\InMemoryNotifications;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
 
 class RegisterSUT
@@ -17,6 +18,7 @@ class RegisterSUT
     private string $username;
     public InMemoryUserRepository $repository;
     public RegisterTestOutputPort $presenter;
+    public InMemoryNotifications $notifications;
 
     /** @var User[] */
     private array $users = [];
@@ -34,8 +36,9 @@ class RegisterSUT
     {
         $this->presenter = new RegisterTestOutputPort();
         $this->repository = new InMemoryUserRepository($this->users);
+        $this->notifications = new InMemoryNotifications();
 
-        $register = new Register($this->repository, new FakePasswordHasher());
+        $register = new Register($this->repository, new FakePasswordHasher(), $this->notifications);
         $register->executes(
             new RegisterInputData($this->username, $this->email, $this->password),
             $this->presenter
