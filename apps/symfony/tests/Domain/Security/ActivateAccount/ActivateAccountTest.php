@@ -2,15 +2,15 @@
 
 namespace App\Tests\Domain\Security\ActivateAccount;
 
-use App\Security\Core\HashedPassword;
 use App\Security\Core\ActivationToken;
+use App\Security\Core\HashedPassword;
 use App\Security\Core\User;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 class ActivateAccountTest extends TestCase
 {
-    public function test_a_user_not_activated_activates_its_account(): void
+    public function testAUserNotActivatedActivatesItsAccount(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),
@@ -18,7 +18,7 @@ class ActivateAccountTest extends TestCase
             email: 'user@example.com',
             password: new HashedPassword('password'),
             activated: false,
-            activationToken: new ActivationToken("token")
+            activationToken: new ActivationToken('token')
         );
 
         $sut = ActivateAccountSUT::new()
@@ -32,7 +32,7 @@ class ActivateAccountTest extends TestCase
         $sut->presenter->assertUserWasActivated();
     }
 
-    public function test_an_invalid_token_cannot_activate_a_user(): void
+    public function testAnInvalidTokenCannotActivateAUser(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),
@@ -40,12 +40,12 @@ class ActivateAccountTest extends TestCase
             email: 'user@example.com',
             password: new HashedPassword('password'),
             activated: false,
-            activationToken: new ActivationToken("token")
+            activationToken: new ActivationToken('token')
         );
 
         $sut = ActivateAccountSUT::new()
             ->withUser($user)
-            ->withActivationToken("invalid-token")
+            ->withActivationToken('invalid-token')
             ->run();
 
         $user = $sut->userRepository->get(Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'))->snapshot();

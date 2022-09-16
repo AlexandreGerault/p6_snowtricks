@@ -9,11 +9,11 @@ use Symfony\Component\Uid\AbstractUid;
 class User
 {
     public function __construct(
-        private AbstractUid      $id,
-        private string           $username,
-        private string           $email,
-        private HashedPassword   $password,
-        private bool             $activated = false,
+        private AbstractUid $id,
+        private string $username,
+        private string $email,
+        private HashedPassword $password,
+        private bool $activated = false,
         private ?ActivationToken $activationToken = null,
         private ?ResetPasswordToken $resetPasswordToken = null,
     ) {

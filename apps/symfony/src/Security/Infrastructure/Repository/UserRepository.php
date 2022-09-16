@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Security\Infrastructure\Repository;
 
-use App\Security\Core\HashedPassword;
 use App\Security\Core\ActivationToken as CoreActivationToken;
+use App\Security\Core\HashedPassword;
 use App\Security\Core\User as CoreUser;
 use App\Security\Infrastructure\Entity\ActivationToken;
 use App\Security\Infrastructure\Entity\PasswordResetToken;
@@ -32,7 +32,6 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
 
         /** @var User $entity */
         $entity = $this->findOneBy(['uuid' => $snapshot->id]) ?? new User();
-
 
         $entity->setEmail($snapshot->email);
         $entity->setUsername($snapshot->username);

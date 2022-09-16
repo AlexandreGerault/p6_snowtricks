@@ -9,11 +9,10 @@ use App\Security\Core\UserRepository;
 class AskPasswordReset
 {
     public function __construct(
-        private readonly UserRepository              $userRepository,
+        private readonly UserRepository $userRepository,
         private readonly PasswordResetTokenGenerator $passwordResetTokenGenerator,
-        private readonly NotificationGateway         $notificationGateway,
-    )
-    {
+        private readonly NotificationGateway $notificationGateway,
+    ) {
     }
 
     public function executes(AskPasswordResetInputData $input, AskPasswordResetPresenter $presenter): void
@@ -22,6 +21,7 @@ class AskPasswordReset
 
         if (is_null($user)) {
             $presenter->userNotFound();
+
             return;
         }
 

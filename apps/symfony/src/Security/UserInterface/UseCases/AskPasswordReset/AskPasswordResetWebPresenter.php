@@ -15,15 +15,14 @@ class AskPasswordResetWebPresenter implements AskPasswordResetPresenter
 
     public function __construct(
         private readonly UrlGeneratorInterface $generator,
-        private readonly SessionBagInterface   $flashBag
-    )
-    {
+        private readonly SessionBagInterface $flashBag
+    ) {
     }
 
     public function resetTokenCreated(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
-            $this->flashBag->add('success', "Un email de réinitialisation de mot de passe vous a été envoyé !");
+            $this->flashBag->add('success', 'Un email de réinitialisation de mot de passe vous a été envoyé !');
         }
         $this->response = new RedirectResponse($this->generator->generate('homepage'));
     }
@@ -36,7 +35,7 @@ class AskPasswordResetWebPresenter implements AskPasswordResetPresenter
     public function userNotFound(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
-            $this->flashBag->add('success', "Un email de réinitialisation de mot de passe vous a été envoyé !");
+            $this->flashBag->add('success', 'Un email de réinitialisation de mot de passe vous a été envoyé !');
         }
         $this->response = new RedirectResponse($this->generator->generate('homepage'));
     }

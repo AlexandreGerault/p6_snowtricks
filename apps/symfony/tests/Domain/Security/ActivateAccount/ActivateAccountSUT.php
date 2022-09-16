@@ -6,7 +6,6 @@ use App\Security\Core\ActivationToken;
 use App\Security\Core\UseCases\ActivateAccount\ActivateAccount;
 use App\Security\Core\UseCases\ActivateAccount\ActivateAccountInputData;
 use App\Security\Core\User;
-use App\Security\Core\UserRepository;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
 
 class ActivateAccountSUT

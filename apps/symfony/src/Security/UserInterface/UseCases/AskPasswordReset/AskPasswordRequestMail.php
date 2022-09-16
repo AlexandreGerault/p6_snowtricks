@@ -12,7 +12,7 @@ class AskPasswordRequestMail extends Email
     {
         parent::__construct($headers, $body);
         $this
-            ->subject("Réinitialisation de mot passe")
+            ->subject('Réinitialisation de mot passe')
             ->from('no-replay@snowtricks')
             ->to($receiver)
             ->text(<<<TXT

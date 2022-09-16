@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\Infrastructure\DataFixtures\UserFixture;
-use App\Security\Infrastructure\Entity\ActivationToken;
 use App\Security\Infrastructure\Entity\User;
 use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegisterTest extends WebTestCase
@@ -39,7 +37,7 @@ class RegisterTest extends WebTestCase
 
         $message = $this->getMailerMessage();
         $this->assertEmailCount(1);
-        $this->assertEmailHtmlBodyContains($message, "/confirmation-inscription?user=Alexandre%20G%C3%A9rault");
+        $this->assertEmailHtmlBodyContains($message, '/confirmation-inscription?user=Alexandre%20G%C3%A9rault');
     }
 
     public function testItCannotRegisterAUserWithAnEmailAlreadyInUse(): void

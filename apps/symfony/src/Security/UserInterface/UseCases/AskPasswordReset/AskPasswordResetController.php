@@ -2,15 +2,9 @@
 
 namespace App\Security\UserInterface\UseCases\AskPasswordReset;
 
-use App\Security\Core\UseCases\ActivateAccount\ActivateAccount;
-use App\Security\Core\UseCases\ActivateAccount\ActivateAccountInputData;
 use App\Security\Core\UseCases\AskPasswordReset\AskPasswordReset;
 use App\Security\Core\UseCases\AskPasswordReset\AskPasswordResetInputData;
 use App\Security\Infrastructure\Repository\UserRepository;
-use App\Security\UserInterface\UseCases\ActivateAccount\ActivateAccountWebPresenter;
-use App\Trick\UserInterface\UseCases\EditTrick\EditTrickDTO;
-use App\Trick\UserInterface\UseCases\EditTrick\EditTrickType;
-use App\Trick\UserInterface\UseCases\EditTrick\EditTrickWebPresenter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

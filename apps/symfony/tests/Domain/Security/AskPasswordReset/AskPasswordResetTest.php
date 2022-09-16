@@ -12,7 +12,7 @@ use Symfony\Component\Uid\Uuid;
 
 class AskPasswordResetTest extends TestCase
 {
-    public function test_a_user_can_ask_a_reset_password(): void
+    public function testAUserCanAskAResetPassword(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),
@@ -20,7 +20,7 @@ class AskPasswordResetTest extends TestCase
             email: 'user@example.com',
             password: new HashedPassword('password'),
             activated: false,
-            activationToken: new ActivationToken("token")
+            activationToken: new ActivationToken('token')
         );
 
         $sut = AskPasswordResetSUT::new()
@@ -39,7 +39,7 @@ class AskPasswordResetTest extends TestCase
         $sut->notifications()->assertPasswordResetRequested();
     }
 
-    public function test_it_presents_the_same_output_when_the_user_does_not_exist(): void
+    public function testItPresentsTheSameOutputWhenTheUserDoesNotExist(): void
     {
         $user = new User(
             id: Uuid::fromString('8a817a66-a46f-4125-997d-94428ae56605'),
@@ -47,7 +47,7 @@ class AskPasswordResetTest extends TestCase
             email: 'user@example.com',
             password: new HashedPassword('password'),
             activated: false,
-            activationToken: new ActivationToken("token")
+            activationToken: new ActivationToken('token')
         );
 
         $sut = AskPasswordResetSUT::new()

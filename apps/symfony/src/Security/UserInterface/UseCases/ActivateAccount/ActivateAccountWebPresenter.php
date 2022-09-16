@@ -20,7 +20,7 @@ class ActivateAccountWebPresenter implements ActivateAccountPresenter
     public function userHasBeenActivated(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
-            $this->flashBag->add('success', "Votre compte a bien été activé !");
+            $this->flashBag->add('success', 'Votre compte a bien été activé !');
         }
         $this->response = new RedirectResponse($this->generator->generate('homepage'));
     }

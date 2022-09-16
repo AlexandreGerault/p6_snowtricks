@@ -2,8 +2,8 @@
 
 namespace App\Tests\Domain\Security\Adapters;
 
-use App\Security\Core\PlainPassword;
 use App\Security\Core\ActivationToken;
+use App\Security\Core\PlainPassword;
 use App\Security\Core\ResetPasswordToken;
 use App\Security\Core\User;
 use App\Security\Core\UserRepository;

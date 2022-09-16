@@ -34,11 +34,11 @@ class ResetPasswordTest extends WebTestCase
         $email = $this->getMailerMessage();
 
         if (is_null($email)) {
-            Assert::fail("No email was sent");
+            Assert::fail('No email was sent');
         }
 
         if (!is_string($htmlBody = $email->getHtmlBody())) {
-            Assert::fail("Email body is not a string");
+            Assert::fail('Email body is not a string');
         }
 
         $link = $this->extractLinkFromEmail($htmlBody);

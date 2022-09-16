@@ -12,12 +12,12 @@ class RegisterWebPresenter implements RegisterPresenter
 
     public function userCreated(): void
     {
-        $this->response = new RedirectResponse("/");
+        $this->response = new RedirectResponse('/');
     }
 
     public function emailAlreadyInUse(): void
     {
-        $this->response = new RedirectResponse("/");
+        $this->response = new RedirectResponse('/');
     }
 
     public function response(): Response

@@ -17,6 +17,7 @@ class ActivateAccount
 
         if (is_null($user)) {
             $presenter->userNotFound();
+
             return;
         }
 

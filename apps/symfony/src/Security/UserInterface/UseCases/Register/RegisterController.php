@@ -14,7 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegisterController extends AbstractController
 {
-    public function __construct(private Register $register) {
+    public function __construct(private Register $register)
+    {
     }
 
     /**

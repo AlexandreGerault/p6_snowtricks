@@ -7,7 +7,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-
 class AskPasswordResetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -27,7 +26,4 @@ class AskPasswordResetType extends AbstractType
             ])
         ;
     }
-}
-{
-
 }

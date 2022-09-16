@@ -29,7 +29,7 @@ class ActivateAccountTest extends WebTestCase
         $this->assertTrue($inactiveUser->isActive());
 
         $crawler = $client->followRedirect();
-        $this->assertStringContainsString("Votre compte a bien été activé !", $crawler->html());
+        $this->assertStringContainsString('Votre compte a bien été activé !', $crawler->html());
     }
 
     public function testItCannotFindAccountForGivenToken(): void

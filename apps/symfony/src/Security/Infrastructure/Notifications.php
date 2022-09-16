@@ -17,11 +17,10 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 class Notifications implements NotificationGateway
 {
     public function __construct(
-        private readonly MailerInterface  $mailer,
+        private readonly MailerInterface $mailer,
         private LoginLinkHandlerInterface $loginLinkHandler,
-        private UserRepository            $repository
-    )
-    {
+        private UserRepository $repository
+    ) {
     }
 
     /** @throws TransportExceptionInterface */
