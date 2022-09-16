@@ -73,11 +73,20 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
             ->getSingleScalarResult() > 0;
     }
 
-    public function get(AbstractUid $id): CoreUser
+    public function get(AbstractUid $id): ?CoreUser
     {
-        // TODO: Implement get() method.
+        $doctrineUser = $this->findOneBy(['uuid' => $id]);
+
+        if (is_null($doctrineUser)) {
+            return null;
+        }
+
+        return $this->coreUser($doctrineUser);
     }
 
+    /** @throws NonUniqueResultException
+     * @throws \Exception
+     */
     public function getFromActivationToken(CoreActivationToken $token): ?CoreUser
     {
         $user = $this->createQueryBuilder('u')
