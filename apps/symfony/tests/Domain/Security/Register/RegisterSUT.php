@@ -7,6 +7,7 @@ namespace App\Tests\Domain\Security\Register;
 use App\Security\Core\UseCases\Register\Register;
 use App\Security\Core\UseCases\Register\RegisterInputData;
 use App\Security\Core\User;
+use App\Tests\Domain\Security\Adapters\FakeActivationTokenGenerator;
 use App\Tests\Domain\Security\Adapters\FakePasswordHasher;
 use App\Tests\Domain\Security\Adapters\InMemoryNotifications;
 use App\Tests\Domain\Security\Adapters\InMemoryUserRepository;
@@ -38,7 +39,13 @@ class RegisterSUT
         $this->repository = new InMemoryUserRepository($this->users);
         $this->notifications = new InMemoryNotifications();
 
-        $register = new Register($this->repository, new FakePasswordHasher(), $this->notifications);
+        $register = new Register(
+            $this->repository,
+            new FakePasswordHasher(),
+            new FakeActivationTokenGenerator(),
+            $this->notifications
+        );
+
         $register->executes(
             new RegisterInputData($this->username, $this->email, $this->password),
             $this->presenter

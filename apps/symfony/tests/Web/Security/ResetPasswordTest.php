@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Web\Security;
 
 use App\Security\Infrastructure\DataFixtures\UserFixture;
+use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
 use Exception;
 use PHPUnit\Framework\Assert;
@@ -20,6 +21,7 @@ class ResetPasswordTest extends WebTestCase
     public function testItSendsAResetRequestWhenEmailExists(): void
     {
         $client = static::createClient();
+        $container = $this->getContainer();
 
         $crawler = $client->request('GET', '/nouveau-mot-de-passe');
 
@@ -45,21 +47,24 @@ class ResetPasswordTest extends WebTestCase
 
         $this->assertEmailCount(1);
         $this->assertResponseRedirects();
+
+        dd($container->get(UserRepository::class)->findOneBy(['email' => UserFixture::ADMIN_MAIL]));
+
         $crawler = $client->followRedirect();
 
         $this->assertStringContainsString('Un email de réinitialisation de mot de passe vous a été envoyé !', $crawler->html());
         $this->assertEmailTextBodyContains($email, $link);
         $this->assertEmailHtmlBodyContains($email, $link);
 
-        $client->request('GET', $link);
-        $this->assertResponseRedirects();
+        $crawler = $client->request('GET', $link);
 
-        $crawler = $client->followRedirect();
+        $this->assertResponseIsSuccessful();
+
         $this->assertStringContainsString('Réinitialiser votre mot de passe', $crawler->html());
 
         $client->submitForm('Réinitialiser', [
-            'change_password_form[plainPassword][first]' => 'new_password',
-            'change_password_form[plainPassword][second]' => 'new_password',
+            'change_password[password][first]' => 'new_password',
+            'change_password[password][second]' => 'new_password',
         ]);
         $this->assertResponseRedirects('/');
         $client->followRedirect();
@@ -69,6 +74,7 @@ class ResetPasswordTest extends WebTestCase
             '_username' => UserFixture::ADMIN_NAME,
             '_password' => 'new_password',
         ]);
+
         $security = static::getContainer()->get(AuthorizationCheckerInterface::class);
         $this->assertTrue($security?->isGranted('IS_AUTHENTICATED_FULLY'));
     }

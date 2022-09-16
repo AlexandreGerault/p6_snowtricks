@@ -23,9 +23,6 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-            login_link:
-                check_route: app_confirm_account
-                signature_properties: ['email']
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

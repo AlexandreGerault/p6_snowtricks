@@ -27,16 +27,16 @@ class AskPasswordResetWebPresenter implements AskPasswordResetPresenter
         $this->response = new RedirectResponse($this->generator->generate('homepage'));
     }
 
-    public function response(): Response
-    {
-        return $this->response;
-    }
-
     public function userNotFound(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
             $this->flashBag->add('success', 'Un email de réinitialisation de mot de passe vous a été envoyé !');
         }
         $this->response = new RedirectResponse($this->generator->generate('homepage'));
+    }
+
+    public function response(): Response
+    {
+        return $this->response;
     }
 }

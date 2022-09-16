@@ -17,7 +17,7 @@ class ActivateAccountTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/confirmer?token='.ActivationTokenFixture::ACTIVATION_TOKEN);
+        $client->request(Request::METHOD_GET, '/confirmer/'.ActivationTokenFixture::ACTIVATION_TOKEN);
 
         $this->assertResponseRedirects();
 
@@ -36,7 +36,7 @@ class ActivateAccountTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/confirmer?token=invalid');
+        $client->request(Request::METHOD_GET, '/confirmer/invalid');
 
         $this->assertResponseRedirects();
         $crawler = $client->followRedirect();

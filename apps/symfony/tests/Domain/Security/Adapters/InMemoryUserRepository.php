@@ -113,4 +113,20 @@ class InMemoryUserRepository implements UserRepository
 
         return null;
     }
+
+    public function findByPasswordResetToken(ResetPasswordToken $resetPasswordToken): ?User
+    {
+        foreach ($this->users as $user) {
+            if ($user->snapshot()->passwordResetToken->equals($resetPasswordToken)) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
+    public function assertHasActivationToken(User $user): void
+    {
+        Assert::assertNotNull($user->snapshot()->activationToken);
+    }
 }

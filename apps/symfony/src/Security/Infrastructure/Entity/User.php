@@ -36,7 +36,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private bool $active = false;
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: ActivationToken::class, cascade: ['remove'])]
-    private ?ActivationToken $activationToken;
+    private ?ActivationToken $activationToken = null;
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: PasswordResetToken::class, cascade: ['remove'])]
     private ?PasswordResetToken $passwordResetToken;

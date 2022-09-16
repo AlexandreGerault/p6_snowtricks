@@ -25,6 +25,7 @@ class RegisterTest extends TestCase
         $sut->repository->assertUserWasCreated('user@email.fr');
         $sut->repository->assertPasswordIsHashedForEmail('user@email.fr', new PlainPassword('password'));
         $sut->notifications->assertAccountCreatedSent();
+        $sut->repository->assertHasActivationToken($sut->repository->findByEmail('user@email.fr'));
     }
 
     public function testAUserCannotRegisterWhenTheEmailIsAlreadyInUse(): void

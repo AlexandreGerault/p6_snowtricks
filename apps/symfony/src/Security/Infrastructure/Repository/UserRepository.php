@@ -6,6 +6,7 @@ namespace App\Security\Infrastructure\Repository;
 
 use App\Security\Core\ActivationToken as CoreActivationToken;
 use App\Security\Core\HashedPassword;
+use App\Security\Core\ResetPasswordToken;
 use App\Security\Core\User as CoreUser;
 use App\Security\Infrastructure\Entity\ActivationToken;
 use App\Security\Infrastructure\Entity\PasswordResetToken;
@@ -28,6 +29,7 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
 
     public function save(CoreUser $user): void
     {
+        dump("save");
         $snapshot = $user->snapshot();
 
         /** @var User $entity */
@@ -65,11 +67,11 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
     public function exists(string $email): bool
     {
         return $this->createQueryBuilder('u')
-            ->select('COUNT(u)')
-            ->where('u.email = :email')
-            ->setParameter('email', $email)
-            ->getQuery()
-            ->getSingleScalarResult() > 0;
+                ->select('COUNT(u)')
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
     }
 
     public function get(AbstractUid $id): ?CoreUser
@@ -131,5 +133,34 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
             activated: $entity->isActive(),
             activationToken: $entity->activationToken() ? new CoreActivationToken($entity->activationToken()->getToken()) : null
         );
+    }
+
+    /** @throws NonUniqueResultException */
+    public function findByPasswordResetToken(ResetPasswordToken $resetPasswordToken): ?CoreUser
+    {
+        dump($resetPasswordToken->token);
+        dump($this->findAll());
+        $user = $this->createQueryBuilder('u')
+//            ->innerJoin('u.passwordResetToken', 'r')
+//            ->where('r.token = :token')
+//            ->setParameter('token', $resetPasswordToken->token)
+            ->getQuery()
+            ->getFirstResult();
+
+        dump($user);
+
+        if (!($user instanceof User) && !is_null($user)) {
+            throw new \Exception('The user type is invalid');
+        }
+
+        if (is_null($user)) {
+            return null;
+        }
+
+        if (is_null($user->passwordResetToken())) {
+            return throw new \Exception('The user password reset token is null');
+        }
+
+        return $this->coreUser($user);
     }
 }

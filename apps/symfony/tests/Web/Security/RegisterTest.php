@@ -37,7 +37,7 @@ class RegisterTest extends WebTestCase
 
         $message = $this->getMailerMessage();
         $this->assertEmailCount(1);
-        $this->assertEmailHtmlBodyContains($message, '/confirmation-inscription?user=Alexandre%20G%C3%A9rault');
+        $this->assertEmailHtmlBodyContains($message, '/confirmer/' . $createdUser->activationToken()->getToken());
     }
 
     public function testItCannotRegisterAUserWithAnEmailAlreadyInUse(): void

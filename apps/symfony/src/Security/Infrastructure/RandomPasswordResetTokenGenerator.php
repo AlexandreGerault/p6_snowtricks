@@ -10,6 +10,6 @@ class RandomPasswordResetTokenGenerator implements PasswordResetTokenGenerator
     /** @throws \Exception */
     public function generate(): ResetPasswordToken
     {
-        return new ResetPasswordToken(sha1(random_bytes(16)));
+        return new ResetPasswordToken(bin2hex(random_bytes(16)));
     }
 }

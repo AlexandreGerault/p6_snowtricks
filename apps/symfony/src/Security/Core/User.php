@@ -41,4 +41,9 @@ class User
     {
         $this->resetPasswordToken = $resetPasswordToken;
     }
+
+    public function changePassword(HashedPassword $newHashedPassword): void
+    {
+        $this->password = $newHashedPassword;
+    }
 }

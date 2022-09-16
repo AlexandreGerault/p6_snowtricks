@@ -12,14 +12,14 @@ use App\Security\UserInterface\UseCases\AskPasswordReset\AskPasswordRequestMail;
 use App\Security\UserInterface\UseCases\Register\RegisterConfirmationLinkMail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Notifications implements NotificationGateway
 {
     public function __construct(
         private readonly MailerInterface $mailer,
-        private LoginLinkHandlerInterface $loginLinkHandler,
-        private UserRepository $repository
+        private readonly UserRepository $repository,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -32,9 +32,13 @@ class Notifications implements NotificationGateway
             throw new \RuntimeException('User not found');
         }
 
-        $confirmLink = $this->loginLinkHandler->createLoginLink($doctrineUser);
+        $confirmLink = $this->urlGenerator->generate(
+            'app_confirm_account',
+            ['token' => $user->activationToken],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
 
-        $mail = new RegisterConfirmationLinkMail($confirmLink->getUrl(), $user->email);
+        $mail = new RegisterConfirmationLinkMail($confirmLink, $user->email);
         $this->mailer->send($mail);
     }
 
@@ -49,7 +53,7 @@ class Notifications implements NotificationGateway
 
         $token = $snapshot->passwordResetToken->token;
 
-        $mail = new AskPasswordRequestMail($token, $snapshot->email);
+        $mail = new AskPasswordRequestMail($token, $snapshot->email, $this->urlGenerator);
         $this->mailer->send($mail);
     }
 }

@@ -21,24 +21,16 @@ class ActivateAccountController extends AbstractController
     {
     }
 
-    #[Route(path: '/confirmer', name: 'app_activate_account')]
-    public function __invoke(Request $request, UserRepository $userRepository, EntityManagerInterface $em, RequestStack $requestStack): Response
+    #[Route(path: '/confirmer/{token}', name: 'app_confirm_account')]
+    public function __invoke(Request $request, RequestStack $requestStack, string $token): Response
     {
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('homepage');
-        }
-
-        $token = $request->get('token');
-
-        if (!is_string($token)) {
-            return $this->redirectToRoute('app_login');
-        }
-
         $input = new ActivateAccountInputData($token);
+
         $presenter = new ActivateAccountWebPresenter(
             $this->generator,
             $requestStack->getSession()->getBag('flashes')
         );
+
         $this->activateAccount->executes($input, $presenter);
 
         return $presenter->response();
