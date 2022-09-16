@@ -13,11 +13,9 @@ class ActivateAccount
 
     public function executes(ActivateAccountInputData $request, ActivateAccountPresenter $presenter): void
     {
-        dump("A");
         $user = $this->repository->getFromActivationToken(new ActivationToken($request->userActivationToken));
 
         if (is_null($user)) {
-            dump("A");
             $presenter->userNotFound();
 
             return;

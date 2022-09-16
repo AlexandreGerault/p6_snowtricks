@@ -29,7 +29,6 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
 
     public function save(CoreUser $user): void
     {
-        dump("save");
         $snapshot = $user->snapshot();
 
         /** @var User $entity */
@@ -43,6 +42,7 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
         if (!is_null($snapshot->activationToken)) {
             $activationToken = $entity->activationToken() ?? new ActivationToken();
             $activationToken->setToken($snapshot->activationToken->token);
+            $activationToken->setUser($entity);
             $this->_em->persist($activationToken);
 
             $entity->setActivationToken($activationToken);
@@ -51,6 +51,7 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
         if (!is_null($snapshot->passwordResetToken)) {
             $passwordResetToken = $entity->passwordResetToken() ?? new PasswordResetToken();
             $passwordResetToken->setToken($snapshot->passwordResetToken->token);
+            $passwordResetToken->setUser($entity);
             $this->_em->persist($passwordResetToken);
 
             $entity->setPasswordResetToken($passwordResetToken);
@@ -135,19 +136,18 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
         );
     }
 
-    /** @throws NonUniqueResultException */
+    /**
+     * @throws NonUniqueResultException
+     * @throws \Exception
+     */
     public function findByPasswordResetToken(ResetPasswordToken $resetPasswordToken): ?CoreUser
     {
-        dump($resetPasswordToken->token);
-        dump($this->findAll());
         $user = $this->createQueryBuilder('u')
-//            ->innerJoin('u.passwordResetToken', 'r')
-//            ->where('r.token = :token')
-//            ->setParameter('token', $resetPasswordToken->token)
+            ->innerJoin('u.passwordResetToken', 'r')
+            ->where('r.token = :token')
+            ->setParameter('token', $resetPasswordToken->token)
             ->getQuery()
-            ->getFirstResult();
-
-        dump($user);
+            ->getOneOrNullResult();
 
         if (!($user instanceof User) && !is_null($user)) {
             throw new \Exception('The user type is invalid');

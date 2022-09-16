@@ -18,7 +18,7 @@ class ChangePasswordController extends AbstractController
     }
 
     #[Route(path: '/nouveau-mot-de-passe/reinitialisation/{token}', name: 'change_password')]
-    public function __invoke(PasswordResetToken $token, Request $request): Response
+    public function __invoke(PasswordResetToken $passwordResetToken, Request $request): Response
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('homepage');
@@ -34,7 +34,7 @@ class ChangePasswordController extends AbstractController
             $dto = $form->getData();
             $password = $dto->password;
 
-            $input = new ChangePasswordInputData($token, $password);
+            $input = new ChangePasswordInputData($passwordResetToken->getToken(), $password);
             $presenter = new ChangePasswordWebPresenter($this->generator);
 
             $this->changePassword->executes($input, $presenter);

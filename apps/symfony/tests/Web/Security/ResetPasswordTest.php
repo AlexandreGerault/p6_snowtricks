@@ -7,6 +7,7 @@ namespace App\Tests\Web\Security;
 use App\Security\Infrastructure\DataFixtures\UserFixture;
 use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use PHPUnit\Framework\Assert;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -48,8 +49,6 @@ class ResetPasswordTest extends WebTestCase
         $this->assertEmailCount(1);
         $this->assertResponseRedirects();
 
-        dd($container->get(UserRepository::class)->findOneBy(['email' => UserFixture::ADMIN_MAIL]));
-
         $crawler = $client->followRedirect();
 
         $this->assertStringContainsString('Un email de réinitialisation de mot de passe vous a été envoyé !', $crawler->html());
@@ -57,6 +56,9 @@ class ResetPasswordTest extends WebTestCase
         $this->assertEmailHtmlBodyContains($email, $link);
 
         $crawler = $client->request('GET', $link);
+
+        /** @var EntityManagerInterface $em */
+        $em = $container->get(EntityManagerInterface::class);
 
         $this->assertResponseIsSuccessful();
 
@@ -99,14 +101,7 @@ class ResetPasswordTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/nouveau-mot-de-passe/reinitialisation/0utVQfNb7ZEGtWrOeNJIXbBjvjg8JpIb6R7Vo666');
-        $this->assertResponseRedirects('/nouveau-mot-de-passe/reinitialisation');
-        $crawler = $client->followRedirect();
-        $this->assertResponseRedirects('/nouveau-mot-de-passe');
-        $crawler = $client->followRedirect();
-        $this->assertStringContainsString(
-            'Un problème est survenu lors de la validation de votre demande de réinitialisation de mot de passe',
-            $crawler->html()
-        );
+        $this->assertResponseStatusCodeSame(404);
     }
 
     private function extractLinkFromEmail(string $email): string
