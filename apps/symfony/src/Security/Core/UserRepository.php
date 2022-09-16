@@ -8,6 +8,8 @@ use Symfony\Component\Uid\AbstractUid;
 
 interface UserRepository
 {
+    public function exists(string $email): bool;
+
     public function get(AbstractUid $id): User;
 
     public function getFromActivationToken(ActivationToken $token): ?User;

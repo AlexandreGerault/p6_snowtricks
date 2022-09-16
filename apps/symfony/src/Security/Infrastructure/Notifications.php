@@ -42,11 +42,12 @@ class Notifications implements NotificationGateway
     /** @throws TransportExceptionInterface */
     public function notifyPasswordResetTokenCreated(User $user): void
     {
-        if (is_null($user)) {
-            throw new \RuntimeException('User not found');
+        $snapshot = $user->snapshot();
+
+        if (!is_string($snapshot->passwordResetToken?->token)) {
+            throw new \RuntimeException('Token is not a string');
         }
 
-        $snapshot = $user->snapshot();
         $token = $snapshot->passwordResetToken->token;
 
         $mail = new AskPasswordRequestMail($token, $snapshot->email);
