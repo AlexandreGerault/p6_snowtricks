@@ -13,15 +13,9 @@ class AskPasswordResetType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Email',
+                'label' => 'Votre adresse mail',
                 'attr' => [
-                    'placeholder' => 'Email',
-                ],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
-                'attr' => [
-                    'class' => 'button-green',
+                    'placeholder' => 'john-doe@example.com',
                 ],
             ])
         ;

@@ -13,7 +13,10 @@
 
     {{ form_rest(form) }}
 
-    <button type="submit">S'inscrire</button>
+    {{ component('button', {
+        type: 'submit',
+        label: "S'inscrire",
+    }) }}
 
     {{ form_end(form) }}
 {% endblock %}
