@@ -19,7 +19,7 @@ class TrickFixture extends Fixture
     {
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var Category $category */
         $category = $this->getReference(CategoryFixture::CATEGORY_NAME_RIDER);
@@ -43,7 +43,7 @@ class TrickFixture extends Fixture
 
     private function copyAssetImageForTrick(Trick $trick, string $imageName): Image
     {
-        $path = $this->imageStorage->save(__DIR__ . '/../../../../assets/fixtures/tricks/' . $imageName);
+        $path = $this->imageStorage->save(__DIR__.'/../../../../assets/fixtures/tricks/'.$imageName);
 
         return new Image($path, $imageName);
     }

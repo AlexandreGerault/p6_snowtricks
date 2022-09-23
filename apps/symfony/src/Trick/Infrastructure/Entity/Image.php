@@ -13,8 +13,8 @@ use Symfony\Component\Uid\Uuid;
 class Image
 {
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
-    #[ORM\GeneratedValue(strategy: "CUSTOM")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private Uuid $uuid;
 
@@ -24,8 +24,8 @@ class Image
     #[ORM\Column(type: Types::STRING)]
     private string $alt;
 
-    #[ORM\JoinColumn(name: "trick_uuid", referencedColumnName: "uuid", nullable: false)]
-    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: "images")]
+    #[ORM\JoinColumn(name: 'trick_uuid', referencedColumnName: 'uuid', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'images')]
     private Trick $trick;
 
     public function setTrick(Trick $trick): void

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure;
 
-use App\Trick\Core\Image;
 use App\Trick\Core\ImageStorage;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -41,7 +40,7 @@ class FilesystemImageStorage implements ImageStorage
 
         $filename = $this->generateFilename($file);
 
-        $output = $this->uploadDir . '/' . $filename;
+        $output = $this->uploadDir.'/'.$filename;
 
         $this->filesystem->copy($path, $output);
 
@@ -82,7 +81,7 @@ class FilesystemImageStorage implements ImageStorage
         $mime = $this->mimeType->guessMimeType($file->getRealPath());
 
         if (is_null($mime)) {
-            throw new \RuntimeException("Could not guess mime type");
+            throw new \RuntimeException('Could not guess mime type');
         }
 
         $extension = $this->mimeType->getExtensions($mime)[0];
@@ -91,7 +90,7 @@ class FilesystemImageStorage implements ImageStorage
         return "{$uniqueName}.{$extension}";
     }
 
-    public function delete($path): void
+    public function delete(string $path): void
     {
         $this->filesystem->remove($path);
     }

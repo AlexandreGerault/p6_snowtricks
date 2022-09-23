@@ -9,12 +9,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 class NullableImageWithDefaultPathValidator extends ConstraintValidator
 {
     /**
-     * @param ImageDTO $value
+     * @param ImageDTO                     $value
      * @param NullableImageWithDefaultPath $constraint
      */
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        if ($value->image === null && $value->path === null) {
+        if (null === $value->image && null === $value->path) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

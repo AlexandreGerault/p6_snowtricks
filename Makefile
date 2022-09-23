@@ -15,6 +15,10 @@ prepare-install:
 migrate:
 	docker compose exec php bin/console d:s:u --force
 
+.PHONY: migrate
+reset-db:
+	docker compose -f docker-compose.test.yml exec php bin/console d:s:u --force
+
 .PHONY: build-front
 build-front:
 	docker compose run -w="/usr/src/app" -u=1000:1000 node yarn
@@ -31,7 +35,7 @@ stop:
 
 .PHONY: format
 format:
-	docker compose exec php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	docker compose exec php vendor/bin/php-cs-fixer fix
 
 .PHONY: analyse
 analyse:

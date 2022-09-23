@@ -19,8 +19,7 @@ class EditTrickWebPresenter implements EditTrickPresenter
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly SessionBagInterface $flashBag
-    )
-    {
+    ) {
     }
 
     public function trickEdited(Trick $trick): void

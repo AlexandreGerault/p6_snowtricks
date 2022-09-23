@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
@@ -14,8 +13,8 @@ use Symfony\Component\Uid\Uuid;
 class Category
 {
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
-    #[ORM\GeneratedValue(strategy: "CUSTOM")]
+    #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private Uuid $uuid;
 
@@ -36,6 +35,7 @@ class Category
     public function setUuid(Uuid $uuid): Category
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 
@@ -43,6 +43,7 @@ class Category
     public function setName(string $name): Category
     {
         $this->name = $name;
+
         return $this;
     }
 }

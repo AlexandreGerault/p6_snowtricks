@@ -23,17 +23,17 @@ class EditTrickSUT
     /** @var array<array{path:string, alt:string}> */
     public array $images = [
         [
-            "path" => "97d9d9ec-db95-45e2-b501-67159e7825c0.jpg",
-            "alt" => "New image",
+            'path' => '97d9d9ec-db95-45e2-b501-67159e7825c0.jpg',
+            'alt' => 'New image',
         ],
         [
-            "path" => "539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg",
-            "alt" => "New image 2",
+            'path' => '539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg',
+            'alt' => 'New image 2',
         ],
         [
-            "path" => "fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg",
-            "alt" => "Same image",
-        ]
+            'path' => 'fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg',
+            'alt' => 'Same image',
+        ],
     ];
 
     /** @var string[] */
@@ -77,10 +77,10 @@ class EditTrickSUT
     public function run(): self
     {
         $request = new EditTrickInputData(
-            "1ece5bf4-83aa-6ca6-ac18-fb03dfecd997",
-            "New name",
-            "New description",
-            "1ece6881-b8c6-6d6a-aa71-a9e76a603a2f",
+            '1ece5bf4-83aa-6ca6-ac18-fb03dfecd997',
+            'New name',
+            'New description',
+            '1ece6881-b8c6-6d6a-aa71-a9e76a603a2f',
             $this->images,
             $this->videos,
         );

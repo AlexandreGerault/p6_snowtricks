@@ -11,7 +11,7 @@ class Trick
     /**
      * @param Image[] $images
      * @param Video[] $videos
-     * :thumb
+     *                        :thumb
      */
     public function __construct(
         private readonly AbstractUid $uuid,
@@ -22,11 +22,11 @@ class Trick
         private array $images,
         private array $videos,
     ) {
-        if (count($images) === 0) {
+        if (0 === count($images)) {
             throw new \InvalidArgumentException('Trick must have at least one image');
         }
 
-        if (count($videos) === 0) {
+        if (0 === count($videos)) {
             throw new \InvalidArgumentException('Trick must have at least one video');
         }
     }
@@ -77,7 +77,7 @@ class Trick
     /** @param Image[] $images */
     public function updateImages(array $images): void
     {
-        if (count($images) === 0) {
+        if (0 === count($images)) {
             throw new \InvalidArgumentException('Trick must have at least one image');
         }
 
@@ -87,7 +87,7 @@ class Trick
     /** @param Video[] $videos */
     public function updateVideos(array $videos): void
     {
-        if (count($videos) === 0) {
+        if (0 === count($videos)) {
             throw new \InvalidArgumentException('Trick must have at least one image');
         }
 

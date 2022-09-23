@@ -8,7 +8,7 @@ class EditTrickInputData
 {
     /**
      * @param array<array{path: string, alt: string}> $images
-     * @param string[] $videos
+     * @param string[]                                $videos
      */
     public function __construct(
         public readonly string $trickId,

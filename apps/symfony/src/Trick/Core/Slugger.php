@@ -11,7 +11,7 @@ class Slugger
         $name = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
 
         if (!$name) {
-            throw new \RuntimeException("Unable to normalize accentuated characters");
+            throw new \RuntimeException('Unable to normalize accentuated characters');
         }
 
         /** @var string $name */
