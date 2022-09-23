@@ -25,7 +25,7 @@ class ButtonComponent
 
     public function getColor(): string
     {
-        return match($this->color) {
+        return match ($this->color) {
             ButtonColorVariants::PRIMARY => 'bg-blue-500 text-white',
             ButtonColorVariants::SECONDARY => 'border border-blue-500 bg-white',
             ButtonColorVariants::DANGER => 'bg-red-500 text-white',
@@ -40,5 +40,12 @@ class ButtonComponent
     public function setColor(string $color): void
     {
         $this->color = ButtonColorVariants::from($color);
+    }
+
+    public function getCss(): string
+    {
+        $commonCss = 'px-6 py-4 rounded';
+
+        return $this->getColor().' '.$commonCss;
     }
 }

@@ -1,1 +1,1 @@
-<button type="{{ this.type }}" class="{{ this.color }} px-6 py-4 rounded">{{ label }}</button>
+<button{{ attributes.defaults({ class: this.css, type: this.type }) }}>{{ label }}</button>
