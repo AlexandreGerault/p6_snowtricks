@@ -54,6 +54,7 @@ class Notifications implements NotificationGateway
         $token = $snapshot->passwordResetToken->token;
 
         $mail = new AskPasswordRequestMail($token, $snapshot->email, $this->urlGenerator);
+
         $this->mailer->send($mail);
     }
 }
