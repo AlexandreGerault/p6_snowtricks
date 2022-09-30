@@ -11,7 +11,7 @@ class Trick
     /**
      * @param Image[] $images
      * @param Video[] $videos
-     *                        :thumb
+     * @param Comment[] $comments
      */
     public function __construct(
         private readonly AbstractUid $uuid,

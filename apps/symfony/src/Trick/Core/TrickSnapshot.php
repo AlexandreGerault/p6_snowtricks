@@ -11,6 +11,7 @@ class TrickSnapshot
     /**
      * @param array<Image> $images
      * @param array<Video> $videos
+     * @param array<Comment> $comments
      */
     public function __construct(
         public readonly AbstractUid $uuid,
