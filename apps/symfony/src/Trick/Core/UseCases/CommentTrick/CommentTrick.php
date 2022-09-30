@@ -2,7 +2,6 @@
 
 namespace App\Trick\Core\UseCases\CommentTrick;
 
-use App\Shared\Dates\CurrentDate;
 use App\Shared\Dates\CurrentDateInterface;
 use App\Trick\Core\Comment;
 use App\Trick\Core\TrickGateway;

@@ -10,7 +10,7 @@ use Symfony\Component\Uid\UuidV4;
 
 class CommentTrickTest extends TestCase
 {
-    public function test_a_user_can_comment_a_trick(): void
+    public function testAUserCanCommentATrick(): void
     {
         $trick = new Trick(
             UuidV4::fromString('4128c52f-6ccb-4db2-812c-c8f53b6571cb'),
@@ -26,7 +26,7 @@ class CommentTrickTest extends TestCase
             ->asUser(UuidV4::fromString('e3b7081b-0f67-40af-a725-4323a3a1ea3d'))
             ->onTrick($trick)
             ->withTricks([$trick])
-            ->withCommentContent("Comment a trick")
+            ->withCommentContent('Comment a trick')
             ->run();
 
         $trick = $sut->trickRepository()->get(UuidV4::fromString('4128c52f-6ccb-4db2-812c-c8f53b6571cb'));
@@ -35,7 +35,7 @@ class CommentTrickTest extends TestCase
         $this->assertCount(1, $trick->snapshot()->comments);
         $sut->trickRepository()->assertTrickSaved();
         $sut->output()->assertTrickCommented();
-        $this->assertEquals("Comment a trick", $comment->snapshot()->content);
+        $this->assertEquals('Comment a trick', $comment->snapshot()->content);
         $this->assertEquals($sut->currentDate(), $comment->snapshot()->createdAt);
     }
 }

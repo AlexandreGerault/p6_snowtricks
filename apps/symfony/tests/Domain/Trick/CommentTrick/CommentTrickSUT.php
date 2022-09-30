@@ -70,14 +70,14 @@ class CommentTrickSUT
     public function withCommentContent(string $commentContent): static
     {
         $this->commentContent = $commentContent;
-        
+
         return $this;
     }
 
     public function asUser(UuidV4 $userId): static
     {
         $this->userId = $userId;
-        
+
         return $this;
     }
 

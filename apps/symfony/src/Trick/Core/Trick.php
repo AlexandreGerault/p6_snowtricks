@@ -9,8 +9,8 @@ use Symfony\Component\Uid\AbstractUid;
 class Trick
 {
     /**
-     * @param Image[] $images
-     * @param Video[] $videos
+     * @param Image[]   $images
+     * @param Video[]   $videos
      * @param Comment[] $comments
      */
     public function __construct(
