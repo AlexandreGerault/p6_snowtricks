@@ -21,6 +21,7 @@ class Trick
         private readonly string $slug,
         private array $images,
         private array $videos,
+        private array $comments = [],
     ) {
         if (0 === count($images)) {
             throw new \InvalidArgumentException('Trick must have at least one image');
@@ -41,7 +42,7 @@ class Trick
         string $description,
         AbstractUid $category,
         array $images,
-        array $videos
+        array $videos,
     ): Trick {
         return new self($uuid, $name, $description, $category, Slugger::slugify($name), $images, $videos);
     }
@@ -55,7 +56,8 @@ class Trick
             $this->category,
             $this->slug,
             $this->images,
-            $this->videos
+            $this->videos,
+            $this->comments
         );
     }
 
@@ -92,5 +94,10 @@ class Trick
         }
 
         $this->videos = $videos;
+    }
+
+    public function comment(Comment $comment): void
+    {
+        $this->comments[] = $comment;
     }
 }

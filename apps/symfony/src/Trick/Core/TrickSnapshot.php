@@ -20,6 +20,7 @@ class TrickSnapshot
         public readonly string $slug,
         public readonly array $images,
         public readonly array $videos,
+        public readonly array $comments,
     ) {
     }
 }

@@ -12,6 +12,7 @@ use Symfony\Component\Uid\AbstractUid;
 
 class InMemoryTrickGateway implements TrickGateway
 {
+    private bool $saved = false;
     private bool $edited = false;
 
     /** @param Trick[] $tricks */
@@ -21,6 +22,8 @@ class InMemoryTrickGateway implements TrickGateway
 
     public function save(Trick $trick): void
     {
+        $this->saved = true;
+
         foreach ($this->tricks as $key => $iterationTrick) {
             if ($iterationTrick->snapshot()->uuid->equals($trick->snapshot()->uuid)) {
                 $this->edited = true;
@@ -50,8 +53,13 @@ class InMemoryTrickGateway implements TrickGateway
         throw new Exception('Trick not found');
     }
 
-    public function assertTrickEdited()
+    public function assertTrickEdited(): void
     {
         Assert::assertTrue($this->edited);
+    }
+
+    public function assertTrickSaved(): void
+    {
+        Assert::assertTrue($this->saved);
     }
 }
