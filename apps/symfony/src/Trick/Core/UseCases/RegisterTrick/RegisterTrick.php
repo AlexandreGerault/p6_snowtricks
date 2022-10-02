@@ -10,7 +10,6 @@ use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
 use App\Trick\Core\Video;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV6;
 
 class RegisterTrick
 {
@@ -30,10 +29,10 @@ class RegisterTrick
             }, $request->videos);
 
             $trick = Trick::create(
-                Uuid::v6(),
+                Uuid::v4(),
                 $request->name,
                 $request->description,
-                UuidV6::fromString($request->categoryId),
+                Uuid::fromString($request->categoryId),
                 $images,
                 $videos,
             );

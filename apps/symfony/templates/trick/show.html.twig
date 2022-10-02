@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Show figure
+{% endblock %}
+
+{% block body %}
+    <div class="mt-6">
+        <div class="w-full max-w-4xl bg-white rounded shadow px-6 py-4 mx-auto">
+            <h1 class="title">Une figure - Titre</h1>
+
+            {{ form_start(form) }}
+
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+
+            {{ form_row(form.message) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

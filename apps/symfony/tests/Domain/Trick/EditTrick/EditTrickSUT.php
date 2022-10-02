@@ -11,7 +11,7 @@ use App\Trick\Core\Trick;
 use App\Trick\Core\UseCases\EditTrick\EditTrick;
 use App\Trick\Core\UseCases\EditTrick\EditTrickInputData;
 use App\Trick\Core\Video;
-use Symfony\Component\Uid\UuidV6;
+use Symfony\Component\Uid\UuidV4;
 
 class EditTrickSUT
 {
@@ -23,45 +23,45 @@ class EditTrickSUT
     /** @var array<array{path:string, alt:string}> */
     public array $images = [
         [
-            'path' => '97d9d9ec-db95-45e2-b501-67159e7825c0.jpg',
+            'path' => 'd71d82c1-358a-430b-a8ac-90b5c3359f2b.jpg',
             'alt' => 'New image',
         ],
         [
-            'path' => '539fcd0b-232c-4e78-a9bf-f923c33aea73.jpg',
+            'path' => '911d7ab4-4658-476d-bfcc-d157882f44dd.jpg',
             'alt' => 'New image 2',
         ],
         [
-            'path' => 'fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg',
+            'path' => '359bec38-c06e-4892-8832-0e4780350151.jpg',
             'alt' => 'Same image',
         ],
     ];
 
     /** @var string[] */
     private array $videos = [
-        '1ece5bf4-83aa-6ca6-ac18-fb03dfecd997.mp4',
+        '8c75058e-72ce-43a3-bdc1-65274c3a2f38.mp4',
     ];
 
     public function __construct()
     {
         $this->trickToEdit = new Trick(
-            UuidV6::fromString('1ece5bf4-83aa-6ca6-ac18-fb03dfecd997'),
+            UuidV4::fromString('8c75058e-72ce-43a3-bdc1-65274c3a2f38'),
             'Old name',
             'Old description',
-            new UuidV6('1ece5bf4-83aa-6ca6-ac18-fb03dfecd997'),
+            new UuidV4('8c75058e-72ce-43a3-bdc1-65274c3a2f38'),
             'old-name',
             [
-                new Image('37b48eb3-3ed0-4019-a45f-88b90bc571a2.jpg', 'Old image'),
-                new Image('df419614-60ac-44fb-8311-3925a399776e.jpg', 'Old image 2'),
-                new Image('fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg', 'Same image'),
+                new Image('1c12f71c-7e00-4c34-adb9-cd8b55d1440a.jpg', 'Old image'),
+                new Image('118139a9-8a86-4638-84d8-9cb61b0ace76.jpg', 'Old image 2'),
+                new Image('359bec38-c06e-4892-8832-0e4780350151.jpg', 'Same image'),
             ],
             [
-                new Video('1e37acb3-bc71-4d87-aa93-631e6ecd97a3.mp4'),
+                new Video('d524bdfc-d33f-4036-be06-ae785e40a68f.mp4'),
             ]
         );
         $this->imageStorage = new InMemoryImageStorage([
-            '37b48eb3-3ed0-4019-a45f-88b90bc571a2.jpg',
-            'df419614-60ac-44fb-8311-3925a399776e.jpg',
-            'fbbd53c1-1d1b-49ac-8e15-d1e0012742cc.jpg',
+            '1c12f71c-7e00-4c34-adb9-cd8b55d1440a.jpg',
+            '118139a9-8a86-4638-84d8-9cb61b0ace76.jpg',
+            '359bec38-c06e-4892-8832-0e4780350151.jpg',
         ]);
 
         $this->testOutputPort = new EditTrickTestOutputPort();
@@ -77,10 +77,10 @@ class EditTrickSUT
     public function run(): self
     {
         $request = new EditTrickInputData(
-            '1ece5bf4-83aa-6ca6-ac18-fb03dfecd997',
+            '8c75058e-72ce-43a3-bdc1-65274c3a2f38',
             'New name',
             'New description',
-            '1ece6881-b8c6-6d6a-aa71-a9e76a603a2f',
+            '7c012e6b-df13-481e-acdb-36f8250ad9c8',
             $this->images,
             $this->videos,
         );

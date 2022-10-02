@@ -6,6 +6,7 @@ namespace App\Trick\Infrastructure\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
@@ -16,7 +17,7 @@ class Category
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private Uuid $uuid;
+    private AbstractUid $uuid;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     private string $name;
@@ -26,7 +27,7 @@ class Category
         return $this->name;
     }
 
-    public function uuid(): Uuid
+    public function uuid(): AbstractUid
     {
         return $this->uuid;
     }

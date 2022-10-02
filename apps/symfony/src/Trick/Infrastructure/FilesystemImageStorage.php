@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Mime\MimeTypesInterface;
-use Symfony\Component\Uid\UuidV6;
+use Symfony\Component\Uid\Uuid;
 
 class FilesystemImageStorage implements ImageStorage
 {
@@ -85,7 +85,7 @@ class FilesystemImageStorage implements ImageStorage
         }
 
         $extension = $this->mimeType->getExtensions($mime)[0];
-        $uniqueName = UuidV6::generate();
+        $uniqueName = Uuid::v4();
 
         return "{$uniqueName}.{$extension}";
     }
