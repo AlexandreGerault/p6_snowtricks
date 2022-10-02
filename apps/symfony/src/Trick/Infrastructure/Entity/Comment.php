@@ -4,11 +4,9 @@ namespace App\Trick\Infrastructure\Entity;
 
 use App\Security\Infrastructure\Entity\User;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`trick_comments`')]
@@ -22,7 +20,7 @@ class Comment
     private string $content;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private DateTimeInterface $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\JoinColumn(name: 'trick_uuid', referencedColumnName: 'uuid', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'comments')]
@@ -57,12 +55,12 @@ class Comment
         $this->trick = $trick;
     }
 
-    public function setAuthor($author): void
+    public function setAuthor(User $author): void
     {
         $this->author = $author;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): void
+    public function setCreatedAt(DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }

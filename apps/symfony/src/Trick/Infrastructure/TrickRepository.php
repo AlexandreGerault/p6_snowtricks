@@ -64,8 +64,10 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         $entity->setSlug($snapshot->slug);
 
         foreach ($snapshot->comments as $comment) {
-            if (!$entity->comments()->exists(fn(int $key, Comment $c) => $c->uuid()->equals($comment->uuid()))) {
-                $commentSnapshot = $comment->snapshot();
+            $commentSnapshot = $comment->snapshot();
+
+            if (!$entity->comments()->exists(fn (int $key, Comment $c) => $c->uuid()->equals($commentSnapshot->uuid))) {
+                /** @var User $user */
                 $user = $this->_em->find(User::class, $commentSnapshot->userId);
 
                 $newComment = new Comment();
@@ -115,8 +117,8 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             $entity->description(),
             $entity->category()->uuid(),
             $entity->slug(),
-            array_map(fn(ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
-            array_map(fn(VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
+            array_map(fn (ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
+            array_map(fn (VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
         );
     }
 }

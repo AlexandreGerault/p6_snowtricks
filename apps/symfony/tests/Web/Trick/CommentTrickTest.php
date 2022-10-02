@@ -49,4 +49,15 @@ class CommentTrickTest extends WebTestCase
         $this->assertInstanceOf(Trick::class, $trick);
         $this->assertCount(1, $trick->comments());
     }
+
+    public function testAnUnauthenticatedUserCannotCommentATrick(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request(Request::METHOD_GET, "/figure/{$this->getTrickSlug()}");
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertEquals(0, $crawler->filter('form[name="comment_trick"]')->count());
+    }
 }

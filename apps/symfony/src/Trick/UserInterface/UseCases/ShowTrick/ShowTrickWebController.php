@@ -14,16 +14,26 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ShowTrickWebController extends AbstractController
 {
-    public function __construct(private readonly CommentTrick $commentTrick, private readonly UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        private readonly CommentTrick $commentTrick,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly Security $security,
+    ) {
     }
 
     #[Route('/figure/{slug}', name: 'show_trick')]
     public function __invoke(Trick $trick, Request $request, RequestStack $requestStack): Response
     {
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('trick/show.html.twig', [
+                'trick' => $trick,
+            ]);
+        }
+
         /** @var User $user */
         $user = $this->getUser();
 

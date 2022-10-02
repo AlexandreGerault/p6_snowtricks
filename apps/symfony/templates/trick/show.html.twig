@@ -9,6 +9,7 @@
         <div class="w-full max-w-4xl bg-white rounded shadow px-6 py-4 mx-auto">
             <h1 class="title">Une figure - Titre</h1>
 
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and form is defined %}
             {{ form_start(form) }}
 
             <div class="my-custom-class-for-errors">
@@ -18,6 +19,7 @@
             {{ form_row(form.message) }}
 
             {{ form_end(form) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
