@@ -5,6 +5,7 @@ namespace App\Trick\Core\UseCases\CommentTrick;
 use App\Shared\Dates\CurrentDateInterface;
 use App\Trick\Core\Comment;
 use App\Trick\Core\TrickGateway;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 
 class CommentTrick
@@ -19,7 +20,7 @@ class CommentTrick
 
         $comment = new Comment(
             uuid: UuidV4::v4(),
-            userId: UuidV4::fromString($request->userId),
+            userId: Uuid::fromString($request->authorId),
             content: $request->commentContent,
             createdAt: $this->currentDate->now()
         );

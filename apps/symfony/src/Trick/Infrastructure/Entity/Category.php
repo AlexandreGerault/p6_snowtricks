@@ -10,7 +10,7 @@ use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-#[ORM\Table(name: '`categories`')]
+#[ORM\Table(name: '`trick_categories`')]
 class Category
 {
     #[ORM\Id]

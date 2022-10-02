@@ -34,7 +34,7 @@ class CommentTrickSUT
         $commentTrick = new CommentTrick($this->trickRepository, $this->currentDate);
         $input = new CommentTrickInputData(
             trickId: $this->trick->snapshot()->uuid->toRfc4122(),
-            userId: $this->userId->toRfc4122(),
+            authorId: $this->userId->toRfc4122(),
             commentContent: $this->commentContent
         );
         $commentTrick->executes($input, $this->output);
