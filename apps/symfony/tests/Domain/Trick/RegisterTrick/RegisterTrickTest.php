@@ -6,7 +6,7 @@ namespace App\Tests\Domain\Trick\RegisterTrick;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Uid\UuidV6;
+use Symfony\Component\Uid\Uuid;
 
 class RegisterTrickTest extends TestCase
 {
@@ -36,7 +36,7 @@ class RegisterTrickTest extends TestCase
             ->with([
                 'name' => 'Trick without image',
                 'description' => 'Trick without image',
-                'category' => UuidV6::generate(),
+                'category' => Uuid::v4()->toRfc4122(),
             ])
             ->withoutImages()
             ->withVideos(2)
@@ -51,7 +51,7 @@ class RegisterTrickTest extends TestCase
             ->with([
                 'name' => 'Trick without video',
                 'description' => 'Trick without video',
-                'category' => UuidV6::generate(),
+                'category' => Uuid::v4()->toRfc4122(),
             ])
             ->withImages(2)
             ->withoutVideos()
@@ -62,7 +62,7 @@ class RegisterTrickTest extends TestCase
 
     public function provideValidInputs(): Generator
     {
-        yield ['name' => 'test', 'description' => 'test', 'category' => UuidV6::generate()];
-        yield ['name' => 'test2', 'description' => 'test2', 'category' => UuidV6::generate()];
+        yield ['name' => 'test', 'description' => 'test', 'category' => Uuid::v4()->toRfc4122()];
+        yield ['name' => 'test2', 'description' => 'test2', 'category' => Uuid::v4()->toRfc4122()];
     }
 }

@@ -25,7 +25,7 @@ class TrickFixture extends Fixture
         $category = $this->getReference(CategoryFixture::CATEGORY_NAME_RIDER);
 
         $trick = new Trick();
-        $trick->setUuid(Uuid::v6());
+        $trick->setUuid(Uuid::v4());
         $trick->setName('Trick 1');
         $trick->setSlug('trick-1');
         $trick->setDescription('Description 1');

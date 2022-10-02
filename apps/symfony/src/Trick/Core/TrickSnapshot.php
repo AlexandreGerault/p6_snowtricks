@@ -9,8 +9,9 @@ use Symfony\Component\Uid\AbstractUid;
 class TrickSnapshot
 {
     /**
-     * @param array<Image> $images
-     * @param array<Video> $videos
+     * @param array<Image>   $images
+     * @param array<Video>   $videos
+     * @param array<Comment> $comments
      */
     public function __construct(
         public readonly AbstractUid $uuid,
@@ -20,6 +21,7 @@ class TrickSnapshot
         public readonly string $slug,
         public readonly array $images,
         public readonly array $videos,
+        public readonly array $comments,
     ) {
     }
 }

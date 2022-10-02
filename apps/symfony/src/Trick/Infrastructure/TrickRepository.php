@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure;
 
+use App\Security\Infrastructure\Entity\User;
 use App\Trick\Core\Image;
 use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
 use App\Trick\Core\Video;
+use App\Trick\Infrastructure\Entity\Comment;
 use App\Trick\Infrastructure\Entity\Image as ImageEntity;
 use App\Trick\Infrastructure\Entity\Trick as Entity;
 use App\Trick\Infrastructure\Entity\Video as VideoEntity;
@@ -25,6 +27,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         parent::__construct($registry, Entity::class);
     }
 
+    /** @throws \Exception */
     public function save(Trick $trick): void
     {
         $snapshot = $trick->snapshot();
@@ -59,6 +62,24 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         $entity->setDescription($snapshot->description);
         $entity->setCategory($category);
         $entity->setSlug($snapshot->slug);
+
+        foreach ($snapshot->comments as $comment) {
+            $commentSnapshot = $comment->snapshot();
+
+            if (!$entity->comments()->exists(fn (int $key, Comment $c) => $c->uuid()->equals($commentSnapshot->uuid))) {
+                /** @var User $user */
+                $user = $this->_em->find(User::class, $commentSnapshot->userId);
+
+                $newComment = new Comment();
+                $newComment->setUuid($commentSnapshot->uuid);
+                $newComment->setTrick($entity);
+                $newComment->setAuthor($user);
+                $newComment->setContent($commentSnapshot->content);
+                $newComment->setCreatedAt($commentSnapshot->createdAt);
+
+                $entity->addComment($newComment);
+            }
+        }
 
         foreach ($snapshot->images as $image) {
             $entity->addImage($image);

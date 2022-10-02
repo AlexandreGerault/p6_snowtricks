@@ -40,10 +40,15 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist', 'remove'])]
     private Collection $videos;
 
+    /** @var Collection<int, Comment> */
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function setUuid(AbstractUid $uuid): void
@@ -115,6 +120,12 @@ class Trick
         return $this->videos;
     }
 
+    /** @return Collection<int, Comment> */
+    public function comments(): Collection
+    {
+        return $this->comments;
+    }
+
     public function uuid(): AbstractUid
     {
         return $this->uuid;
@@ -123,5 +134,10 @@ class Trick
     public function slug(): string
     {
         return $this->slug;
+    }
+
+    public function addComment(Comment $param): void
+    {
+        $this->comments->add($param);
     }
 }
