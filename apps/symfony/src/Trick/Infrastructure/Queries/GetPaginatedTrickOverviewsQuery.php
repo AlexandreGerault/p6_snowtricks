@@ -24,7 +24,7 @@ FROM tricks AS t
 INNER JOIN trick_categories c1 ON t.category_uuid = c1.uuid
 INNER JOIN trick_images i ON t.uuid = i.trick_uuid
 LEFT JOIN trick_comments c ON t.uuid = c.trick_uuid
-# GROUP BY t.uuid
+ORDER BY t.created_at DESC, t.name
 LIMIT :limit
 OFFSET :offset
 SQL;
@@ -32,7 +32,7 @@ SQL;
         $statement = $this->entityManager->getConnection()->prepare($sql);
 
         $statement->bindValue('limit', $limit, PDO::PARAM_INT);
-        $statement->bindValue('offset', $offset - 1, PDO::PARAM_INT);
+        $statement->bindValue('offset', (($offset - 1) * $limit), PDO::PARAM_INT);
 
         /** @var array{name: string, slug: string, categoryName: string, thumbnailUrl: string, commentsCount: int}[] $result */
         $result = $statement->executeQuery()->fetchAllAssociative();
@@ -48,8 +48,10 @@ SQL;
             $result
         );
 
+        $totalOverviews = $this->entityManager->getConnection()->executeQuery('SELECT COUNT(*) FROM tricks')->fetchOne();
+
         return new PaginatedTrickOverviewsResult(
-            total: count($overviews),
+            total: $totalOverviews / $limit,
             perPage: $limit,
             page: $offset,
             trickOverviews: $overviews
