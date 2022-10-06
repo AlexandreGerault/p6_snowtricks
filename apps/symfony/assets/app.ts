@@ -9,5 +9,11 @@
 import './styles/app.css';
 import {CollectionInputCustomElement} from "./components/CollectionInputCustomElement";
 import './collection'
+import Alpine from 'alpinejs'
+
+// @ts-ignore
+window.Alpine = Alpine
 
 customElements.define('collection-input', CollectionInputCustomElement);
+
+Alpine.start()
