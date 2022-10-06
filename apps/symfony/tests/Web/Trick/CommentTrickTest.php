@@ -46,7 +46,7 @@ class CommentTrickTest extends WebTestCase
         /** @var TrickRepository $trickRepository */
         $trickRepository = $client->getContainer()->get(TrickRepository::class);
 
-        $trick = $trickRepository->findOneBy(['name' => 'Trick 1']);
+        $trick = $tricGkRepository->findOneBy(['name' => 'Trick 1']);
         $this->assertInstanceOf(Trick::class, $trick);
         $this->assertCount(1, $trick->comments());
     }

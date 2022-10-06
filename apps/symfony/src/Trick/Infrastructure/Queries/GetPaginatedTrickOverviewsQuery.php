@@ -5,7 +5,7 @@ namespace App\Trick\Infrastructure\Queries;
 use App\Trick\Core\UseCases\Queries\GetPaginatedTrickOverviews\GetPaginatedTrickOverviewsQuery as GetPaginatedTrickOverviewsQueryInterface;
 use App\Trick\Core\UseCases\Queries\GetPaginatedTrickOverviews\PaginatedTrickOverviewsResult;
 use App\Trick\Core\UseCases\Queries\GetPaginatedTrickOverviews\TrickOverview;
-use App\Trick\Infrastructure\Entity\Trick;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use PDO;
 
@@ -15,6 +15,7 @@ class GetPaginatedTrickOverviewsQuery implements GetPaginatedTrickOverviewsQuery
     {
     }
 
+    /** @throws Exception */
     public function run(int $limit, int $offset): PaginatedTrickOverviewsResult
     {
         $sql = <<<SQL
@@ -33,10 +34,11 @@ SQL;
         $statement->bindValue('limit', $limit, PDO::PARAM_INT);
         $statement->bindValue('offset', $offset - 1, PDO::PARAM_INT);
 
+        /** @var array{name: string, slug: string, categoryName: string, thumbnailUrl: string, commentsCount: int}[] $result */
         $result = $statement->executeQuery()->fetchAllAssociative();
 
         $overviews = array_map(
-            fn(array $trick) => new TrickOverview(
+            fn (array $trick) => new TrickOverview(
                 name: $trick['name'],
                 slug: $trick['slug'],
                 categoryName: $trick['categoryName'],

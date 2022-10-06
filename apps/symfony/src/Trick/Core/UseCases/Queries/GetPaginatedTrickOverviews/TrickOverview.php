@@ -9,7 +9,7 @@ class TrickOverview
         public readonly string $slug,
         public readonly string $categoryName,
         public readonly string $thumbnailUrl,
-        public readonly int    $commentsCount,
+        public readonly int $commentsCount,
     ) {
     }
 }

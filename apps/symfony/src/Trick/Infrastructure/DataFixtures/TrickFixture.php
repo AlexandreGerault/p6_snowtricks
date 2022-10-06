@@ -24,12 +24,12 @@ class TrickFixture extends Fixture
         /** @var Category $category */
         $category = $this->getReference(CategoryFixture::CATEGORY_NAME_RIDER);
 
-        for ($i = 0; $i < 60; $i++) {
+        for ($i = 0; $i < 60; ++$i) {
             $trick = new Trick();
             $trick->setUuid(Uuid::v4());
-            $trick->setName('Trick ' . $i);
-            $trick->setSlug('trick-' . $i);
-            $trick->setDescription('Description ' . $i);
+            $trick->setName('Trick '.$i);
+            $trick->setSlug('trick-'.$i);
+            $trick->setDescription('Description '.$i);
             $trick->setCategory($category);
 
             $image = $this->copyAssetImageForTrick($trick, '180-1.jpg');
@@ -47,6 +47,6 @@ class TrickFixture extends Fixture
     {
         $path = $this->imageStorage->save(__DIR__.'/../../../../assets/fixtures/tricks/'.$imageName);
 
-        return new Image("/storage/uploads/tricks/" . basename($path), $imageName);
+        return new Image('/storage/uploads/tricks/'.basename($path), $imageName);
     }
 }

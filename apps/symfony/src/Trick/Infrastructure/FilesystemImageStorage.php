@@ -40,7 +40,6 @@ class FilesystemImageStorage implements ImageStorage
 
         $filename = $this->generateFilename($file);
 
-
         $output = $this->uploadDir.'/'.$filename;
 
         $this->filesystem->copy($path, $output);
