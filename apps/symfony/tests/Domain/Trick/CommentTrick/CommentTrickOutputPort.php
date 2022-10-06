@@ -3,7 +3,7 @@
 namespace App\Tests\Domain\Trick\CommentTrick;
 
 use App\Trick\Core\Comment;
-use App\Trick\Core\UseCases\CommentTrick\CommentTrickPresenter;
+use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrickPresenter;
 use PHPUnit\Framework\Assert;
 
 class CommentTrickOutputPort implements CommentTrickPresenter

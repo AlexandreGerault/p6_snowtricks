@@ -5,8 +5,8 @@ namespace App\Tests\Domain\Trick\CommentTrick;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
 use App\Tests\Helpers\Dates\FakeCurrentDate;
 use App\Trick\Core\Trick;
-use App\Trick\Core\UseCases\CommentTrick\CommentTrick;
-use App\Trick\Core\UseCases\CommentTrick\CommentTrickInputData;
+use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrick;
+use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrickInputData;
 use Symfony\Component\Uid\UuidV4;
 
 class CommentTrickSUT

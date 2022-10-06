@@ -64,6 +64,7 @@ class EditTrickTest extends WebTestCase
         $this->assertResponseRedirects('/');
 
         $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('div.flash-success')->count());
         $crawler->filter('div.flash-success')->each(function ($node) {
             $this->assertStringContainsString('La figure a bien été modifiée', $node->text());
         });
@@ -94,7 +95,7 @@ class EditTrickTest extends WebTestCase
                 'images' => [
                     [
                         'alt' => 'Figure de snow',
-                        'path' => '/usr/src/app/storage/uploads/tricks/1ecec9aa-4aa6-676a-bf1f-d1ba3faf8f9b.png',
+                        'path' => '/usr/src/app/assets/fixtures/tricks/0a996066-fc6c-4a0f-be4b-c51e7f673c3d.jpg',
                     ],
                 ],
                 'videos' => [
@@ -108,6 +109,7 @@ class EditTrickTest extends WebTestCase
         $this->assertResponseRedirects('/');
 
         $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('div.flash-success')->count());
         $crawler->filter('div.flash-success')->each(function ($node) {
             $this->assertStringContainsString('La figure a bien été modifiée', $node->text());
         });
@@ -121,7 +123,7 @@ class EditTrickTest extends WebTestCase
         $images = $em->createQueryBuilder()->from(Image::class, 'i')->select('i')->getQuery()->execute();
         $videos = $em->createQueryBuilder()->from(Video::class, 'v')->select('v')->getQuery()->execute();
 
-        $this->assertCount(1, $images);
-        $this->assertCount(2, $videos);
+        $this->assertCount(60, $images);
+        $this->assertCount(61, $videos);
     }
 }

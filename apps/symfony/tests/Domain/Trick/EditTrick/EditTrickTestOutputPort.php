@@ -6,7 +6,7 @@ namespace App\Tests\Domain\Trick\EditTrick;
 
 use App\Trick\Core\Trick;
 use App\Trick\Core\TrickSnapshot;
-use App\Trick\Core\UseCases\EditTrick\EditTrickPresenter;
+use App\Trick\Core\UseCases\Commands\EditTrick\EditTrickPresenter;
 
 class EditTrickTestOutputPort implements EditTrickPresenter
 {

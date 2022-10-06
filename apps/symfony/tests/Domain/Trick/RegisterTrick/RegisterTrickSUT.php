@@ -8,8 +8,8 @@ use App\Tests\Domain\Trick\Adapters\InMemoryImageStorage;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
 use App\Trick\Core\ImageStorage;
 use App\Trick\Core\TrickGateway;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrick;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickInputData;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrick;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickInputData;
 
 class RegisterTrickSUT
 {

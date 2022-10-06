@@ -8,8 +8,8 @@ use App\Tests\Domain\Trick\Adapters\InMemoryImageStorage;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
 use App\Trick\Core\Image;
 use App\Trick\Core\Trick;
-use App\Trick\Core\UseCases\EditTrick\EditTrick;
-use App\Trick\Core\UseCases\EditTrick\EditTrickInputData;
+use App\Trick\Core\UseCases\Commands\EditTrick\EditTrick;
+use App\Trick\Core\UseCases\Commands\EditTrick\EditTrickInputData;
 use App\Trick\Core\Video;
 use Symfony\Component\Uid\UuidV4;
 

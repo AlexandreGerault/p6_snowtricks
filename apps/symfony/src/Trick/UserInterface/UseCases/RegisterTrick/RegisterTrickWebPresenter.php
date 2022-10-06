@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 
 use App\Trick\Core\TrickSnapshot;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickOutputPort;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickOutputPort;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;

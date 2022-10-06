@@ -71,6 +71,7 @@ class RegisterTrickTest extends WebTestCase
         $this->assertResponseRedirects('/');
 
         $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('div.flash-success')->count());
         $crawler->filter('div.flash-success')->each(function ($node) {
             $this->assertStringContainsString('La figure a bien été créée', $node->text());
         });

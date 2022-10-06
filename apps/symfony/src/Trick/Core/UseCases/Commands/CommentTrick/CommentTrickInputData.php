@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trick\Core\UseCases\CommentTrick;
+namespace App\Trick\Core\UseCases\Commands\CommentTrick;
 
 class CommentTrickInputData
 {
