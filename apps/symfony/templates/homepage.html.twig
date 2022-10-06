@@ -1,16 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends 'hero_layout.html.twig' %}
 
 {% block body %}
     {% for message in app.flashes('error') %}
-        <div>
+        <div class="rounded px-6 py-4 bg-red-100 text-red-800">
             {{ message }}
         </div>
     {% endfor %}
 
 
     {% for message in app.flashes('success') %}
-        <div class="flash-success">
+        <div class="flash-success rounded px-6 py-4 bg-green-100 text-green-800">
             {{ message }}
         </div>
     {% endfor %}
+
+    <h1>Figures de snowboard</h1>
+
+    <section class="grid gap-4 xl:grid-cols-3 md:grid-cols-2 py-12">
+        {% for trick in tricks %}
+            {{ component('trick-overview', {
+                image: trick.thumbnailUrl,
+                title: trick.name,
+                slug: trick.slug,
+                category: trick.categoryName,
+                commentsCount: trick.commentsCount,
+            }) }}
+        {% endfor %}
+    </section>
+    <div>
+        {% for i in range(1, total) %}
+            <a href="{{ path('homepage', {page: i}) }}">{{ i }}</a>
+        {% endfor %}
+    </div>
 {% endblock %}

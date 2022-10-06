@@ -80,7 +80,7 @@ class Trick
     {
         $new = new Image();
         $new->setTrick($this);
-        $new->setPath($image->path);
+        $new->setPath(basename($image->path));
         $new->setAlt($image->description);
         $this->images->add($new);
     }

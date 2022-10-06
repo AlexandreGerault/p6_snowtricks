@@ -24,19 +24,21 @@ class TrickFixture extends Fixture
         /** @var Category $category */
         $category = $this->getReference(CategoryFixture::CATEGORY_NAME_RIDER);
 
-        $trick = new Trick();
-        $trick->setUuid(Uuid::v4());
-        $trick->setName('Trick 1');
-        $trick->setSlug('trick-1');
-        $trick->setDescription('Description 1');
-        $trick->setCategory($category);
+        for ($i = 0; $i < 60; $i++) {
+            $trick = new Trick();
+            $trick->setUuid(Uuid::v4());
+            $trick->setName('Trick ' . $i);
+            $trick->setSlug('trick-' . $i);
+            $trick->setDescription('Description ' . $i);
+            $trick->setCategory($category);
 
-        $image = $this->copyAssetImageForTrick($trick, '180-1.jpg');
-        $trick->addImage($image);
+            $image = $this->copyAssetImageForTrick($trick, '180-1.jpg');
+            $trick->addImage($image);
 
-        $trick->addVideo(new Video('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+            $trick->addVideo(new Video('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
 
-        $manager->persist($trick);
+            $manager->persist($trick);
+        }
 
         $manager->flush();
     }
@@ -45,6 +47,6 @@ class TrickFixture extends Fixture
     {
         $path = $this->imageStorage->save(__DIR__.'/../../../../assets/fixtures/tricks/'.$imageName);
 
-        return new Image($path, $imageName);
+        return new Image("/storage/uploads/tricks/" . basename($path), $imageName);
     }
 }

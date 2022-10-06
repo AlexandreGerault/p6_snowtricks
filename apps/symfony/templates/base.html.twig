@@ -15,12 +15,23 @@
     {% endblock %}
 </head>
 <body class="px-6 lg:px-0">
-{% for message in app.flashes('error') %}
-    <div class="error">
-        {{ message }}
-    </div>
-{% endfor %}
+
+{% include('partials/navbar.html.twig') %}
+
 <main class="max-w-5xl mx-auto">
+    {% for message in app.flashes('error') %}
+        <div class="rounded px-6 py-4 bg-red-100 text-red-800">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-success rounded px-6 py-4 bg-green-100 text-green-800">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {% block body %}{% endblock %}
 </main>
 </body>

@@ -27,7 +27,7 @@ yarn-error.log
 ###< phpunit/phpunit ###
 
 ###> projet ###
-storage/
+/storage/
 ###< projet ###
 
 ###> friendsofphp/php-cs-fixer ###
