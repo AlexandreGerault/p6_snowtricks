@@ -9,7 +9,7 @@ interface ImageStorage
     /** @return array<string> */
     public function findAll(): array;
 
-    /** Save an image from a given path and return the generated image path */
+    /** Save an image from a given path and return the generated image name */
     public function save(string $path): string;
 
     /** Assert that an image exists */

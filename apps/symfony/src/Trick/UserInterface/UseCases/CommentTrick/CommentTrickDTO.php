@@ -3,7 +3,7 @@
 namespace App\Trick\UserInterface\UseCases\CommentTrick;
 
 use App\Security\Infrastructure\Entity\User;
-use App\Trick\Core\UseCases\CommentTrick\CommentTrickInputData;
+use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrickInputData;
 use App\Trick\Infrastructure\Entity\Trick;
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Validator\Constraints as Assert;

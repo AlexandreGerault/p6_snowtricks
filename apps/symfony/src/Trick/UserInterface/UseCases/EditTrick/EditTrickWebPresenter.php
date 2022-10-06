@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Trick\UserInterface\UseCases\EditTrick;
 
 use App\Trick\Core\Trick;
-use App\Trick\Core\UseCases\EditTrick\EditTrickPresenter;
+use App\Trick\Core\UseCases\Commands\EditTrick\EditTrickPresenter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;

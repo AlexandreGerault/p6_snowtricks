@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\Core\UseCases\RegisterTrick;
+namespace App\Trick\Core\UseCases\Commands\RegisterTrick;
 
 use App\Trick\Core\Image;
 use App\Trick\Core\ImageStorage;

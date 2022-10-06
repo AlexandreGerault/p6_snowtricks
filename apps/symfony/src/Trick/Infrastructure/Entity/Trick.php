@@ -44,11 +44,15 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
     private Collection $comments;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private \DateTimeInterface $createdAt;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function setUuid(AbstractUid $uuid): void
@@ -80,7 +84,7 @@ class Trick
     {
         $new = new Image();
         $new->setTrick($this);
-        $new->setPath($image->path);
+        $new->setPath(basename($image->path));
         $new->setAlt($image->description);
         $this->images->add($new);
     }

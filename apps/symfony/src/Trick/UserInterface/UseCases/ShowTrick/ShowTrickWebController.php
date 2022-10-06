@@ -3,7 +3,7 @@
 namespace App\Trick\UserInterface\UseCases\ShowTrick;
 
 use App\Security\Infrastructure\Entity\User;
-use App\Trick\Core\UseCases\CommentTrick\CommentTrick;
+use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrick;
 use App\Trick\Infrastructure\Entity\Trick;
 use App\Trick\UserInterface\UseCases\CommentTrick\CommentTrickDTO;
 use App\Trick\UserInterface\UseCases\CommentTrick\CommentTrickType;

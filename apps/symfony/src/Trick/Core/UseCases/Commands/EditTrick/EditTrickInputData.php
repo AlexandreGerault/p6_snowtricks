@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\Core\UseCases\EditTrick;
+namespace App\Trick\Core\UseCases\Commands\EditTrick;
 
 class EditTrickInputData
 {

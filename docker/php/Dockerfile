@@ -23,6 +23,7 @@ RUN pecl install apcu imagick xdebug
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install bcmath exif gd mysqli pdo_mysql zip
 RUN docker-php-ext-enable apcu imagick xdebug
+RUN ln -s /usr/src/app/storage /usr/src/app/public/storage
 
 ENV LANG fr_FR.UTF-8
 ENV LANGUAGE fr_FR:en

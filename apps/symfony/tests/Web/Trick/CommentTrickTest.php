@@ -20,7 +20,7 @@ class CommentTrickTest extends WebTestCase
 
         $client->loginUser(FetchUser::new($client->getContainer())->fetchUserByMail(UserFixture::ADMIN_MAIL));
 
-        $crawler = $client->request(Request::METHOD_GET, "/figure/{$this->getTrickSlug()}");
+        $crawler = $client->request(Request::METHOD_GET, "/figure/{$this->getTrickSlug('Trick 1')}");
 
         $this->assertResponseIsSuccessful();
 
@@ -34,18 +34,19 @@ class CommentTrickTest extends WebTestCase
             ],
         ];
 
-        $client->request(Request::METHOD_POST, "/figure/{$this->getTrickSlug()}", $params);
-        $this->assertResponseRedirects("/figure/{$this->getTrickSlug()}");
+        $client->request(Request::METHOD_POST, "/figure/{$this->getTrickSlug('Trick 1')}", $params);
+        $this->assertResponseRedirects("/figure/{$this->getTrickSlug('Trick 1')}");
 
         $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('div.flash-success')->count());
         $crawler->filter('div.flash-success')->each(function ($node) {
-            $this->assertStringContainsString('Votre commentaire a bien été pris en compte', $node->text());
+            $this->assertStringContainsString('Votre commentaire a bien été ajouté', $node->text());
         });
 
         /** @var TrickRepository $trickRepository */
         $trickRepository = $client->getContainer()->get(TrickRepository::class);
 
-        $trick = $trickRepository->findOneBy(['name' => 'Trick 1']);
+        $trick = $tricGkRepository->findOneBy(['name' => 'Trick 1']);
         $this->assertInstanceOf(Trick::class, $trick);
         $this->assertCount(1, $trick->comments());
     }

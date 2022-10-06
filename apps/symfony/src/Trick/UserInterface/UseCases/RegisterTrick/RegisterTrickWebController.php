@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrick;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrick;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

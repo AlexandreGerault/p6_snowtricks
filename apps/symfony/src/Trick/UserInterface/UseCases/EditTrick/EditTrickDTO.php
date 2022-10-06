@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\EditTrick;
 
-use App\Trick\Core\UseCases\EditTrick\EditTrickInputData;
+use App\Trick\Core\UseCases\Commands\EditTrick\EditTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\Infrastructure\Entity\Image;
 use App\Trick\Infrastructure\Entity\Trick;

@@ -12,7 +12,7 @@ class WebTestCase extends TestCase
     protected function tearDown(): void
     {
         $rootDir = $this->getContainer()->getParameter('kernel.project_dir');
-        $uploadedFiles = "{$rootDir}/storage/testing/uploads";
+        $uploadedFiles = "{$rootDir}/public/storage/testing/uploads";
 
         $this
             ->getContainer()
