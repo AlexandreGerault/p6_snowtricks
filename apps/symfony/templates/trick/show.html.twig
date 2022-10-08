@@ -75,6 +75,14 @@
                         </p>
                     </article>
                 {% endfor %}
+
+                {% if trick.total > 1 %}
+                <div class="my-8 flex gap-4 text-xl justify-center">
+                    {% for i in range(1, trick.total) %}
+                        <a href="{{ path('show_trick', {slug: trick.trickSlug, page: i}) }}" class="{{ trick.page is same as i ? "text-blue-500" : "" }}">{{ i }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </section>
         </div>
     </article>

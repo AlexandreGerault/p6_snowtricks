@@ -63,7 +63,7 @@ class ShowTrickWebController extends AbstractController
     {
         $input = new GetTrickWithPaginatedCommentsInputData(
             $trick->slug(),
-            $request->query->getInt('per_page', 10),
+            $request->query->getInt('per_page', 1),
             $request->query->getInt('page', 1),
         );
 

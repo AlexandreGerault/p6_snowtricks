@@ -39,7 +39,7 @@ class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedComment
         $comments = $this->getComments($trick['uuid'], $limit, $offset);
 
         return new TrickWithPaginatedCommentsResult(
-            total: $trick['commentsCount'] / $limit,
+            total: $trick['commentsCount'] / $limit > 0 ? (int) ceil($trick['commentsCount'] / $limit) : 1,
             perPage: $limit,
             page: $offset,
             trickName: $trick['name'],
@@ -123,8 +123,9 @@ class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedComment
             ->from(Comment::class, 'c')
             ->select('c.content, c.createdAt, u.username')
             ->innerJoin('c.author', 'u')
-            ->where('c.trick = :trick')
-            ->setParameter('trick', $uuid)
+            ->innerJoin('c.trick', 't')
+            ->where('t.uuid = :trick')
+            ->setParameter('trick', $uuid->toBinary())
             ->setMaxResults($limit)
             ->setFirstResult(($offset - 1) * $limit)
             ->orderBy('c.createdAt', 'DESC')
