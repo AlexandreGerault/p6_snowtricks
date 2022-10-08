@@ -7,7 +7,7 @@ namespace App\Trick\Core\UseCases\Commands\EditTrick;
 class EditTrickInputData
 {
     /**
-     * @param array{path: string, alt: string} $thumbnail
+     * @param array{path: string, alt: string}        $thumbnail
      * @param array<array{path: string, alt: string}> $images
      * @param string[]                                $videos
      */

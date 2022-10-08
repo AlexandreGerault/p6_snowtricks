@@ -9,7 +9,6 @@ use Symfony\Component\Uid\AbstractUid;
 class TrickSnapshot
 {
     /**
-     * @param Image   $thumbnail
      * @param array<Image>   $images
      * @param array<Video>   $videos
      * @param array<Comment> $comments

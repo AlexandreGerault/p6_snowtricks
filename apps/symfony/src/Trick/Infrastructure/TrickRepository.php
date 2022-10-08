@@ -11,7 +11,6 @@ use App\Trick\Core\TrickGateway;
 use App\Trick\Core\Video;
 use App\Trick\Infrastructure\Entity\Comment;
 use App\Trick\Infrastructure\Entity\Image as ImageEntity;
-use App\Trick\Infrastructure\Entity\Thumbnail;
 use App\Trick\Infrastructure\Entity\Trick as Entity;
 use App\Trick\Infrastructure\Entity\Video as VideoEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
