@@ -31,10 +31,8 @@ class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedComment
     public function run(string $slug, int $limit, int $offset): TrickWithPaginatedCommentsResult
     {
         $trick = $this->getTrick($slug);
-//        dd($trick['uuid']);
 
         $images = $this->getImages($trick['uuid']);
-//        dd($images);
 
         $videos = $this->getVideos($trick['uuid']);
 
@@ -73,6 +71,7 @@ class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedComment
      *     thumbnailAlt: string,
      *     commentsCount: int
      * }
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
