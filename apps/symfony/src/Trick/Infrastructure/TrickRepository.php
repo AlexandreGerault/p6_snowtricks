@@ -11,6 +11,7 @@ use App\Trick\Core\TrickGateway;
 use App\Trick\Core\Video;
 use App\Trick\Infrastructure\Entity\Comment;
 use App\Trick\Infrastructure\Entity\Image as ImageEntity;
+use App\Trick\Infrastructure\Entity\Thumbnail;
 use App\Trick\Infrastructure\Entity\Trick as Entity;
 use App\Trick\Infrastructure\Entity\Video as VideoEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -62,6 +63,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         $entity->setDescription($snapshot->description);
         $entity->setCategory($category);
         $entity->setSlug($snapshot->slug);
+        $entity->updateThumbnail($snapshot->thumbnail);
 
         foreach ($snapshot->comments as $comment) {
             $commentSnapshot = $comment->snapshot();
@@ -117,6 +119,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             $entity->description(),
             $entity->category()->uuid(),
             $entity->slug(),
+            new Image($entity->thumbnail()->path(), $entity->thumbnail()->alt()),
             array_map(fn (ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
             array_map(fn (VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
         );

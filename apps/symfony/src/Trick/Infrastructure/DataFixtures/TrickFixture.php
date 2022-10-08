@@ -32,10 +32,13 @@ class TrickFixture extends Fixture
             $trick->setDescription('Description '.$i);
             $trick->setCategory($category);
 
+            $thumbnail = $this->copyAssetImageForTrick($trick, '180-thumbnail.jpg');
+            $trick->setThumbnail($thumbnail);
+
             $image = $this->copyAssetImageForTrick($trick, '180-1.jpg');
             $trick->addImage($image);
 
-            $trick->addVideo(new Video('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+            $trick->addVideo(new Video('https://www.youtube.com/embed/pbMwTqkKSps'));
 
             $manager->persist($trick);
         }

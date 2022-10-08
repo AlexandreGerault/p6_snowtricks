@@ -47,6 +47,7 @@ class EditTrickTest extends WebTestCase
                 'name' => 'Figure 2',
                 'description' => 'Description',
                 'category' => $this->getCategoryUuid($client->getContainer()),
+                'thumbnail' => [['alt' => 'Miniature de snow']],
                 'images' => [['alt' => 'Figure de snow']],
                 'videos' => [
                     ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
@@ -56,6 +57,7 @@ class EditTrickTest extends WebTestCase
 
         $files = [
             'edit_trick' => [
+                'thumbnail' => ['image' => File::image('thumbnail.jpg')],
                 'images' => [['image' => File::image('figure.jpg')]],
             ],
         ];

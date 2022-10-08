@@ -25,6 +25,10 @@ class EditTrickDTO
     #[Assert\NotBlank]
     public Category $category;
 
+    #[Assert\Valid]
+    #[Assert\Type(type: ImageDTO::class)]
+    public ImageDTO $thumbnail;
+
     /** @var ImageDTO[] */
     #[Assert\Valid]
     #[Assert\Type(type: 'array')]
@@ -47,6 +51,7 @@ class EditTrickDTO
         $this->name = $trick->name();
         $this->description = $trick->description();
         $this->category = $trick->category();
+        $this->thumbnail = new ImageDTO($trick->thumbnail());
         $this->images = array_map(fn (Image $image) => new ImageDTO($image), $trick->images()->toArray());
         $this->videos = array_map(fn (Video $video) => new VideoDTO($video), $trick->videos()->toArray());
     }
@@ -58,6 +63,7 @@ class EditTrickDTO
             $this->name,
             $this->description,
             $this->category->uuid()->toRfc4122(),
+            $this->thumbnail->toDomain(),
             array_map(fn (ImageDTO $image) => $image->toDomain(), $this->images),
             array_map(fn (VideoDTO $video) => $video->toDomain(), $this->videos)
         );

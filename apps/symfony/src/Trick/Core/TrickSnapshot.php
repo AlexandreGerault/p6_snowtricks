@@ -9,6 +9,7 @@ use Symfony\Component\Uid\AbstractUid;
 class TrickSnapshot
 {
     /**
+     * @param Image   $thumbnail
      * @param array<Image>   $images
      * @param array<Video>   $videos
      * @param array<Comment> $comments
@@ -19,6 +20,7 @@ class TrickSnapshot
         public readonly string $description,
         public readonly AbstractUid $categoryId,
         public readonly string $slug,
+        public readonly Image $thumbnail,
         public readonly array $images,
         public readonly array $videos,
         public readonly array $comments,

@@ -45,6 +45,11 @@ class EditTrick
         $trick->updateImages(array_merge($unchangedImages, $newImages));
         $trick->updateVideos(array_map(fn (string $video) => new Video($video), $request->videos));
 
+        if ($request->thumbnail['path'] !== $snapshot->thumbnail->path) {
+            $newThumbnailPath = $this->imageStorage->save($request->thumbnail['path']);
+            $trick->changeThumbnail(new Image($newThumbnailPath, $request->thumbnail['alt']));
+        }
+
         $this->trickGateway->save($trick);
 
         $presenter->trickEdited($trick);

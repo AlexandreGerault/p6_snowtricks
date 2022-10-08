@@ -19,12 +19,13 @@ class RegisterTrickTest extends TestCase
                 'description' => $description,
                 'category' => $category,
             ])
+            ->withThumbnail('thumbnail.jpg')
             ->withImages(2)
             ->withVideos(2)
             ->run();
 
         $this->assertCount(1, $sut->gateway()->findAll());
-        $this->assertCount(2, $sut->imageStorage()->findAll());
+        $this->assertCount(3, $sut->imageStorage()->findAll());
         $this->assertEquals($name, $sut->output()->snapshot->name);
         $this->assertEquals($description, $sut->output()->snapshot->description);
         $this->assertEquals($category, $sut->output()->snapshot->categoryId);

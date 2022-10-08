@@ -19,6 +19,7 @@ class Trick
         private string $description,
         private AbstractUid $category,
         private readonly string $slug,
+        private Image $thumbnail,
         private array $images,
         private array $videos,
         private array $comments = [],
@@ -41,10 +42,11 @@ class Trick
         string $name,
         string $description,
         AbstractUid $category,
+        Image $thumbnail,
         array $images,
         array $videos,
     ): Trick {
-        return new self($uuid, $name, $description, $category, Slugger::slugify($name), $images, $videos);
+        return new self($uuid, $name, $description, $category, Slugger::slugify($name), $thumbnail, $images, $videos);
     }
 
     public function snapshot(): TrickSnapshot
@@ -55,6 +57,7 @@ class Trick
             $this->description,
             $this->category,
             $this->slug,
+            $this->thumbnail,
             $this->images,
             $this->videos,
             $this->comments
@@ -99,5 +102,10 @@ class Trick
     public function comment(Comment $comment): void
     {
         $this->comments[] = $comment;
+    }
+
+    public function changeThumbnail(Image $newThumbnail): void
+    {
+        $this->thumbnail = $newThumbnail;
     }
 }

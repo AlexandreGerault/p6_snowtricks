@@ -7,6 +7,7 @@ namespace App\Trick\UserInterface\UseCases\RegisterTrick;
 use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickInputData;
 use App\Trick\Infrastructure\Entity\Category;
+use App\Trick\Infrastructure\Entity\Thumbnail;
 use App\Trick\UserInterface\Form\Type\ImageDTO;
 use App\Trick\UserInterface\Form\Type\VideoDTO;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,6 +23,10 @@ class RegisterTrickDTO
 
     #[Assert\NotBlank]
     public Category $category;
+
+    #[Assert\Valid]
+    #[Assert\Type(type: ImageDTO::class)]
+    public ImageDTO $thumbnail;
 
     /** @var ImageDTO[] */
     #[Assert\Valid]
@@ -43,6 +48,7 @@ class RegisterTrickDTO
             $this->name,
             $this->description,
             $this->category->uuid()->toRfc4122(),
+            $this->thumbnail->toDomain(),
             array_map(fn (ImageDTO $image) => $image->toDomain(), $this->images),
             array_map(fn (VideoDTO $video) => $video->toDomain(), $this->videos)
         );
