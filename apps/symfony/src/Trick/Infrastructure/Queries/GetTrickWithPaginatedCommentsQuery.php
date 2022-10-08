@@ -7,9 +7,15 @@ use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\GetTrickWithPa
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\TrickComment;
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\TrickWithPaginatedCommentsResult;
 use App\Trick\Core\Video;
-use Doctrine\DBAL\Exception;
+use App\Trick\Infrastructure\Entity\Comment;
+use App\Trick\Infrastructure\Entity\Image as ImageEntity;
+use App\Trick\Infrastructure\Entity\Trick;
+use App\Trick\Infrastructure\Entity\Video as VideoEntity;
 use Doctrine\ORM\EntityManagerInterface;
-use PDO;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Exception;
+use Symfony\Component\Uid\AbstractUid;
 
 class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedCommentsQueryInterface
 {
@@ -17,78 +23,113 @@ class GetTrickWithPaginatedCommentsQuery implements GetTrickWithPaginatedComment
     {
     }
 
-    /** @throws Exception */
+    /**
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
     public function run(string $slug, int $limit, int $offset): TrickWithPaginatedCommentsResult
     {
-        $trickSql = <<<SQL
-SELECT t.uuid, t.name, t.slug, t.description, COUNT(tc.uuid) AS commentsCount, c.name as categoryName
-FROM tricks t 
-INNER JOIN snowtricks.trick_categories c on t.category_uuid = c.uuid
-LEFT JOIN trick_comments tc on t.uuid = tc.trick_uuid
-WHERE t.slug = :slug
-GROUP BY t.uuid
-SQL;
-        /** @var array{uuid: string, name: string, slug: string, description: string, categoryName: string, commentsCount: int} $trickResult */
-        $trickResult = $this->entityManager
-            ->getConnection()
-            ->executeQuery($trickSql, ['slug' => $slug])
-            ->fetchAllAssociative()[0];
+        $trick = $this->getTrick($slug);
+//        dd($trick['uuid']);
 
-        $imagesSql = <<<SQL
-SELECT i.path, i.alt FROM trick_images i WHERE i.trick_uuid = :trickUuid;
-SQL;
-        /** @var array{path: string, alt: string}[] $imagesResult */
-        $imagesResult = $this->entityManager
-            ->getConnection()
-            ->executeQuery($imagesSql, ['trickUuid' => $trickResult['uuid']])
-            ->fetchAllAssociative();
+        $images = $this->getImages($trick['uuid']);
+//        dd($images);
 
-        $videosSql = <<<SQL
-SELECT v.url FROM snowtricks.trick_videos v WHERE v.trick_uuid = :trickUuid;
-SQL;
-        /** @var array{url: string}[] $videosResult */
-        $videosResult = $this->entityManager
-            ->getConnection()
-            ->executeQuery($videosSql, ['trickUuid' => $trickResult['uuid']])
-            ->fetchAllAssociative();
+        $videos = $this->getVideos($trick['uuid']);
 
-        $comments = <<<SQL
-SELECT c.content, c.created_at, u.username
-FROM trick_comments c 
-INNER JOIN users u ON c.author_uuid = u.uuid
-WHERE c.trick_uuid = :trickUuid
-ORDER BY c.created_at DESC
-LIMIT :limit
-OFFSET :offset;
-SQL;
-        $statement = $this->entityManager->getConnection()->prepare($comments);
-
-        $statement->bindValue('trickUuid', $trickResult['uuid']);
-        $statement->bindValue('limit', $limit, PDO::PARAM_INT);
-        $statement->bindValue('offset', ($offset - 1) * $limit, PDO::PARAM_INT);
-
-        /** @var array{content: string, created_at: string, username: string}[] $commentsResult */
-        $commentsResult = $statement->executeQuery()->fetchAllAssociative();
+        $comments = $this->getComments($trick['uuid'], $limit, $offset);
 
         return new TrickWithPaginatedCommentsResult(
-            total: $trickResult['commentsCount'] / $limit,
+            total: $trick['commentsCount'] / $limit,
             perPage: $limit,
             page: $offset,
-            trickName: $trickResult['name'],
-            trickSlug: $trickResult['slug'],
-            trickCategoryName: $trickResult['categoryName'],
-            trickDescription: $trickResult['description'],
-            thumbnailUrl: $imagesResult[0]['path'],
+            trickName: $trick['name'],
+            trickSlug: $trick['slug'],
+            trickCategoryName: $trick['categoryName'],
+            trickDescription: $trick['description'],
+            thumbnailUrl: $trick['thumbnailUrl'],
             comments: array_map(
                 fn (array $comment) => new TrickComment(
                     author: $comment['username'],
                     content: $comment['content'],
-                    createdAt: (new \DateTimeImmutable($comment['created_at']))->format('d/m/Y à H:i'),
+                    createdAt: $comment['createdAt']->format('d/m/Y à H:i'),
                 ),
-                $commentsResult,
+                $comments,
             ),
-            images: array_map(fn (array $image) => new Image($image['path'], $image['alt']), $imagesResult),
-            videos: array_map(fn (array $video) => new Video($video['url']), $videosResult),
+            images: array_map(fn (array $image) => new Image($image['path'], $image['alt']), $images),
+            videos: array_map(fn (array $video) => new Video($video['url']), $videos),
         );
+    }
+
+    /**
+     * @return array{
+     *     uuid: AbstractUid,
+     *     name: string,
+     *     slug: string,
+     *     categoryName: string,
+     *     description: string,
+     *     thumbnailUrl: string,
+     *     thumbnailAlt: string,
+     *     commentsCount: int
+     * }
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getTrick(string $slug): array
+    {
+        return $this->entityManager->createQueryBuilder() // @phpstan-ignore-line
+            ->from(Trick::class, 't')
+            ->select('t.uuid AS uuid, t.name, t.slug, t.description, COUNT(tc.uuid) AS commentsCount, c.name as categoryName, th.path AS thumbnailUrl, th.alt AS thumbnailAlt')
+            ->leftJoin('t.comments', 'tc')
+            ->innerJoin('t.category', 'c')
+            ->innerJoin('t.thumbnail', 'th')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->groupBy('t.uuid')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    /** @return array{path: string, alt: string}[] */
+    public function getImages(AbstractUid $uuid): array
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->from(ImageEntity::class, 'i')
+            ->select('i.path, i.alt')
+            ->innerJoin('i.trick', 't')
+            ->where('t.uuid = :trick')
+            ->setParameter('trick', $uuid->toBinary())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /** @return array{url: string}[] */
+    public function getVideos(AbstractUid $uuid): array
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->from(VideoEntity::class, 'v')
+            ->select('v.url')
+            ->innerJoin('v.trick', 't')
+            ->where('t.uuid = :trick')
+            ->setParameter('trick', $uuid->toBinary())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /** @return array{content: string, createdAt: \DateTimeImmutable, username: string}[] */
+    public function getComments(AbstractUid $uuid, int $limit, int $offset): mixed
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->from(Comment::class, 'c')
+            ->select('c.content, c.createdAt, u.username')
+            ->innerJoin('c.author', 'u')
+            ->where('c.trick = :trick')
+            ->setParameter('trick', $uuid)
+            ->setMaxResults($limit)
+            ->setFirstResult(($offset - 1) * $limit)
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }
