@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Trick\Infrastructure;
 
-use App\Trick\Core\Image;
 use App\Trick\Core\ImageStorage;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Mime\MimeTypesInterface;
-use Symfony\Component\Uid\UuidV6;
+use Symfony\Component\Uid\Uuid;
 
 class FilesystemImageStorage implements ImageStorage
 {
@@ -41,7 +40,7 @@ class FilesystemImageStorage implements ImageStorage
 
         $filename = $this->generateFilename($file);
 
-        $output = $this->uploadDir . '/' . $filename;
+        $output = $this->uploadDir.'/'.$filename;
 
         $this->filesystem->copy($path, $output);
 
@@ -82,12 +81,17 @@ class FilesystemImageStorage implements ImageStorage
         $mime = $this->mimeType->guessMimeType($file->getRealPath());
 
         if (is_null($mime)) {
-            throw new \RuntimeException("Could not guess mime type");
+            throw new \RuntimeException('Could not guess mime type');
         }
 
         $extension = $this->mimeType->getExtensions($mime)[0];
-        $uniqueName = UuidV6::generate();
+        $uniqueName = Uuid::v4();
 
         return "{$uniqueName}.{$extension}";
+    }
+
+    public function delete(string $path): void
+    {
+        $this->filesystem->remove($path);
     }
 }

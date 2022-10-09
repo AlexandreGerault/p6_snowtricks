@@ -7,13 +7,9 @@ namespace App\Tests\Domain\Trick\RegisterTrick;
 use App\Tests\Domain\Trick\Adapters\InMemoryImageStorage;
 use App\Tests\Domain\Trick\Adapters\InMemoryTrickGateway;
 use App\Trick\Core\ImageStorage;
-use App\Trick\Core\Trick;
 use App\Trick\Core\TrickGateway;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrick;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickInputData;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickResponse;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV4;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrick;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickInputData;
 
 class RegisterTrickSUT
 {
@@ -21,7 +17,11 @@ class RegisterTrickSUT
     private string $description = '';
     private string $categoryId = '';
 
+    /** @var array{path: string, alt: string} */
+    private array $thumbnail = [];
+    /** @var array{path: string, alt: string}[] */
     private array $images = [];
+    /** @var array<string> */
     private array $videos = [];
 
     private RegisterTrickTestOutputPort $outputPort;
@@ -46,6 +46,7 @@ class RegisterTrickSUT
             $this->name,
             $this->description,
             $this->categoryId,
+            $this->thumbnail,
             $this->images,
             $this->videos
         );
@@ -68,8 +69,8 @@ class RegisterTrickSUT
 
     public function withImages(int $int): static
     {
-        for ($i = 0; $i < $int; $i++) {
-            $this->images[] = ['path' => "public/storage/img/figure_{$i}.png", 'alt' => "test"];
+        for ($i = 0; $i < $int; ++$i) {
+            $this->images[] = ['path' => "public/storage/img/figure_{$i}.png", 'alt' => 'test'];
         }
 
         return $this;
@@ -77,7 +78,7 @@ class RegisterTrickSUT
 
     public function withVideos(int $int): static
     {
-        for ($i = 0; $i < $int; $i++) {
+        for ($i = 0; $i < $int; ++$i) {
             $this->videos[] = "https://www.youtube.com/watch?v=lCQigQcTMJ{$i}";
         }
 
@@ -97,6 +98,7 @@ class RegisterTrickSUT
     public function withoutImages(): static
     {
         $this->images = [];
+
         return $this;
     }
 
@@ -110,5 +112,12 @@ class RegisterTrickSUT
     public function imageStorage(): ImageStorage
     {
         return $this->imageStorage;
+    }
+
+    public function withThumbnail(string $thumbnail, string $alt = 'test'): static
+    {
+        $this->thumbnail = ['path' => "public/storage/img/{$thumbnail}", 'alt' => $alt];
+
+        return $this;
     }
 }

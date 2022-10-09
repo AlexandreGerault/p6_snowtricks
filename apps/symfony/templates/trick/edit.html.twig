@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="mt-6">
+        <div class="w-full max-w-4xl bg-white rounded shadow px-6 py-4 mx-auto">
+            <h1 class="title">Ajouter une figure</h1>
+
+            {{ form_start(form) }}
+
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.category) }}
+
+            {{ form_row(form.thumbnail) }}
+
+            {{ form_row(form.images) }}
+            {{ form_row(form.add_image, {attr: {'data-collection': form.images.vars.id}}) }}
+
+
+            {{ form_row(form.videos) }}
+            {{ form_row(form.add_video, {attr: {'data-collection': form.videos.vars.id}}) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

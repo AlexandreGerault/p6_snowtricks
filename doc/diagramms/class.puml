@@ -1,0 +1,99 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+package Trick {
+    class Trick {
+        - name: string
+        - description: string
+
+        + string name()
+        + string description()
+        + Image thumbnail()
+        + void setName(string name)
+        + void setDescription(string description)
+        + void addImage(Image image)
+        + void addVideo(Video image)
+        + void removeImage(Image image)
+        + void removeVideo(Video image)
+        + void setThumbnail(Image image)
+    }
+
+    interface ImageInterface {
+        + string path()
+        + void setPath(string path)
+        + string alt()
+        + void setAlt(string alt)
+    }
+
+    class Thumbnail implements ImageInterface {
+        - path: string
+        - alt: string
+    }
+
+    class Image implements ImageInterface {
+        - path: string
+        - alt: string
+    }
+
+    class Video {
+        - url: string
+        + setUrl(string url)
+        + string url()
+    }
+
+    class Comment {
+        - content: string
+        - createdAt: DateTimeImmutable
+        + setContent(string content)
+        + string content()
+        + DateTimeImmutable createdAt()
+        + void setCreatedAt(DateTimeImmutable createdAt)
+    }
+
+    class Category {
+        - name: string
+        + setName(string name)
+        + string name()
+    }
+
+    Trick "1" *-- "1" Thumbnail
+    Trick "1" *-- "n" Image
+    Trick "1" *-- "n" Video
+    Trick "1" *-- "n" Comment
+    Trick "1" *-- "1" Category
+}
+
+package Security {
+    class User {
+        - username: string
+        - email: string
+        - password: string
+        - active: bool
+
+        + setUsername(string username)
+        + string username()
+        + setEmail(string email)
+        + string email()
+        + setPassword(string password)
+        + string password()
+        + setActive(bool active)
+        + bool active()
+    }
+
+    class PasswordResetToken {
+      - token: string
+    }
+
+    class ActivationToken {
+      - token: string
+    }
+
+    User "1" *-- "1" PasswordResetToken
+    User "1" *-- "1" ActivationToken
+}
+
+User "1" *-- "n" Comment
+
+
+@enduml

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Trick\RegisterTrick;
 
 use App\Trick\Core\TrickSnapshot;
-use App\Trick\Core\UseCases\RegisterTrick\RegisterTrickOutputPort;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickOutputPort;
 
 class RegisterTrickTestOutputPort implements RegisterTrickOutputPort
 {

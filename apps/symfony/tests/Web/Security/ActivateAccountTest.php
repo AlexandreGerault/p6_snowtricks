@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Web\Security;
 
-use App\Security\DataFixtures\ActivationTokenFixture;
-use App\Security\DataFixtures\UserFixture;
-use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
+use App\Security\Infrastructure\DataFixtures\ActivationTokenFixture;
+use App\Security\Infrastructure\DataFixtures\UserFixture;
+use App\Security\Infrastructure\Entity\User;
+use App\Security\Infrastructure\Repository\UserRepository;
 use App\Tests\Web\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class ActivateAccountTest extends WebTestCase
 {
-    public function test_it_activates_an_account_when_clicking_on_confirm_link(): void
+    public function testItActivatesAnAccountWhenClickingOnConfirmLink(): void
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/confirmer?token=' . ActivationTokenFixture::ACTIVATION_TOKEN);
+        $client->request(Request::METHOD_GET, '/confirmer/'.ActivationTokenFixture::ACTIVATION_TOKEN);
 
         $this->assertResponseRedirects();
 
@@ -27,13 +27,16 @@ class ActivateAccountTest extends WebTestCase
         $inactiveUser = $userRepository->findOneBy(['username' => UserFixture::INACTIVE_NAME]);
 
         $this->assertTrue($inactiveUser->isActive());
+
+        $crawler = $client->followRedirect();
+        $this->assertStringContainsString('Votre compte a bien été activé !', $crawler->html());
     }
 
-    public function test_it_cannot_find_account_for_given_token(): void
+    public function testItCannotFindAccountForGivenToken(): void
     {
         $client = static::createClient();
 
-        $client->request(Request::METHOD_GET, '/confirmer?token=invalid');
+        $client->request(Request::METHOD_GET, '/confirmer/invalid');
 
         $this->assertResponseRedirects();
         $crawler = $client->followRedirect();

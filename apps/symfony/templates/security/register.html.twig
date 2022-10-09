@@ -5,15 +5,20 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
+    <div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8">
+        {{ form_start(form) }}
 
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        {{ component('button', {
+            type: 'submit',
+            label: "S'inscrire",
+        }) }}
+
+        {{ form_end(form) }}
     </div>
-
-    {{ form_rest(form) }}
-
-    <button type="submit">S'inscrire</button>
-
-    {{ form_end(form) }}
 {% endblock %}

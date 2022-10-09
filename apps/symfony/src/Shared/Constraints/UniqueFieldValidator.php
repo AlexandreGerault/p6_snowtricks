@@ -16,6 +16,7 @@ class UniqueFieldValidator extends ConstraintValidator
     {
     }
 
+    /** @throws Exception */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueField) {
@@ -28,15 +29,13 @@ class UniqueFieldValidator extends ConstraintValidator
 
         if ($this->alreadyExists($value, $constraint->field, $constraint->table)) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter("{{ value }}", $value)
-                ->setParameter("{{ field }}", $constraint->fieldName)
+                ->setParameter('{{ value }}', $value)
+                ->setParameter('{{ field }}', $constraint->fieldName)
                 ->addViolation();
         }
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     private function alreadyExists(string $value, string $field, string $table): bool
     {
         $connection = $this->entityManager->getConnection();

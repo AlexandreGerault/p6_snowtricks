@@ -2,11 +2,9 @@ controllers:
     resource: ../src
     type: annotation
 
-homepage:
-    path: /
-    controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-    defaults:
-        template: 'homepage.html.twig'
+app_logout:
+    path: /deconnexion
+    methods: GET
 
 kernel:
     resource: ../src/Kernel.php

@@ -5,4 +5,4 @@ services:
 
   App\Trick\Infrastructure\FilesystemImageStorage:
     arguments:
-      $uploadDir: '%kernel.project_dir%/storage/testing/uploads/tricks'
+      $uploadDir: '%kernel.project_dir%/public/storage/testing/uploads/tricks'

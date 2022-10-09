@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Show figure
+{% endblock %}
+
+{% block body %}
+    <article class="relative">
+        <header class="relative h-96 flex flex-col">
+            <div class="absolute inset-0">
+                <img class="w-full max-h-96 object-cover"
+                     src="/storage/uploads/tricks/{{ trick.thumbnailUrl }}"
+                     alt="Photo d'une figure de {{ trick.trickName }}"
+                />
+            </div>
+            <div class="absolute inset-0 bg-gray-400 mix-blend-multiply"></div>
+
+            <div class="relative flex-grow flex flex-col space-y-8 items-center justify-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                    <span class="block text-white">{{ trick.trickName }}</span>
+                </h1>
+                <h2 class="text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
+                <span class="block text-white max-w-3xl text-center">
+                    {{ trick.trickCategoryName }}
+                </span>
+                </h2>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto bg-white rounded shadow transform -translate-y-8">
+            <section class="grid lg:grid-cols-2 gap-8 p-4">
+                {# Photos #}
+                <div class="flex justify-between flex-wrap gap-4">
+                    {% for illustration in trick.images %}
+                        <img src="/storage/uploads/tricks/{{ illustration.path }}" class="w-48 h-48 object-cover"
+                             alt=""/>
+                    {% endfor %}
+                </div>
+
+                {# Videos #}
+                <div>
+                    {% for video in trick.videos %}
+                        <iframe width="192" height="192" src="{{ video.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <p class="px-6 py-4">
+                {{ trick.trickDescription }}
+            </p>
+
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and form is defined %}
+                <div class="px-6 py-4">
+                {{ form_start(form) }}
+
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(form) }}
+                </div>
+
+                {{ form_row(form.message) }}
+
+                {{ component('button', {type: 'submit', label: 'Commenter'}) }}
+
+                {{ form_end(form) }}</div>
+            {% endif %}
+
+            {# Comments #}
+            <section class="flex flex-col gap-4 px-6 py-4">
+                {% for comment in trick.comments %}
+                    <article class="rounded bg-white shadow px-6 py-4">
+                        <p>{{ comment.content }}</p>
+                        <p class="text-sm text-gray-600 italic">{{ comment.author }} le
+                            <time>{{ comment.createdAt }}</time>
+                        </p>
+                    </article>
+                {% endfor %}
+
+                {% if trick.total > 1 %}
+                <div class="my-8 flex gap-4 text-xl justify-center">
+                    {% for i in range(1, trick.total) %}
+                        <a href="{{ path('show_trick', {slug: trick.trickSlug, page: i}) }}" class="{{ trick.page is same as i ? "text-blue-500" : "" }}">{{ i }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </section>
+        </div>
+    </article>
+{% endblock %}

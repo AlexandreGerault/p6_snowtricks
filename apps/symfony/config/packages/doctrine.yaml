@@ -12,8 +12,8 @@ doctrine:
         mappings:
             App\Security:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Security/Entity'
-                prefix: 'App\Security\Entity'
+                dir: '%kernel.project_dir%/src/Security/Infrastructure/Entity'
+                prefix: 'App\Security\Infrastructure\Entity'
                 alias: App\Security
             App\Trick:
                 is_bundle: false

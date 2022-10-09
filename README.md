@@ -9,8 +9,8 @@ A CRUD-like project, where users can register and look snowboard tricks up. User
 To install the project locally, you need to have Docker and Docker-Compose installed locally. Then simply run these commands:
 
 ```bash
-  git clone git@github.com:AlexandreGerault/snowtricks.git
-  cd snowtricks
+  git clone git@github.com:AlexandreGerault/p6_snowtricks.git
+  cd p6_snowtricks
   make install
 ```
 

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+:Visitor:
+:Member:
+
+Member -|> Visitor
+
+package Security {
+    usecase "Login" as Login
+    usecase "Register" as Register
+    usecase "Logout" as Logout
+    usecase "Ask new password" as AskNewPassword
+    usecase "Change password" as ChangePassword
+}
+
+Visitor --> Login
+Visitor --> Register
+Member --> Logout
+Member --> AskNewPassword
+Member --> ChangePassword
+
+@enduml

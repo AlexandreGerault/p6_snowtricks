@@ -14,12 +14,25 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
-{% for message in app.flashes('error') %}
-    <div class="error">
-        {{ message }}
-    </div>
-{% endfor %}
-{% block body %}{% endblock %}
+<body class="px-6 lg:px-0">
+
+{% include('partials/navbar.html.twig') %}
+
+<main>
+    {% for message in app.flashes('error') %}
+        <div class="rounded px-6 py-4 bg-red-100 text-red-800">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-success rounded px-6 py-4 bg-green-100 text-green-800">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+</main>
 </body>
 </html>

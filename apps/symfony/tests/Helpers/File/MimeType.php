@@ -13,8 +13,8 @@ class MimeType
 
     public static function getMimeTypes(): MimeTypes|MimeTypesInterface|null
     {
-        if (self::$mime === null) {
-            self::$mime = new MimeTypes;
+        if (null === self::$mime) {
+            self::$mime = new MimeTypes();
         }
 
         return self::$mime;

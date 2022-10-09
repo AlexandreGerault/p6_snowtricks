@@ -30,7 +30,15 @@ services:
 
     App\Trick\Infrastructure\FilesystemImageStorage:
         arguments:
-            $uploadDir: '%kernel.project_dir%/storage/uploads/tricks'
+            $uploadDir: '%kernel.project_dir%/public/storage/uploads/tricks'
+
+    Symfony\Component\PasswordHasher\PasswordHasherInterface:
+        class: Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher
+        arguments:
+            $opsLimit: null
+            $memLimit: null
+            $cost: null
+            $algorithm: 'argon2i'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

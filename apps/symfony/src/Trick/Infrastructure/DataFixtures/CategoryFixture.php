@@ -11,19 +11,19 @@ use Symfony\Component\Uid\UuidV4;
 
 class CategoryFixture extends Fixture
 {
-    public const CATEGORY_UUID_RIDER = 'd35effa2-f180-4d3b-b656-14b586264ffc';
+    public const CATEGORY_UUID_RIDER = '71494473-142a-4e97-9872-7fb787a07573';
     public const CATEGORY_NAME_RIDER = 'Rider';
 
-    public const CATEGORY_UUID_GRAB = 'a2daae4c-f7e9-4e0f-9193-1736e32766d5';
+    public const CATEGORY_UUID_GRAB = '8d00de52-6777-42b7-8560-1c6807a1e8ae';
     public const CATEGORY_NAME_GRAB = 'Grab';
 
-    public const CATEGORY_UUID_ROTATION = '90623086-d636-43d4-aadb-130539c3606c';
+    public const CATEGORY_UUID_ROTATION = 'bf881534-07a7-408e-b1e7-57aeab02d6ec';
     public const CATEGORY_NAME_ROTATION = 'Rotation';
 
-    public const CATEGORY_UUID_FLIP = 'b56dde60-d114-4193-9816-8dbd5c370b32';
+    public const CATEGORY_UUID_FLIP = 'a3ade03f-7f96-43fb-9e30-ae3e321a9abb';
     public const CATEGORY_NAME_FLIP = 'Flip';
 
-    public const CATEGORY_UUID_SLIDES = 'd684cea9-47f9-4de6-bb5e-e2a4cc720fee';
+    public const CATEGORY_UUID_SLIDES = '71b763b8-d2ae-4e03-acbd-3e966eb4c87c';
     public const CATEGORY_NAME_SLIDES = 'Slides';
 
     public function load(ObjectManager $manager): void
@@ -54,5 +54,7 @@ class CategoryFixture extends Fixture
         $manager->persist($slide);
 
         $manager->flush();
+
+        $this->addReference(self::CATEGORY_NAME_RIDER, $rider);
     }
 }

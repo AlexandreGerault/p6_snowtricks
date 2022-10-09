@@ -1,17 +1,23 @@
 .PHONY: install
-install: prepare-install migrate build-front
+install: prepare-install build-test migrate build-front
 
 .PHONY: prepare-install
 prepare-install:
 	cp .env.example .env
+	cp .env.test.example .env.test
 	docker compose build
 	docker compose up -d
 	cp apps/symfony/.env.example apps/symfony/.env
+	cp apps/symfony/.env.test.example apps/symfony/.env.test
 	docker compose exec php composer install
 
 .PHONY: migrate
 migrate:
 	docker compose exec php bin/console d:s:u --force
+
+.PHONY: migrate
+reset-db:
+	docker compose -f docker-compose.test.yml exec php bin/console d:s:u --force
 
 .PHONY: build-front
 build-front:
@@ -29,7 +35,7 @@ stop:
 
 .PHONY: format
 format:
-	docker compose exec php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
+	docker compose exec php vendor/bin/php-cs-fixer fix
 
 .PHONY: analyse
 analyse:
