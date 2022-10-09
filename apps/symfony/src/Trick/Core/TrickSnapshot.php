@@ -19,6 +19,7 @@ class TrickSnapshot
         public readonly string $description,
         public readonly AbstractUid $categoryId,
         public readonly string $slug,
+        public readonly Image $thumbnail,
         public readonly array $images,
         public readonly array $videos,
         public readonly array $comments,

@@ -27,7 +27,7 @@ class Comment
     private Trick $trick;
 
     #[ORM\JoinColumn(name: 'author_uuid', referencedColumnName: 'uuid', nullable: false)]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private User $author;
 
     public function uuid(): AbstractUid

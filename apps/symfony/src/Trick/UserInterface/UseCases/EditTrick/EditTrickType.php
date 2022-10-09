@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Trick\UserInterface\UseCases\EditTrick;
 
+use App\Trick\UserInterface\Form\Type\ImageType;
 use App\Trick\UserInterface\Form\Type\TrickType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,6 +18,10 @@ class EditTrickType extends TrickType
         parent::buildForm($builder, $options);
 
         $builder
+            ->add('thumbnail', ImageType::class, [
+                'label' => 'Image principale',
+                'required' => false,
+            ])
             ->add('add_image', ButtonType::class, [
                 'label' => 'Ajouter une image',
                 'attr' => [

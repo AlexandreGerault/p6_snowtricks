@@ -34,7 +34,7 @@ class EditTrickTest extends WebTestCase
 
         $client->loginUser(FetchUser::new($client->getContainer())->fetchUserByMail(UserFixture::ADMIN_MAIL));
 
-        $crawler = $client->request(Request::METHOD_GET, "/figure/modifier/{$this->getTrickSlug()}");
+        $crawler = $client->request(Request::METHOD_GET, "/figure/modifier/{$this->getTrickSlug('Trick 2')}");
 
         $this->assertResponseIsSuccessful();
 
@@ -47,6 +47,7 @@ class EditTrickTest extends WebTestCase
                 'name' => 'Figure 2',
                 'description' => 'Description',
                 'category' => $this->getCategoryUuid($client->getContainer()),
+                'thumbnail' => ['alt' => 'Miniature de snow'],
                 'images' => [['alt' => 'Figure de snow']],
                 'videos' => [
                     ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
@@ -56,11 +57,12 @@ class EditTrickTest extends WebTestCase
 
         $files = [
             'edit_trick' => [
+                'thumbnail' => ['image' => File::image('thumbnail.jpg')],
                 'images' => [['image' => File::image('figure.jpg')]],
             ],
         ];
 
-        $client->request(Request::METHOD_POST, "/figure/modifier/{$this->getTrickSlug()}", $params, $files);
+        $client->request(Request::METHOD_POST, "/figure/modifier/{$this->getTrickSlug('Trick 2')}", $params, $files);
         $this->assertResponseRedirects('/');
 
         $crawler = $client->followRedirect();
@@ -69,7 +71,7 @@ class EditTrickTest extends WebTestCase
             $this->assertStringContainsString('La figure a bien été modifiée', $node->text());
         });
 
-        $this->assertCount(1, $client->getContainer()->get(ImageStorage::class)->findAll());
+        $this->assertCount(2, $client->getContainer()->get(ImageStorage::class)->findAll());
         $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findBy(['name' => 'Figure 2']));
     }
 
@@ -92,6 +94,10 @@ class EditTrickTest extends WebTestCase
                 'name' => 'Figure 2',
                 'description' => 'Description',
                 'category' => $this->getCategoryUuid($client->getContainer()),
+                'thumbnail' => [
+                    'alt' => 'Miniature de snow',
+                    'path' => '/usr/src/app/assets/fixtures/tricks/0a996066-fc6c-4a0f-be4b-c51e7f673c3d.jpg',
+                ],
                 'images' => [
                     [
                         'alt' => 'Figure de snow',
@@ -114,7 +120,7 @@ class EditTrickTest extends WebTestCase
             $this->assertStringContainsString('La figure a bien été modifiée', $node->text());
         });
 
-        $this->assertCount(1, $client->getContainer()->get(ImageStorage::class)->findAll());
+        $this->assertCount(2, $client->getContainer()->get(ImageStorage::class)->findAll());
         $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findBy(['name' => 'Figure 2']));
 
         /** @var EntityManagerInterface $em */

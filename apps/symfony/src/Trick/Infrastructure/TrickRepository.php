@@ -62,6 +62,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
         $entity->setDescription($snapshot->description);
         $entity->setCategory($category);
         $entity->setSlug($snapshot->slug);
+        $entity->updateThumbnail($snapshot->thumbnail);
 
         foreach ($snapshot->comments as $comment) {
             $commentSnapshot = $comment->snapshot();
@@ -117,6 +118,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             $entity->description(),
             $entity->category()->uuid(),
             $entity->slug(),
+            new Image($entity->thumbnail()->path(), $entity->thumbnail()->alt()),
             array_map(fn (ImageEntity $image) => new Image($image->path(), $image->alt()), $entity->images()->toArray()),
             array_map(fn (VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
         );

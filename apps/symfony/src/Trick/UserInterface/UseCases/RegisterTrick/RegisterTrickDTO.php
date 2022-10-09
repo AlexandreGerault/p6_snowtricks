@@ -23,6 +23,10 @@ class RegisterTrickDTO
     #[Assert\NotBlank]
     public Category $category;
 
+    #[Assert\Valid]
+    #[Assert\Type(type: ImageDTO::class)]
+    public ImageDTO $thumbnail;
+
     /** @var ImageDTO[] */
     #[Assert\Valid]
     #[Assert\Type(type: 'array')]
@@ -43,6 +47,7 @@ class RegisterTrickDTO
             $this->name,
             $this->description,
             $this->category->uuid()->toRfc4122(),
+            $this->thumbnail->toDomain(),
             array_map(fn (ImageDTO $image) => $image->toDomain(), $this->images),
             array_map(fn (VideoDTO $video) => $video->toDomain(), $this->videos)
         );

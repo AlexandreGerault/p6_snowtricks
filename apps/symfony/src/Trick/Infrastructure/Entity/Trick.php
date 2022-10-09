@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\AbstractUid;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[ORM\Table(name: '`tricks`')]
@@ -31,6 +32,10 @@ class Trick
     #[ORM\JoinColumn(name: 'category_uuid', referencedColumnName: 'uuid', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Category::class)]
     private Category $category;
+
+    #[ORM\JoinColumn(name: 'thumbnail_uuid', referencedColumnName: 'uuid', nullable: false)]
+    #[ORM\OneToOne(targetEntity: Thumbnail::class, cascade: ['persist', 'remove'])]
+    private Thumbnail $thumbnail;
 
     /** @var Collection<int, Image> */
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['persist', 'remove'])]
@@ -83,6 +88,7 @@ class Trick
     public function addImage(\App\Trick\Core\Image $image): void
     {
         $new = new Image();
+        $new->setUuid(Uuid::v4());
         $new->setTrick($this);
         $new->setPath(basename($image->path));
         $new->setAlt($image->description);
@@ -143,5 +149,28 @@ class Trick
     public function addComment(Comment $param): void
     {
         $this->comments->add($param);
+    }
+
+    public function thumbnail(): Thumbnail
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(\App\Trick\Core\Image $thumbnail): void
+    {
+        $new = new Thumbnail();
+        $new->setUuid(Uuid::v4());
+        $new->setPath(basename($thumbnail->path));
+        $new->setAlt($thumbnail->description);
+        $this->thumbnail = $new;
+    }
+
+    public function updateThumbnail(\App\Trick\Core\Image $thumbnail): void
+    {
+        $new = $this->thumbnail ?? new Thumbnail();
+        $new->setUuid($new->uuid() ?? Uuid::v4());
+        $new->setPath(basename($thumbnail->path));
+        $new->setAlt($thumbnail->description);
+        $this->thumbnail = $new;
     }
 }

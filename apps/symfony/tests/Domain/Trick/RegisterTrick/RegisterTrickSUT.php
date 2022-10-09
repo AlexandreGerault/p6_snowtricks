@@ -17,7 +17,11 @@ class RegisterTrickSUT
     private string $description = '';
     private string $categoryId = '';
 
+    /** @var array{path: string, alt: string} */
+    private array $thumbnail = [];
+    /** @var array{path: string, alt: string}[] */
     private array $images = [];
+    /** @var array<string> */
     private array $videos = [];
 
     private RegisterTrickTestOutputPort $outputPort;
@@ -42,6 +46,7 @@ class RegisterTrickSUT
             $this->name,
             $this->description,
             $this->categoryId,
+            $this->thumbnail,
             $this->images,
             $this->videos
         );
@@ -107,5 +112,12 @@ class RegisterTrickSUT
     public function imageStorage(): ImageStorage
     {
         return $this->imageStorage;
+    }
+
+    public function withThumbnail(string $thumbnail, string $alt = 'test'): static
+    {
+        $this->thumbnail = ['path' => "public/storage/img/{$thumbnail}", 'alt' => $alt];
+
+        return $this;
     }
 }

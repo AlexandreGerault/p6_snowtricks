@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+:Visitor:
+:Member:
+
+Member -|> Visitor
+
+package Trick {
+    usecase "Add a trick to the trick's directory" as FigureCreate
+    usecase "Edit a trick's from the directory" as FigureEdit
+    usecase "Remove a trick's from the directory" as FigureDelete
+    usecase "Post a message in the discussion space of a trick" as FigureMessageCreate
+    usecase "List snowboard tricks" as FiguresIndex
+    usecase "See trick's details" as FiguresShow
+    usecase "See trick's discussion messages" as FiguresReadMessages
+}
+
+Visitor --> FiguresIndex
+Visitor --> FiguresShow
+Visitor --> FiguresReadMessages
+Member --> FigureCreate
+Member --> FigureEdit
+Member --> FigureDelete
+Member --> FigureMessageCreate
+
+@enduml

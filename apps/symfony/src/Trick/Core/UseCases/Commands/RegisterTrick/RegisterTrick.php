@@ -20,6 +20,8 @@ class RegisterTrick
     public function executes(RegisterTrickInputData $request, RegisterTrickOutputPort $outputPort): void
     {
         try {
+            $thumbnail = new Image($this->imageStorage->save($request->thumbnail['path']), $request->thumbnail['alt']);
+
             $images = array_map(function (array $image) {
                 return new Image($this->imageStorage->save($image['path']), $image['alt']);
             }, $request->images);
@@ -33,6 +35,7 @@ class RegisterTrick
                 $request->name,
                 $request->description,
                 Uuid::fromString($request->categoryId),
+                $thumbnail,
                 $images,
                 $videos,
             );

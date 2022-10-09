@@ -10,12 +10,10 @@ use Symfony\Component\Uid\AbstractUid;
 
 #[ORM\Entity()]
 #[ORM\Table(name: '`trick_images`')]
-class Image
+class Image implements ImageInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private AbstractUid $uuid;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
@@ -27,6 +25,13 @@ class Image
     #[ORM\JoinColumn(name: 'trick_uuid', referencedColumnName: 'uuid', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'images')]
     private Trick $trick;
+
+    public function setUuid(AbstractUid $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
 
     public function setTrick(Trick $trick): void
     {

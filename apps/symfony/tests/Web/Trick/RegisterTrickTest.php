@@ -55,6 +55,7 @@ class RegisterTrickTest extends WebTestCase
                 'name' => 'Figure',
                 'description' => 'Description',
                 'category' => $this->getCategoryUuid($client->getContainer()),
+                'thumbnail' => ['alt' => 'Thumbnail de snow'],
                 'images' => [['alt' => 'Figure de snow']],
                 'videos' => [
                     ['url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
@@ -63,6 +64,7 @@ class RegisterTrickTest extends WebTestCase
         ];
         $files = [
             'register_trick' => [
+                'thumbnail' => ['image' => File::image('figure.jpg')],
                 'images' => [['image' => File::image('figure.jpg')]],
             ],
         ];
@@ -76,7 +78,7 @@ class RegisterTrickTest extends WebTestCase
             $this->assertStringContainsString('La figure a bien été créée', $node->text());
         });
 
-        $this->assertCount(1, $client->getContainer()->get(ImageStorage::class)->findAll());
+        $this->assertCount(2, $client->getContainer()->get(ImageStorage::class)->findAll());
         $this->assertCount(1, $client->getContainer()->get(TrickRepository::class)->findBy(['name' => 'Figure']));
     }
 }

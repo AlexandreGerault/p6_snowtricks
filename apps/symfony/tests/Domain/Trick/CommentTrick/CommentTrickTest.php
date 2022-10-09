@@ -18,6 +18,7 @@ class CommentTrickTest extends TestCase
             'Trick description',
             UuidV4::fromString('4128c52f-6ccb-4db2-812c-c8f53b6571cb'),
             'trick-name',
+            new Image('/', ''),
             [new Image('/', '')],
             [new Video('/')],
         );

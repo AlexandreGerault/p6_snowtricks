@@ -49,6 +49,7 @@ class EditTrickSUT
             'Old description',
             new UuidV4('8c75058e-72ce-43a3-bdc1-65274c3a2f38'),
             'old-name',
+            new Image('f6ae7a00-bb36-4bbb-bd6f-21875494a48a.jpg', 'Thumbnail'),
             [
                 new Image('1c12f71c-7e00-4c34-adb9-cd8b55d1440a.jpg', 'Old image'),
                 new Image('118139a9-8a86-4638-84d8-9cb61b0ace76.jpg', 'Old image 2'),
@@ -59,6 +60,7 @@ class EditTrickSUT
             ]
         );
         $this->imageStorage = new InMemoryImageStorage([
+            'f6ae7a00-bb36-4bbb-bd6f-21875494a48a.jpg',
             '1c12f71c-7e00-4c34-adb9-cd8b55d1440a.jpg',
             '118139a9-8a86-4638-84d8-9cb61b0ace76.jpg',
             '359bec38-c06e-4892-8832-0e4780350151.jpg',
@@ -81,6 +83,7 @@ class EditTrickSUT
             'New name',
             'New description',
             '7c012e6b-df13-481e-acdb-36f8250ad9c8',
+            ['path' => 'd71d82c1-358a-430b-a8ac-90b5c3359f2b.jpg', 'alt' => 'New thumbnail'],
             $this->images,
             $this->videos,
         );
