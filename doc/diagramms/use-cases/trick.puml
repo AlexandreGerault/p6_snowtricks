@@ -7,14 +7,6 @@ left to right direction
 
 Member -|> Visitor
 
-package Security {
-    usecase "Login" as Login
-    usecase "Register" as Register
-    usecase "Logout" as Logout
-    usecase "Ask new password" as AskNewPassword
-    usecase "Change password" as ChangePassword
-}
-
 package Trick {
     usecase "Add a trick to the trick's directory" as FigureCreate
     usecase "Edit a trick's from the directory" as FigureEdit
@@ -28,15 +20,9 @@ package Trick {
 Visitor --> FiguresIndex
 Visitor --> FiguresShow
 Visitor --> FiguresReadMessages
-Visitor --> Login
-Visitor --> Register
-
-Member --> Logout
 Member --> FigureCreate
 Member --> FigureEdit
 Member --> FigureDelete
 Member --> FigureMessageCreate
-Member --> AskNewPassword
-Member --> ChangePassword
 
 @enduml
