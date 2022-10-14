@@ -17,7 +17,7 @@ class AskPasswordResetSUT
 
     private AskPasswordReset $askPasswordReset;
     private User $user;
-    private string $email;
+    private string $username;
     private InMemoryNotifications $notifications;
 
     public static function new(): self
@@ -25,9 +25,9 @@ class AskPasswordResetSUT
         return new self();
     }
 
-    public function withEmail(string $email): static
+    public function withUsername(string $username): static
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
@@ -49,7 +49,7 @@ class AskPasswordResetSUT
 
         $this->askPasswordReset = new AskPasswordReset($this->userRepository, $passwordResetGenerator, $this->notifications);
 
-        $input = new AskPasswordResetInputData($this->email);
+        $input = new AskPasswordResetInputData($this->username);
         $this->askPasswordReset->executes($input, $this->outputPort);
 
         return $this;

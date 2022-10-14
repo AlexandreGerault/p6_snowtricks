@@ -17,7 +17,7 @@ class AskPasswordReset
 
     public function executes(AskPasswordResetInputData $input, AskPasswordResetPresenter $presenter): void
     {
-        $user = $this->userRepository->findByEmail($input->email);
+        $user = $this->userRepository->findByUsername($input->username);
 
         if (is_null($user)) {
             $presenter->userNotFound();

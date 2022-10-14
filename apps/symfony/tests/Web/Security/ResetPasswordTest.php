@@ -29,7 +29,7 @@ class ResetPasswordTest extends WebTestCase
         $this->assertStringContainsString('Demande de réinitialisation de votre mot de passe', $crawler->html());
 
         $client->submitForm('Envoyer', [
-            'ask_password_reset[email]' => UserFixture::ADMIN_MAIL,
+            'ask_password_reset[username]' => UserFixture::ADMIN_NAME,
         ]);
 
         /** @var ?TemplatedEmail $email */
@@ -90,7 +90,7 @@ class ResetPasswordTest extends WebTestCase
         $this->assertStringContainsString('Demande de réinitialisation de votre mot de passe', $crawler->html());
 
         $client->submitForm('Envoyer', [
-            'ask_password_reset[email]' => 'wrong@email.fr',
+            'ask_password_reset[username]' => 'None',
         ]);
         $this->assertEmailCount(0);
         $this->assertResponseRedirects();

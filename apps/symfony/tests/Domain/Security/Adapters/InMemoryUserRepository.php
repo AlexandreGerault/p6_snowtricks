@@ -129,4 +129,15 @@ class InMemoryUserRepository implements UserRepository
     {
         Assert::assertNotNull($user->snapshot()->activationToken);
     }
+
+    public function findByUsername(string $username): ?User
+    {
+        foreach ($this->users as $user) {
+            if ($user->snapshot()->username === $username) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
 }

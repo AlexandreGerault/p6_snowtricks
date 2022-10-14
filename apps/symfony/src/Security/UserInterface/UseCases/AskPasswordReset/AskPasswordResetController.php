@@ -34,9 +34,9 @@ class AskPasswordResetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var AskPasswordResetDTO $dto */
             $dto = $form->getData();
-            $email = $dto->email;
+            $username = $dto->username;
 
-            $input = new AskPasswordResetInputData($email);
+            $input = new AskPasswordResetInputData($username);
             $presenter = new AskPasswordResetWebPresenter(
                 $this->generator,
                 $requestStack->getSession()->getBag('flashes')

@@ -163,4 +163,15 @@ class UserRepository extends ServiceEntityRepository implements \App\Security\Co
 
         return $this->coreUser($user);
     }
+
+    public function findByUsername(string $username): ?CoreUser
+    {
+        $entity = $this->findOneBy(['username' => $username]);
+
+        if (is_null($entity)) {
+            return null;
+        }
+
+        return $this->coreUser($entity);
+    }
 }

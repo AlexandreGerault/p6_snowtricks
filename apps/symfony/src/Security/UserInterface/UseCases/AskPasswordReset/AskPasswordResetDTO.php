@@ -2,7 +2,10 @@
 
 namespace App\Security\UserInterface\UseCases\AskPasswordReset;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class AskPasswordResetDTO
 {
-    public string $email;
+    #[Assert\NotBlank]
+    public string $username;
 }
