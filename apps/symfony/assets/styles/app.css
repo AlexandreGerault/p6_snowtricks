@@ -21,3 +21,7 @@
 .button-red {
     @apply px-3 py-2 rounded bg-red-600 hover:bg-red-800 transition-all duration-200 text-white;
 }
+
+body {
+    min-height: 100vh;
+}
