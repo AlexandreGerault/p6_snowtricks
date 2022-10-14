@@ -25,7 +25,7 @@ class AskPasswordResetTest extends TestCase
 
         $sut = AskPasswordResetSUT::new()
             ->withUser($user)
-            ->withEmail('user@example.com')
+            ->withUsername('username')
             ->run();
 
         $sut->userRepository()->assertHasSaved();
@@ -52,7 +52,7 @@ class AskPasswordResetTest extends TestCase
 
         $sut = AskPasswordResetSUT::new()
             ->withUser($user)
-            ->withEmail('user-2@example.com')
+            ->withUsername('user-2@example.com')
             ->run();
 
         $sut->userRepository()->assertHasNotSaved();
