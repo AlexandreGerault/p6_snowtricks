@@ -5,29 +5,37 @@
 {% endblock %}
 
 {% block body %}
-    <div class="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto px-2 sm:px-6 lg:px-8">
         {% if error %}
             <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('app_login') }}" method="post" class="space-y-4">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <div class="rounded px-8 py-6 shadow space-y-4">
+            <h1 class="text-4xl font-extrabold tracking-tight text-center">Connexion</h1>
 
-            <div>
-                <label for="username" class="block">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="_username" class="w-full rounded"/>
-            </div>
+            <form action="{{ path('app_login') }}" method="post" class="space-y-4">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <div>
-                <label for="password" class="block">Mot de passe :</label>
-                <input type="password" id="password" name="_password" class="w-full rounded"/>
-            </div>
+                <div>
+                    <label for="username" class="block">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="_username" class="w-full rounded"/>
+                </div>
 
-            {{ component('button', {
-                type: 'submit',
-                label: "Se connecter",
-                class: "w-full"
-            }) }}
-        </form>
+                <div>
+                    <label for="password" class="block">Mot de passe :</label>
+                    <input type="password" id="password" name="_password" class="w-full rounded"/>
+                </div>
+
+                <p>
+                    <a class="text-sm text-blue-600" href="{{ path('ask_password_reset') }}">Mot de passe oublié ?</a>
+                </p>
+
+                {{ component('button', {
+                    type: 'submit',
+                    label: "Se connecter",
+                    class: "w-full"
+                }) }}
+            </form>
+        </div>
     </div>
 {% endblock %}
