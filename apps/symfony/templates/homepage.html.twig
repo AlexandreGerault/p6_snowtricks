@@ -27,9 +27,11 @@
             }) }}
         {% endfor %}
     </section>
+    {% if total > 1 %}
     <div class="my-8 flex gap-4 text-xl justify-center">
         {% for i in range(1, total) %}
             <a href="{{ path('homepage', {page: i}) }}" class="{{ page is same as i ? "text-blue-500" : "" }}">{{ i }}</a>
         {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}
