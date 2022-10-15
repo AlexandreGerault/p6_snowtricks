@@ -10,6 +10,8 @@ prepare-install:
 	cp apps/symfony/.env.example apps/symfony/.env
 	cp apps/symfony/.env.test.example apps/symfony/.env.test
 	docker compose exec php composer install
+	docker compose exec php bin/console doctrine:migrations:migrate --no-interaction
+	docker compose exec php bin/console doctrine:fixtures:load --no-interaction --group=prod
 
 .PHONY: migrate
 migrate:

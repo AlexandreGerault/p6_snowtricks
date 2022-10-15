@@ -2,7 +2,7 @@ import {TrickOverviewType} from "./TrickType";
 
 type Props = TrickOverviewType;
 
-export default function TrickOverview({category, name, image, trickUrl, editUrl, deleteUrl}: Props) {
+export default function TrickOverview({category, name, image, url, editUrl, deleteUrl}: Props) {
     return (
         <article className="trick flex flex-col rounded-lg shadow-lg overflow-hidden">
             <div className="flex-shrink-0">
@@ -17,7 +17,7 @@ export default function TrickOverview({category, name, image, trickUrl, editUrl,
                         {category}
                     </p>
                     <div className="flex gap-2 justify-between">
-                        <a href={trickUrl} className="block mt-2 hover:underline">
+                        <a href={url} className="block mt-2 hover:underline">
                             <p className="text-xl font-semibold text-gray-900">
                                 {name}
                             </p>
