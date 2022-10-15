@@ -25,7 +25,6 @@ trait FindTrick
     }
 
     /**
-     * @param string|null $name
      * @return Trick|mixed|object|null
      */
     private function getTrickByName(?string $name): mixed
@@ -34,7 +33,7 @@ trait FindTrick
             /** @var TrickRepository $repository */
             $repository = $this->getContainer()->get(TrickRepository::class);
         } catch (Exception) {
-            Assert::fail("TrickRepository not found");
+            Assert::fail('TrickRepository not found');
         }
 
         $trick = $repository->findOneBy(['name' => $name]);

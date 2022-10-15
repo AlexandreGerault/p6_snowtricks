@@ -6,7 +6,6 @@ namespace App\Trick\UserInterface\UseCases\DeleteTrick;
 
 use App\Trick\Core\UseCases\Commands\DeleteTrick\DeleteTrick;
 use App\Trick\Core\UseCases\Commands\DeleteTrick\DeleteTrickInputData;
-use App\Trick\Infrastructure\Entity\Trick;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
