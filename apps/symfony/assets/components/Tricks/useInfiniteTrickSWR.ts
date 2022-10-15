@@ -6,7 +6,7 @@ const fetcher = (url: string) => axios.get(url).then(res => res.data)
 
 function getKey(pageIndex: number, previousPageData: any) {
     if (previousPageData && !previousPageData.length) return null
-    return `/api/tricks?page=${pageIndex}&limit=10`
+    return `/api/tricks?page=${pageIndex + 1}&limit=10`
 }
 
 type HookData = TrickOverviewType[];

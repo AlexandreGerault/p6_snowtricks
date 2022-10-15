@@ -17,7 +17,8 @@ migrate:
 
 .PHONY: migrate
 reset-db:
-	docker compose -f docker-compose.test.yml exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:f:l --no-interaction --group=prod
 
 .PHONY: build-front
 build-front:
