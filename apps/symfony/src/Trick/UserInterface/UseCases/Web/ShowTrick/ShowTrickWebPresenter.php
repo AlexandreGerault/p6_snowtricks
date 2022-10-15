@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trick\UserInterface\UseCases\ShowTrick;
+namespace App\Trick\UserInterface\UseCases\Web\ShowTrick;
 
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\GetTrickWithPaginatedCommentsPresenter;
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\TrickWithPaginatedCommentsResult;

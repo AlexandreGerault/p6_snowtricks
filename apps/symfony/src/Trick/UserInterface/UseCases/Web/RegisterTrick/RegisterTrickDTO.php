@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\RegisterTrick;
+namespace App\Trick\UserInterface\UseCases\Web\RegisterTrick;
 
 use App\Shared\Constraints\UniqueField;
 use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickInputData;

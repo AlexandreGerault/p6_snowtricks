@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\RegisterTrick;
+namespace App\Trick\UserInterface\UseCases\Web\RegisterTrick;
 
 use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrick;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

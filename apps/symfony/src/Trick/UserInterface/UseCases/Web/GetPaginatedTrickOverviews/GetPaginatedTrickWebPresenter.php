@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trick\UserInterface\UseCases\GetPaginatedTrickOverviews;
+namespace App\Trick\UserInterface\UseCases\Web\GetPaginatedTrickOverviews;
 
 use App\Trick\Core\UseCases\Queries\GetPaginatedTrickOverviews\GetPaginatedTrickOverviewsPresenter;
 use App\Trick\Core\UseCases\Queries\GetPaginatedTrickOverviews\PaginatedTrickOverviewsResult;

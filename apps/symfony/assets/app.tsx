@@ -10,6 +10,8 @@ import './styles/app.css';
 import {CollectionInputCustomElement} from "./components/CollectionInputCustomElement";
 import './collection'
 import Alpine from 'alpinejs'
+import { createRoot } from 'react-dom/client';
+import TrickList from "./components/Tricks/TrickList";
 
 // @ts-ignore
 window.Alpine = Alpine
@@ -17,3 +19,14 @@ window.Alpine = Alpine
 customElements.define('collection-input', CollectionInputCustomElement);
 
 Alpine.start()
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sectionElement = document.querySelector('#trick-overviews');
+
+    if (!sectionElement) {
+        return;
+    }
+
+    const root = createRoot(sectionElement);
+    root.render(<TrickList />);
+})

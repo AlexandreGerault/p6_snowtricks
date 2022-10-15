@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trick\UserInterface\UseCases\CommentTrick;
+namespace App\Trick\UserInterface\UseCases\Web\CommentTrick;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

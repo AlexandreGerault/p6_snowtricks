@@ -9,7 +9,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
-    .addEntry('app', './assets/app.ts')
+    .addEntry('app', './assets/app.tsx')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

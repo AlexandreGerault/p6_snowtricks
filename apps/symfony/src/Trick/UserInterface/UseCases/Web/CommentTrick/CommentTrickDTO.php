@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Trick\UserInterface\UseCases\CommentTrick;
+namespace App\Trick\UserInterface\UseCases\Web\CommentTrick;
 
 use App\Security\Infrastructure\Entity\User;
 use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrickInputData;
