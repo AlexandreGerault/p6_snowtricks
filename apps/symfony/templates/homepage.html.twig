@@ -2,7 +2,7 @@
 
 {% block body %}
     {% for message in app.flashes('error') %}
-        <div class="rounded px-6 py-4 bg-red-100 text-red-800">
+        <div class="flash-error rounded px-6 py-4 bg-red-100 text-red-800">
             {{ message }}
         </div>
     {% endfor %}
@@ -19,6 +19,7 @@
     <section class="grid gap-4 xl:grid-cols-3 md:grid-cols-2 py-12">
         {% for trick in tricks %}
             {{ component('trick-overview', {
+                id: trick.id,
                 image: trick.thumbnailUrl,
                 title: trick.name,
                 slug: trick.slug,

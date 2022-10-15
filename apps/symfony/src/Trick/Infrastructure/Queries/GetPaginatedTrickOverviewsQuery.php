@@ -45,6 +45,7 @@ class GetPaginatedTrickOverviewsQuery implements GetPaginatedTrickOverviewsQuery
                 }
 
                 $carry[] = new TrickOverview(
+                    id: $trick['uuid']->toRfc4122(),
                     name: $trick['name'],
                     slug: $trick['slug'],
                     categoryName: $trick['categoryName'],

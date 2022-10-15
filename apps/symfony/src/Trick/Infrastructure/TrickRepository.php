@@ -123,4 +123,19 @@ class TrickRepository extends ServiceEntityRepository implements TrickGateway
             array_map(fn (VideoEntity $video) => new Video($video->url()), $entity->videos()->toArray()),
         );
     }
+
+    public function delete(AbstractUid $trickId): bool
+    {
+        /** @var ?Entity $entity */
+        $entity = $this->findOneBy(['uuid' => $trickId->toRfc4122()]);
+
+        if (!$entity) {
+            return false;
+        }
+
+        $this->_em->remove($entity);
+        $this->_em->flush();
+
+        return true;
+    }
 }

@@ -55,7 +55,7 @@ class CommentTrickTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request(Request::METHOD_GET, "/figure/{$this->getTrickSlug()}");
+        $crawler = $client->request(Request::METHOD_GET, "/figure/{$this->getTrickSlug('Trick 1')}");
 
         $this->assertResponseIsSuccessful();
 

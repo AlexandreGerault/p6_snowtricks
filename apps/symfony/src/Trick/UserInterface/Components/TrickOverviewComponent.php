@@ -7,6 +7,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent('trick-overview')]
 class TrickOverviewComponent
 {
+    public string $id;
     public string $title;
     public string $slug;
     public string $category;

@@ -2,32 +2,46 @@
 
 namespace App\Tests\Helpers\Trick;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Trick\Infrastructure\Entity\Trick;
+use App\Trick\Infrastructure\TrickRepository;
+use Exception;
+use PHPUnit\Framework\Assert;
+use Symfony\Component\Uid\AbstractUid;
 
 trait FindTrick
 {
-    private function getTrickSlug(?string $name = null): string
+    private function getTrickSlug(string $name): string
     {
-        /** @var Connection $connection */
-        $connection = $this->getContainer()->get(EntityManagerInterface::class)->getConnection();
+        $trick = $this->getTrickByName($name);
 
-        $sql = 'SELECT * FROM tricks';
+        return $trick->slug();
+    }
 
-        if (!is_null($name)) {
-            $sql .= ' WHERE name = :name';
-        }
+    private function getTrickId(string $name): AbstractUid
+    {
+        $trick = $this->getTrickByName($name);
 
+        return $trick->uuid();
+    }
+
+    /**
+     * @return Trick|mixed|object|null
+     */
+    private function getTrickByName(?string $name): mixed
+    {
         try {
-            $statement = $connection->prepare($sql);
-            if (!is_null($name)) {
-                $statement->bindValue('name', $name);
-            }
-        } catch (Exception $e) {
-            $this->fail('Trick not found');
+            /** @var TrickRepository $repository */
+            $repository = $this->getContainer()->get(TrickRepository::class);
+        } catch (Exception) {
+            Assert::fail('TrickRepository not found');
         }
 
-        return $statement->executeQuery()->fetchAllAssociative()[0]['slug'];
+        $trick = $repository->findOneBy(['name' => $name]);
+
+        if (!$trick) {
+            Assert::fail("Trick {$name} not found");
+        }
+
+        return $trick;
     }
 }
