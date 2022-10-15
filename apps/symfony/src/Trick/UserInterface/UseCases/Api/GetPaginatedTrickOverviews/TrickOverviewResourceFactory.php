@@ -21,7 +21,7 @@ class TrickOverviewResourceFactory
     public function createCollection(array $trickOverviews): array
     {
         return array_map(
-            fn ($trickOverview) => $this->create($trickOverview),
+            fn($trickOverview) => $this->create($trickOverview),
             $trickOverviews
         );
     }
@@ -36,13 +36,9 @@ class TrickOverviewResourceFactory
         );
     }
 
-    private function url(TrickOverview $trickOverview): ?string
+    private function url(TrickOverview $trickOverview): string
     {
-        if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->generator->generate('show_trick', ['slug' => $trickOverview->slug]);
-        }
-
-        return null;
+        return $this->generator->generate('show_trick', ['slug' => $trickOverview->slug]);
     }
 
     private function editUrl(TrickOverview $trickOverview): ?string
