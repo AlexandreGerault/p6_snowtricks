@@ -14,4 +14,6 @@ interface TrickGateway
     public function findAll(): array;
 
     public function get(AbstractUid $trickId): Trick;
+
+    public function delete(AbstractUid $trickId): bool;
 }

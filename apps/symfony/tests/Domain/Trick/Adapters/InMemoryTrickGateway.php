@@ -9,6 +9,7 @@ use App\Trick\Core\TrickGateway;
 use Exception;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Uid\AbstractUid;
+use Symfony\Component\Uid\Uuid;
 
 class InMemoryTrickGateway implements TrickGateway
 {
@@ -61,5 +62,24 @@ class InMemoryTrickGateway implements TrickGateway
     public function assertTrickSaved(): void
     {
         Assert::assertTrue($this->saved);
+    }
+
+    public function assertTrickDoesNotExist(string $string)
+    {
+        $uuids = array_map(fn (Trick $trick) => $trick->snapshot()->uuid->toRfc4122(), $this->tricks);
+        Assert::assertNotContains($string, $uuids);
+    }
+
+    public function delete(AbstractUid $trickId): bool
+    {
+        foreach ($this->tricks as $key => $trick) {
+            if ($trick->snapshot()->uuid->equals($trickId)) {
+                unset($this->tricks[$key]);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
