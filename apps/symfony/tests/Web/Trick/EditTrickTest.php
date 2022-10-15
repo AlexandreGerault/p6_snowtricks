@@ -81,7 +81,7 @@ class EditTrickTest extends WebTestCase
 
         $client->loginUser(FetchUser::new($client->getContainer())->fetchUserByMail(UserFixture::ADMIN_MAIL));
 
-        $crawler = $client->request(Request::METHOD_GET, "/figure/modifier/{$this->getTrickSlug()}");
+        $crawler = $client->request(Request::METHOD_GET, "/figure/modifier/{$this->getTrickSlug('Trick 2')}");
 
         $this->assertResponseIsSuccessful();
 
@@ -111,7 +111,7 @@ class EditTrickTest extends WebTestCase
             ],
         ];
 
-        $client->request(Request::METHOD_POST, "/figure/modifier/{$this->getTrickSlug()}", $params);
+        $client->request(Request::METHOD_POST, "/figure/modifier/{$this->getTrickSlug('Trick 2')}", $params);
         $this->assertResponseRedirects('/');
 
         $crawler = $client->followRedirect();

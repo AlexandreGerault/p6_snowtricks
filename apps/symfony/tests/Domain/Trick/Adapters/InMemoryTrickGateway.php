@@ -9,7 +9,6 @@ use App\Trick\Core\TrickGateway;
 use Exception;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
 
 class InMemoryTrickGateway implements TrickGateway
 {
