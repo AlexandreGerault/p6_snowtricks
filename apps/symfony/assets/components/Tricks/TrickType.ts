@@ -3,7 +3,7 @@ export interface TrickOverviewType {
     category: string;
     name: string;
     image: string;
-    trickUrl: string;
+    url: string;
     editUrl?: string;
     deleteUrl?: string;
 }

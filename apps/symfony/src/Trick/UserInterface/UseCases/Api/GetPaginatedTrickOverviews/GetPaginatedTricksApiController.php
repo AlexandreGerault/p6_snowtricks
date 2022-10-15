@@ -24,7 +24,7 @@ class GetPaginatedTricksApiController extends AbstractController
     {
         $input = new GetPaginatedTrickOverviewsInputData(
             perPage: $request->query->getInt('limit', 10),
-            page: 1,
+            page: $request->query->getInt('page', 1),
         );
 
         $this->getPaginatedTricks->executes($input, $this->presenter);

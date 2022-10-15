@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\Infrastructure\DataFixtures;
+namespace App\Trick\Infrastructure\DataFixtures\Test;
 
 use App\Trick\Core\Image;
 use App\Trick\Core\ImageStorage;
@@ -10,10 +10,11 @@ use App\Trick\Core\Video;
 use App\Trick\Infrastructure\Entity\Category;
 use App\Trick\Infrastructure\Entity\Trick;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Uid\Uuid;
 
-class TrickFixture extends Fixture
+class TrickFixture extends Fixture implements FixtureGroupInterface
 {
     public function __construct(private readonly ImageStorage $imageStorage)
     {
@@ -48,8 +49,13 @@ class TrickFixture extends Fixture
 
     private function copyAssetImageForTrick(Trick $trick, string $imageName): Image
     {
-        $path = $this->imageStorage->save(__DIR__.'/../../../../assets/fixtures/tricks/'.$imageName);
+        $path = $this->imageStorage->save(__DIR__.'/../../../../../assets/fixtures/tricks/'.$imageName);
 
         return new Image('/storage/uploads/tricks/'.basename($path), $imageName);
+    }
+
+    public static function getGroups(): array
+    {
+        return ['test'];
     }
 }

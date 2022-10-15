@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\Infrastructure\DataFixtures;
+namespace App\Trick\Infrastructure\DataFixtures\Test;
 
 use App\Trick\Infrastructure\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Uid\UuidV4;
 
-class CategoryFixture extends Fixture
+class CategoryFixture extends Fixture implements FixtureGroupInterface
 {
     public const CATEGORY_UUID_RIDER = '71494473-142a-4e97-9872-7fb787a07573';
     public const CATEGORY_NAME_RIDER = 'Rider';
@@ -56,5 +57,10 @@ class CategoryFixture extends Fixture
         $manager->flush();
 
         $this->addReference(self::CATEGORY_NAME_RIDER, $rider);
+    }
+
+    public static function getGroups(): array
+    {
+        return ['test'];
     }
 }

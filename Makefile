@@ -10,14 +10,18 @@ prepare-install:
 	cp apps/symfony/.env.example apps/symfony/.env
 	cp apps/symfony/.env.test.example apps/symfony/.env.test
 	docker compose exec php composer install
+	docker compose exec php bin/console doctrine:migrations:migrate --no-interaction
+	docker compose exec php bin/console doctrine:fixtures:load --no-interaction --group=prod
 
 .PHONY: migrate
 migrate:
 	docker compose exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:f:l --no-interaction --group=prod
 
 .PHONY: migrate
 reset-db:
-	docker compose -f docker-compose.test.yml exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:f:l --no-interaction --group=prod
 
 .PHONY: build-front
 build-front:
@@ -61,5 +65,5 @@ test:
 
 reset-db-test:
 	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:s:u --force
-	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:f:l --no-interaction
+	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:f:l --no-interaction --group=test
 ##< TEST ENVIRONMENT ##

@@ -19,7 +19,7 @@ export default function TrickList() {
                         category={trick.category}
                         name={trick.name}
                         image={trick.image}
-                        trickUrl={trick.trickUrl}
+                        url={trick.url}
                         editUrl={trick.editUrl}
                         deleteUrl={trick.deleteUrl}
                     />

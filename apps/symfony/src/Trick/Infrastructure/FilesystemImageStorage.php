@@ -60,6 +60,7 @@ class FilesystemImageStorage implements ImageStorage
         $result = reset($files);
 
         if (!$result) {
+            dd($path, $filename, $files);
             throw new \RuntimeException('File not found');
         }
 
