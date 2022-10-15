@@ -61,5 +61,5 @@ test:
 
 reset-db-test:
 	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:s:u --force
-	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:f:l --no-interaction
+	docker compose -f docker-compose.test.yml --env-file=.env.test exec php_test bin/console d:f:l --no-interaction --group=test
 ##< TEST ENVIRONMENT ##

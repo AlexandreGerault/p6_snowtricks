@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Web\Trick;
 
-use App\Security\Infrastructure\DataFixtures\UserFixture;
+use App\Security\Infrastructure\DataFixtures\Test\UserFixture;
 use App\Tests\Helpers\File\File;
 use App\Tests\Helpers\Security\FetchUser;
 use App\Tests\Helpers\Trick\FindCategory;

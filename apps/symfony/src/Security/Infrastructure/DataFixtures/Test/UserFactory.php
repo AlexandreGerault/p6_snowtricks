@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Infrastructure\DataFixtures;
+namespace App\Security\Infrastructure\DataFixtures\Test;
 
 use App\Security\Infrastructure\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

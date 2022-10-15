@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Infrastructure\DataFixtures;
+namespace App\Security\Infrastructure\DataFixtures\Test;
 
 use App\Security\Infrastructure\Entity\ActivationToken;
 use App\Security\Infrastructure\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ActivationTokenFixture extends Fixture implements DependentFixtureInterface
+class ActivationTokenFixture extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public const ACTIVATION_TOKEN = '12345';
 
@@ -36,5 +37,10 @@ class ActivationTokenFixture extends Fixture implements DependentFixtureInterfac
         return [
             UserFixture::class,
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['test'];
     }
 }
