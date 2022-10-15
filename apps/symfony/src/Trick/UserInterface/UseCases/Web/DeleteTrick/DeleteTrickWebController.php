@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\DeleteTrick;
+namespace App\Trick\UserInterface\UseCases\Web\DeleteTrick;
 
 use App\Trick\Core\UseCases\Commands\DeleteTrick\DeleteTrick;
 use App\Trick\Core\UseCases\Commands\DeleteTrick\DeleteTrickInputData;

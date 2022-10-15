@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\DeleteTrick;
+namespace App\Trick\UserInterface\UseCases\Web\RegisterTrick;
 
-use App\Trick\Core\UseCases\Commands\DeleteTrick\DeleteTrickPresenter;
+use App\Trick\Core\TrickSnapshot;
+use App\Trick\Core\UseCases\Commands\RegisterTrick\RegisterTrickOutputPort;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DeleteTrickWebPresenter implements DeleteTrickPresenter
+class RegisterTrickWebPresenter implements RegisterTrickOutputPort
 {
     private Response $response;
 
@@ -21,24 +22,22 @@ class DeleteTrickWebPresenter implements DeleteTrickPresenter
     ) {
     }
 
-    public function trickDeleted(): void
+    public function trickCreated(TrickSnapshot $trick): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
-            $this->flashBag->add('success', 'La figure a bien été supprimée.');
+            $this->flashBag->add('success', 'La figure a bien été créée');
         }
 
-        $url = $this->urlGenerator->generate('homepage');
-        $this->response = new RedirectResponse($url);
+        $this->response = new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 
-    public function trickNotFound(): void
+    public function cannotCreateTrick(): void
     {
         if ($this->flashBag instanceof FlashBagInterface) {
-            $this->flashBag->add('error', 'La figure n\a pas pu être supprimée.');
+            $this->flashBag->add('error', "La figure n'a pas pu être créée");
         }
 
-        $url = $this->urlGenerator->generate('homepage');
-        $this->response = new RedirectResponse($url);
+        $this->response = new RedirectResponse($this->urlGenerator->generate('register_trick'));
     }
 
     public function response(): Response

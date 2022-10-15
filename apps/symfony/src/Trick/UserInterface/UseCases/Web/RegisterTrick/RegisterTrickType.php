@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\RegisterTrick;
+namespace App\Trick\UserInterface\UseCases\Web\RegisterTrick;
 
 use App\Trick\UserInterface\Form\Type\ImageType;
 use App\Trick\UserInterface\Form\Type\TrickType;

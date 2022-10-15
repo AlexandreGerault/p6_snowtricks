@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Trick\UserInterface\UseCases\EditTrick;
+namespace App\Trick\UserInterface\UseCases\Web\EditTrick;
 
 use App\Trick\Core\UseCases\Commands\EditTrick\EditTrick;
 use App\Trick\Infrastructure\Entity\Trick;

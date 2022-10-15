@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Trick\UserInterface\UseCases\ShowTrick;
+namespace App\Trick\UserInterface\UseCases\Web\ShowTrick;
 
 use App\Security\Infrastructure\Entity\User;
 use App\Trick\Core\UseCases\Commands\CommentTrick\CommentTrick;
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\GetTrickWithPaginatedComments;
 use App\Trick\Core\UseCases\Queries\GetTrickWithPaginatedComments\GetTrickWithPaginatedCommentsInputData;
 use App\Trick\Infrastructure\Entity\Trick;
-use App\Trick\UserInterface\UseCases\CommentTrick\CommentTrickDTO;
-use App\Trick\UserInterface\UseCases\CommentTrick\CommentTrickType;
-use App\Trick\UserInterface\UseCases\CommentTrick\CommentTrickWebPresenter;
+use App\Trick\UserInterface\UseCases\Web\CommentTrick\CommentTrickDTO;
+use App\Trick\UserInterface\UseCases\Web\CommentTrick\CommentTrickType;
+use App\Trick\UserInterface\UseCases\Web\CommentTrick\CommentTrickWebPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
