@@ -14,6 +14,7 @@ prepare-install:
 .PHONY: migrate
 migrate:
 	docker compose exec php bin/console d:s:u --force
+	docker compose exec php bin/console d:f:l --no-interaction --group=prod
 
 .PHONY: migrate
 reset-db:
